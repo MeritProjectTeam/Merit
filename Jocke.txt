@@ -1,9 +1,16 @@
 ﻿KEEP YOuR HANDS OFF!!! 
 THIS IS MY FILE!!!
 
+<<<<<<< HEAD
 G E T  O U T!!!!
 
 
 
 
 (ノಠ益ಠ)ノ彡┻━┻
+=======
+G E T  O U T!!!!!
+
+
+hehehehheheheh jag �r inne i din fil!
+>>>>>>> 6d678edc6243c597598fa30e63654358e584dbb3
