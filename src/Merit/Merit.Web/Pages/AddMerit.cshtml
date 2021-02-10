@@ -1,0 +1,27 @@
+﻿@page
+@model Merit.Web.Pages.AddMeritModel
+@{
+}
+
+<form method="post">
+    <h3>Lägg till en merit</h3>
+    <div>
+        <label>Kategori:</label>
+        <input type="text" asp-for="AMerit.Category" placeholder="Kategori" />
+    </div>
+    <div>
+        <label>Underkategori:</label>
+        <input type="text" asp-for="AMerit.SubCategory" placeholder="Underkategori" />
+    </div>
+    <div>
+        <label>Beskrivning:</label>
+        <input type="text" asp-for="AMerit.Description" placeholder="Beskrivning" />
+    </div>
+    <div>
+        <label>Varaktighet:</label>
+        <input type="text" asp-for="AMerit.Duration" placeholder="Varaktighet" />
+    </div>
+    <div>
+    <button type="submit">Lägg till merit</button>
+    </div>
+</form>
