@@ -16,6 +16,9 @@ namespace Merit.Web.Pages
         public NewMerit AMerit { get; set; }
 
         IMeritService meritService = new MockMeritService();
+
+        [BindProperty]
+        public List<NewMerit> Test { get; set; }
         public void OnGet()
         {
 
@@ -24,6 +27,7 @@ namespace Merit.Web.Pages
         public void OnPost()
         {
             meritService.SaveMerit(AMerit);
+            Test = meritService.ReadMerit();
         }
     }
 }
