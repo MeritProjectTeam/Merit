@@ -1,0 +1,36 @@
+﻿@page
+@model Merit.Web.Pages.CompanySearchPageModel
+@{
+}
+
+<h3>Find employee</h3>
+<hr />
+<form method="post">
+    <div>
+        <div>
+            Find your candidate by entering search conditions.
+        </div>
+        <div>
+            Enter required merits: <input type="text" asp-for="SearchMerit" />
+        </div>
+        <div>
+            Enter required skills: <input type="text" asp-for="SearchSkills" />
+        </div>
+        <div>
+            Enter required education: <input type="text" asp-for="SearchEducation" />
+        </div>
+    </div>
+    <div>
+        <button type="submit">Search</button>
+    </div>
+    <ol>
+        @foreach (var x in Model.People)
+	{
+		 <li>
+             @x.FirstName
+         </li>
+	}
+
+
+    </ol>
+</form>

@@ -4,8 +4,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Merit.Web", "Merit.Web\Merit.Web.csproj", "{E2E45C80-E5DB-436D-AC03-C568E6BB54E5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B9793B29-156C-4242-8D27-D862291149A2} = {B9793B29-156C-4242-8D27-D862291149A2}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Merit.ProfileService", "Merit.ProfileService\Merit.ProfileService.csproj", "{1F06F5EC-491A-4DDD-BFEB-7017738BAF2B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Merit.PersonalInfoService", "Merit.PersonalInfoService\Merit.PersonalInfoService.csproj", "{B9793B29-156C-4242-8D27-D862291149A2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +26,10 @@ Global
 		{1F06F5EC-491A-4DDD-BFEB-7017738BAF2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F06F5EC-491A-4DDD-BFEB-7017738BAF2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F06F5EC-491A-4DDD-BFEB-7017738BAF2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9793B29-156C-4242-8D27-D862291149A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9793B29-156C-4242-8D27-D862291149A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9793B29-156C-4242-8D27-D862291149A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9793B29-156C-4242-8D27-D862291149A2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

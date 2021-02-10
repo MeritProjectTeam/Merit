@@ -4,36 +4,21 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Merit.ProfileService;
+using Merit.PersonalInfoService;
 
 namespace Merit.Web.Pages
 {
     public class PersonalinfoPageModel : PageModel
     {
-        private readonly IProfileService profileService = new MockProfileService();
+        private readonly IPersonalInfoService profileService = new FakeProfileService();
 
-        [BindProperty(SupportsGet=true)]
         public string FirstName { get; set; }
-
-        [BindProperty(SupportsGet = true)]
         public string LastName { get; set; }
-
-        [BindProperty(SupportsGet = true)]
         public string Email { get; set; }
-
-        [BindProperty(SupportsGet = true)]
         public string Street { get; set; }
-
-        [BindProperty(SupportsGet = true)]
         public string Zipcode { get; set; }
-
-        [BindProperty(SupportsGet = true)]
         public string City { get; set; }
-
-        [BindProperty(SupportsGet = true)]
         public string Phone { get; set; }
-
-        [BindProperty(SupportsGet = true)]
         public DateTime DateOfBirth { get; set; }
 
         public List<PersonMerit> personalMerits = new List<PersonMerit>();
@@ -42,8 +27,7 @@ namespace Merit.Web.Pages
 
         public void OnGet()
         {
-            var mockProfile = new MockProfileService();
-            var person = mockProfile.Get(2);
+            var person = profileService.Get(1);
             
             FirstName = person.FirstName;
             LastName = person.LastName;
@@ -51,19 +35,18 @@ namespace Merit.Web.Pages
             Street = person.Street;
             Zipcode = person.ZipCode;
             City = person.City;
-            Phone = person.Phone;
+            Phone = person.PhoneNumber;
             DateOfBirth = person.DateOfBirth;
         }
     }
-
-    public class PersonMerit
+    public class PersonMerit  // Placeholder
     {
         public string MeritName { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
     }
 
-    public class PersonEducation
+    public class PersonEducation // Placeholder
     {
         public string EducationName { get; set; }
         public DateTime StartEducation { get; set; }
