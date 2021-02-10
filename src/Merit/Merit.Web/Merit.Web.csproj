@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Merit.MeritService\Merit.MeritService.csproj" />
-    <ProjectReference Include="..\Merit.ProfileService\Merit.ProfileService.csproj" />
+    
   </ItemGroup>
 
 </Project>
