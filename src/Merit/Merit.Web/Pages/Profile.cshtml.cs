@@ -10,7 +10,7 @@ namespace Merit.Web.Pages
 {
     public class ProfileModel : PageModel
     {
-        private IProfileService profileService = new MockProfileService();
+        private readonly IProfileService profileService = new MockProfileService();
 
         [BindProperty]
         public string FirstName { get; set; }

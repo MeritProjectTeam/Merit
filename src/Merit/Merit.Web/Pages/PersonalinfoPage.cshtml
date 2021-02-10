@@ -1,0 +1,77 @@
+﻿@page
+@model Merit.Web.Pages.PersonalinfoPageModel
+@using Merit.ProfileService
+@{
+}
+
+<h3>Hello, @Model.FirstName</h3>
+<div>
+    <div>
+        Name: @Model.FirstName @Model.LastName
+    </div>
+    <div>
+        Date of Birth: @Model.DateOfBirth
+    </div>
+    <button>Change Personal Info</button>
+
+    <hr />
+    <div>
+        Email: @Model.Email
+    </div>
+    <div>
+        Tele#: @Model.Phone
+    </div>
+    <button>Change Contact</button>
+    <hr />
+    <div>
+        Street: @Model.Street
+    </div>
+    <div>
+        Zip: @Model.Zipcode
+    </div>
+    <div>
+        City: @Model.City
+    </div>
+    <button>Change Location</button>
+</div>
+<div>
+    Merits
+</div>
+<div>
+    <ol>
+        @foreach (var x in Model.personalMerits)
+	    {
+		 <li>
+             @x.MeritName;
+         </li>
+         <li>
+             @x.StartDate
+         </li>
+         <li>
+             @x.EndDate
+         </li>
+	    }
+    </ol>
+    <button>Add New Merit</button>
+</div>
+<hr />
+<div>
+    Education
+</div>
+<div>
+    <ol>
+        @foreach (var x in Model.personalEducation)
+	    {
+		    <li>
+                @x.EducationName
+            </li>
+            <li>
+                @x.StartEducation
+            </li>
+            <li>
+                @x.EndEducation
+            </li>
+	    }
+    </ol>
+    <button>Add Education</button>
+</div>
