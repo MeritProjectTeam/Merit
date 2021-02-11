@@ -12,6 +12,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Merit.ProfileService", "Mer
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Merit.PersonalInfoService", "Merit.PersonalInfoService\Merit.PersonalInfoService.csproj", "{B9793B29-156C-4242-8D27-D862291149A2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Merit.MeritService", "Merit.MeritService\Merit.MeritService.csproj", "{26AE76E6-F5B2-4EF2-88CF-969A3D8EDDE8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
