@@ -7,5 +7,6 @@ namespace Merit.MeritService
     public interface IMeritService
     {
         void SaveMerit(NewMerit merit);
+        List<NewMerit> ReadMerit();
     }
 }

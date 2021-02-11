@@ -22,6 +22,14 @@
         <input type="text" asp-for="AMerit.Duration" placeholder="Varaktighet" />
     </div>
     <div>
-    <button type="submit">Lägg till merit</button>
+        <button type="submit">Lägg till merit</button>
     </div>
 </form>
+
+@if (Model.Test != null)
+{
+    @foreach (var line in Model.Test)
+    {
+        <p>@line.Category</p>
+    }
+}
