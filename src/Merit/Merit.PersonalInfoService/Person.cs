@@ -18,6 +18,8 @@ namespace Merit.PersonalInfoService
         public string City { get; set; }
         public string Street { get; set; }
         public string ZipCode { get; set; }
+
+        //denna nedan behöver kopplas till det andra biblioteket med orginal-meriten
         public List<Merit> Merits { get; set; }
         public List<Education> Educations { get; set; }
         public List<Skills> Skillz { get; set; }
