@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Merit.MeritService;
 using Merit.PersonalInfoService;
 
 namespace Merit.PersonalInfoService
@@ -19,8 +20,7 @@ namespace Merit.PersonalInfoService
         public string Street { get; set; }
         public string ZipCode { get; set; }
 
-        //denna nedan behöver kopplas till det andra biblioteket med orginal-meriten
-        public List<Merit> Merits { get; set; }
+        public List<NewMerit> Merits { get; set; }
         public List<Education> Educations { get; set; }
         public List<Skills> Skillz { get; set; }
     }

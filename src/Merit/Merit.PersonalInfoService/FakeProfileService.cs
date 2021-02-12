@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Merit.MeritService;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,11 +11,11 @@ namespace Merit.PersonalInfoService
     {
         private Person currentPerson;
         List<Person> people;
-        List<Merit> meritList = new List<Merit>();
+        List<NewMerit> meritList = new List<NewMerit>();
 
         public FakeProfileService()
         {
-            meritList.Add(new Merit("Död","Krig"));
+            meritList.Add(new NewMerit("lastbilschaufför", "stora bilar", "det var kul", "100 år"));
             people = new List<Person>()
             {
                 new Person

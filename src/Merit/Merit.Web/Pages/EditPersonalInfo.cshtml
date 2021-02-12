@@ -2,30 +2,33 @@
 @model Merit.Web.Pages.EditPersonalInfoModel
 @{
 }
+<h3>Uppdatera profilinformation</h3>
+<hr />
 <form method="post">
+
     <div>
-        <div>
-            Firstname: <input type="text" asp-for="FirstName" />
+        <div class="justify-content-between mb-2">
+            Förnamn: <input type="text" asp-for="FirstName" placeholder="Förnamn" />
         </div>
-        <div>
-            Lastname: <input type="text" asp-for="LastName" />
+        <div class="justify-content-between mb-2">
+            Efternamn: <input type="text" asp-for="LastName" placeholder="Efternamn" />
         </div>
-        <div>
-            Email: <input type="text" asp-for="Email" />
+        <div class="justify-content-between mb-2">
+            E-mail: <input type="text" asp-for="Email" placeholder="E-mail" />
         </div>
-        <div>
-            Phone#: <input type="text" asp-for="Phone" />
+        <div class="justify-content-between mb-2">
+            Telefonnummer: <input type="text" asp-for="Phone" placeholder="Telefonnummer" />
         </div>
-        <div>
-            Street: <input type="text" asp-for="Street" />
+        <div class="justify-content-between mb-2">
+            Adress: <input type="text" asp-for="Street" placeholder="Adress" />
         </div>
-        <div>
-            Zipcode: <input type="text" asp-for="Zipcode" />
+        <div class="justify-content-between mb-2">
+            Postnummer: <input type="text" asp-for="Zipcode" placeholder="Postnummer" />
         </div>
-        <div>
-            City: <input type="text" asp-for="City" />
+        <div class="justify-content-between mb-2">
+            Postadress: <input type="text" asp-for="City" placeholder="Postadress" />
         </div>
-        <div>
+        <div class="justify-content-between mb-2">
             <button type="submit">Save Info</button>
         </div>
 

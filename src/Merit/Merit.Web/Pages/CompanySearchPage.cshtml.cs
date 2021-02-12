@@ -34,7 +34,7 @@ namespace Merit.Web.Pages
             {
                 foreach (var y in x.Merits)
                 {
-                    if (y.Title == SearchMerit)
+                    if (y.Category == SearchMerit)
                     {
                         theOne.Add(x);
                     }

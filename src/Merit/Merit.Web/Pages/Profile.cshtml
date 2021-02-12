@@ -1,33 +1,53 @@
 ﻿@page
 @model Merit.Web.Pages.ProfileModel
+    <h3>Lägg till profilinformation</h3>
+<hr />
+    <form method="post">
 
-<form method="post">
-    <label for="firstname">Förnamn</label>
-    <input asp-for="FirstName" name="firstname" type="text" placeholder="Förnamn" />
-    <label for="lastname">Efternamn</label>
-    <input asp-for="LastName" name="lastname" type="text" />
-    <label for="email">E-Post</label>
-    <input asp-for="Email" name="email" type="email" />
-    <label for="dateofbirth">Födelseår</label>
-    <input asp-for="DateOfBirth" type="date" name="dateofbirth" value="" />
-    <label for="street">Gatuadress</label>
-    <input asp-for="Street" type="text" name="street" value="" />
-    <label for="zipcode">Postnr</label>
-    <input asp-for="Zipcode" type="text" name="zipcode" value="" />
-    <label for="city">Ort</label>
-    <input asp-for="City" type="text" name="city" value="" />
-    <label for="phone">Telefon</label>
-    <input asp-for="Phone" type="tel" name="phone" value="" />
-    <input type="submit" name="save" value="Spara" />
-</form>
-@if (!string.IsNullOrEmpty(Model.FirstName))
-{
-    <p>
-        Hi, @Model.FirstName, Age: @Model.Age
-    </p>
-}
-@{
-}
+        <div class="justify-content-between mb-2">
+            <label for="firstname">Förnamn</label>
+            <input asp-for="FirstName" name="firstname" type="text" placeholder="Förnamn" />
+        </div>
+        <div class="justify-content-between mb-2">
+            <label for="lastname">Efternamn</label>
+            <input asp-for="LastName" name="lastname" type="text" />
+        </div>
+        <div class="justify-content-between mb-2">
+            <label for="email">E-Post</label>
+            <input asp-for="Email" name="email" type="email" />
+        </div>
+        <div class="justify-content-between mb-2">
+            <label for="dateofbirth">Födelseår</label>
+            <input asp-for="DateOfBirth" type="date" name="dateofbirth" value="" />
+        </div>
+        <div class="justify-content-between mb-2">
+            <label for="street">Gatuadress</label>
+            <input asp-for="Street" type="text" name="street" value="" />
+        </div>
+        <div class="justify-content-between mb-2">
+            <label for="zipcode">Postnr</label>
+            <input asp-for="Zipcode" type="text" name="zipcode" value="" />
+        </div>
+        <div class="justify-content-between mb-2">
+            <label for="city">Ort</label>
+            <input asp-for="City" type="text" name="city" value="" />
+        </div>
+        <div class="justify-content-between mb-2">
+            <label for="phone">Telefon</label>
+            <input asp-for="Phone" type="tel" name="phone" value="" />
+        </div>
+        <div class="justify-content-between mb-2">
+            <input type="submit" name="save" value="Spara" />
+        </div>
+    </form>
+    @if (!string.IsNullOrEmpty(Model.FirstName))
+    {
+        <p>
+            Hi, @Model.FirstName, Age: @Model.Age
+        </p>
+    }
+    @{
+    }
 
 
 

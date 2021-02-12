@@ -5,70 +5,66 @@
 }
 
 <h3>Hello, @Model.FirstName</h3>
-<div>
-    <div>
-        Name: @Model.FirstName @Model.LastName
-    </div>
-    <div>
-        Date of Birth: @Model.DateOfBirth
-    </div>
-    <hr />
-    <div>
-        Email: @Model.Email
-    </div>
-    <div>
-        Tele#: @Model.Phone
-    </div>
-    <hr />
-    <div>
-        Street: @Model.Street
-    </div>
-    <div>
-        Zip: @Model.Zipcode
-    </div>
-    <div>
-        City: @Model.City
-    </div>
-    <button onclick="window.location.href='/EditPersonalInfo'">Edit Personal Information</button>
-</div>
-<div>
-    Merits
-</div>
-<div>
-    <ol>
-        @foreach (var x in Model.personalMerits)
-	    {
-		 <li>
-             @x.MeritName;
-         </li>
-         <li>
-             @x.StartDate
-         </li>
-         <li>
-             @x.EndDate
-         </li>
-	    }
-    </ol>
-    <button>Add New Merit</button>
-</div>
 <hr />
-<div>
-    Education
+<div class="justify-content-between mb-2">
+    <div>Name: @Model.FirstName @Model.LastName</div>
+    <div>Date of Birth: @Model.DateOfBirth</div>
+    <hr />
+    <div> Email: @Model.Email</div>
+    <div> Tele#: @Model.Phone</div>
+    <hr />
+    <div>Street: @Model.Street</div>
+    <div>Zip: @Model.Zipcode</div>
+    <div>City: @Model.City</div>
+
+    @*denna nedan är felaktigt kopplad, inte till riktiga meriten i klassbiblioteket*@ 
+
 </div>
-<div>
-    <ol>
-        @foreach (var x in Model.personalEducation)
-	    {
-		    <li>
-                @x.EducationName
-            </li>
-            <li>
-                @x.StartEducation
-            </li>
-            <li>
-                @x.EndEducation
-            </li>
-	    }
-    </ol>
-    <button>Add Education</button>
-</div>
+    <div class="justify-content-between mb-2">
+        <button onclick="window.location.href='/EditPersonalInfo'">Edit Personal Information</button>
+    </div>
+    <div>
+        Merits
+    </div>
+    <div class ="justify-content-between mb-2">
+        <ol>
+            @foreach (var x in Model.personalMerits)
+            {
+                <li>
+                    @x.MeritName;
+                </li>
+                <li>
+                    @x.StartDate
+                </li>
+                <li>
+                    @x.EndDate
+                </li>
+            }
+        </ol>
+        </div>
+        <div class="justify-content-between mb-2">
+            <button onclick="window.location.href='/AddMerit'">Add New Merit</button>
+        </div>
+        <hr />
+        <div class="justify-content-between mb-2">
+            Education
+        </div>
+        <div class="justify-content-between mb-2">
+            <ol>
+                @foreach (var x in Model.personalEducation)
+                {
+                    <li>
+                        @x.EducationName
+                    </li>
+                    <li>
+                        @x.StartEducation
+                    </li>
+                    <li>
+                        @x.EndEducation
+                    </li>
+                }
+            </ol>
+            <div class="justify-content-between mb-2">
+                <button>Add Education</button>
+            </div>
+        </div>

@@ -2,29 +2,31 @@
 @model Merit.Web.Pages.AddMeritModel
 @{
 }
-
+<h3>Lägg till en merit</h3>
+<hr />
 <form method="post">
-    <h3>Lägg till en merit</h3>
-    <div>
+
+    <div class="justify-content-between mb-2">
         <label>Kategori:</label>
         <input type="text" asp-for="AMerit.Category" placeholder="Kategori" />
     </div>
-    <div>
+    <div class="justify-content-between mb-2">
         <label>Underkategori:</label>
         <input type="text" asp-for="AMerit.SubCategory" placeholder="Underkategori" />
     </div>
-    <div>
+    <div class="justify-content-between mb-2">
         <label>Beskrivning:</label>
         <input type="text" asp-for="AMerit.Description" placeholder="Beskrivning" />
     </div>
-    <div>
+    <div class="justify-content-between mb-2">
         <label>Varaktighet:</label>
         <input type="text" asp-for="AMerit.Duration" placeholder="Varaktighet" />
     </div>
-    <div>
+    <div class="justify-content-between mb-2">
         <button type="submit">Lägg till merit</button>
     </div>
 </form>
+
 
 @if (Model.Test != null)
 {
