@@ -79,15 +79,17 @@ namespace Merit.PersonalInfoService
         {
             return people;
         }
-        public void EditPerson(Person person) // not working
+        public Person EditPerson(Person editedPerson) // not working need async
         {
             var existingPerson = people
-                .FirstOrDefault(people => people.Id == person.Id);
+                .FirstOrDefault(p => p.Id == editedPerson.Id);
             if (existingPerson!=null)
             {
-                existingPerson.FirstName = person.FirstName;
-                existingPerson.LastName = person.LastName;
+                existingPerson.FirstName = editedPerson.FirstName;
+                existingPerson.LastName = editedPerson.LastName;
             }
+
+            return existingPerson;
         }
     }
 }
