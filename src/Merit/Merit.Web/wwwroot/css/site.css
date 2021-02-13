@@ -139,6 +139,9 @@ body {
     color: #212529;
     text-align: left;
     background-color: #fff;
+    margin-top: 100px;
+    margin-left: 100px;
+
 }
 
 [tabindex="-1"]:focus:not(:focus-visible) {
@@ -10675,6 +10678,7 @@ p.lead {
     text-transform: uppercase;
     font-weight: 500;
     font-size: 1.5rem;
+    padding-left: 15px;
 }
 
 #sideNav .navbar-nav .nav-item .nav-link {
@@ -10744,6 +10748,7 @@ p.lead {
     border-radius: 100%;
     font-size: 1.5rem;
     margin-right: 1.5rem;
+    
 }
 
     .social-icons .social-icon:last-child {

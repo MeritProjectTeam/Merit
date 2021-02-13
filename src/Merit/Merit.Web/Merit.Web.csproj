@@ -5,6 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\DataFile\MeritMockar.csv" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\DataFile\MeritMockar.csv" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Merit.MeritService\Merit.MeritService.csproj" />
     <ProjectReference Include="..\Merit.PersonalInfoService\Merit.PersonalInfoService.csproj" />
     <ProjectReference Include="..\Merit.ProfileService\Merit.ProfileService.csproj" />
