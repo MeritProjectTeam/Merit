@@ -1,0 +1,27 @@
+﻿@page
+@model Merit.Web.Pages.AddMeritBusinessModel
+@{
+}
+
+<h3>Skapa merit (Företag)</h3>
+
+<form method="post">
+    <div>
+        <table>
+            <tr>
+                <td><label>Kategori: </label></td>
+                <td><input type="text" asp-for="BusinessMerit.Category" placeholder="Kategori"/></td>
+            </tr>
+            <tr>
+                <td><label>Underkategori: </label></td>
+                <td><input type="text" asp-for="BusinessMerit.SubCategory" placeholder="Underkategori"/></td>
+            </tr>
+            <tr>
+                <td><label>Beskrivning: </label></td>
+                <td><input type="text" asp-for="BusinessMerit.Description" placeholder="Beskrivning"/></td>
+            </tr>
+        </table>
+
+    </div>
+
+</form>
