@@ -10,10 +10,18 @@ namespace Merit.Web.Pages
 {
     public class AddMeritBusinessModel : PageModel
     {
+        [BindProperty]
         public NewMeritBusiness BusinessMerit { get; set; }
+
+        IMeritService meritService = new MockMeritService();
 
         public void OnGet()
         {
+        }
+
+        public void OnPost()
+        {
+            meritService.SaveMeritBusiness(BusinessMerit);
         }
     }
 }
