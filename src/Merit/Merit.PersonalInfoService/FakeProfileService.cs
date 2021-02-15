@@ -14,7 +14,7 @@ namespace Merit.PersonalInfoService
 
         public FakeProfileService()
         {
-            meritList.Add(new Merit("Död","Krig"));
+            meritList.Add(new Merit());
             people = new List<Person>()
             {
                 new Person
@@ -28,7 +28,20 @@ namespace Merit.PersonalInfoService
                     ZipCode = "11111",
                     Street = "Aväg1",
                     PhoneNumber = "111-111111",
-                    Merits = meritList 
+                    Merits = new List<Merit>()
+                    {
+                        new Merit()
+                        {
+                            Title = "Skola",
+                            Category = "Utbildning"
+                        },
+                        new Merit()
+                        {
+                            Title = "Lumpen",
+                            Category = "Militärtjänstgöring"
+                        }
+                    }
+
                 },
                   new Person
                 {
@@ -40,7 +53,20 @@ namespace Merit.PersonalInfoService
                     City = "Stockholm",
                     ZipCode = "222222",
                     Street = "Bväg2",
-                    PhoneNumber = "222-2222222"
+                    PhoneNumber = "222-2222222",
+                    Merits = new List<Merit>()
+                    {
+                        new Merit()
+                        {
+                            Title = "Skola",
+                            Category = "Utbildning"
+                        },
+                        new Merit()
+                        {
+                            Title = "Lumpen",
+                            Category = "Militärtjänstgöring"
+                        }
+                    }
                 }
             };
         }

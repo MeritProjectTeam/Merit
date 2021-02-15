@@ -12,10 +12,5 @@ namespace Merit.PersonalInfoService
         public string Title { get; set; }
         public string Category { get; set; }
 
-        public Merit(string aaa, string bbb)
-        {
-            Title = aaa;
-            Category = bbb;
-        }
     }
 }
