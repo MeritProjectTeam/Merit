@@ -10,6 +10,8 @@ namespace Merit.Web.Pages
 {
     public class AddMeritBusinessModel : PageModel
     {
+        public bool SavedBusinessMerit { get; set; } = false;
+
         [BindProperty]
         public NewMeritBusiness BusinessMerit { get; set; }
 
@@ -21,6 +23,7 @@ namespace Merit.Web.Pages
 
         public void OnPost()
         {
+            SavedBusinessMerit = true;
             meritService.SaveMeritBusiness(BusinessMerit);
         }
     }
