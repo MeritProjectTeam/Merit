@@ -25,5 +25,10 @@ namespace Merit.MeritService
 	        }
             return listOfMerits;
         }
+        public void SaveMeritBusiness(NewMeritBusiness bMerit)
+        {
+            using StreamWriter sw = new StreamWriter("wwwroot/DataFile/MeritBusinessMockar.csv", true);
+            sw.WriteLine($"{bMerit.Category},{bMerit.SubCategory},{bMerit.Description}");
+        }
     }
 }
