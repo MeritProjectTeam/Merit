@@ -9,8 +9,7 @@ namespace Merit.Data.Models
 {
     public class PersonalInfo
     {
-        [Key]
-        public int PersonID { get; set; }
+        public int PersonalInfoID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string PhoneNumber { get; set; }

@@ -7,11 +7,11 @@ namespace Merit.Data.Models
 {
     public class CompanyMerit
     {
-        [Key]
         public int CompanyMeritID { get; set; }
         public string Category { get; set; }
         public string SubCategory { get; set; }
         public string Description { get; set; }
-        public int CompanyID { get; set; }
+        public int CompanyID { get; set; } // Foreign key not working. 
     }
 }
+

@@ -7,7 +7,6 @@ namespace Merit.Data.Models
 {
     public class Company
     {
-        [Key]
         public int CompanyID { get; set; }
         public string CompanyName { get; set; }
         public string OrgNumber { get; set; }

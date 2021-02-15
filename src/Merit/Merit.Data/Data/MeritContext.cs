@@ -24,6 +24,7 @@ namespace Merit.Data.Data
         {
             optionsBuilder.UseSqlServer(connectionString);
         }
+
         public DbSet<Company> Companies { get; set; }
         public DbSet<CompanyMerit> CompanyMerits { get; set; }
         public DbSet<PersonalMerit> PersonalMerits { get; set; }
