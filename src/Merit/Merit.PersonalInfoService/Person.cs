@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Merit.PersonalInfoService;
+using Merit.MeritService;
 
 namespace Merit.PersonalInfoService
 {
@@ -18,8 +19,6 @@ namespace Merit.PersonalInfoService
         public string City { get; set; }
         public string Street { get; set; }
         public string ZipCode { get; set; }
-
-        //denna nedan behöver kopplas till det andra biblioteket med orginal-meriten
         public List<Merit> Merits { get; set; }
     }
 }
