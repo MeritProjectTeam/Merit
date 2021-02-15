@@ -38,7 +38,6 @@ namespace Merit.Web.Pages
         {
             
         }
-
         // MAX Superfunktioner
         public List<Person> SearchMeritFunc(string searchTerm, List<Person> people)
         {
