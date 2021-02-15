@@ -39,36 +39,16 @@
         @foreach (var x in Model.personalMerits)
 	    {
 		 <li>
-             @x.MeritName;
+             @x.Category;
          </li>
          <li>
-             @x.StartDate
+             @x.SubCategory
          </li>
          <li>
-             @x.EndDate
+             @x.Description
          </li>
 	    }
     </ol>
     <button>Add New Merit</button>
 </div>
 <hr />
-<div>
-    Education
-</div>
-<div>
-    <ol>
-        @foreach (var x in Model.personalEducation)
-	    {
-		    <li>
-                @x.EducationName
-            </li>
-            <li>
-                @x.StartEducation
-            </li>
-            <li>
-                @x.EndEducation
-            </li>
-	    }
-    </ol>
-    <button>Add Education</button>
-</div>
