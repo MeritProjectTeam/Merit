@@ -8,7 +8,6 @@ namespace Merit.MeritService
 {
     public class MockMeritService : IMeritService
     {
-                
         public void SaveMerit(NewMerit merit)
         {
             using StreamWriter sw = new StreamWriter("wwwroot/DataFile/MeritMockar.csv", true);
