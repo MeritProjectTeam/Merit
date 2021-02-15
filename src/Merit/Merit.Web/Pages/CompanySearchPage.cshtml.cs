@@ -24,7 +24,7 @@ namespace Merit.Web.Pages
         [BindProperty(SupportsGet= true)]
         public List<Person> TheOne {  get;  set;  }
 
-        public List<PersonalInfoService.Merit> Merits { get; set; }
+        public List<NewMerit> Merits { get; set; }
         public Person MyMan { get; set; }
 
 
