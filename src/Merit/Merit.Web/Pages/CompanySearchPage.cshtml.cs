@@ -21,7 +21,7 @@ namespace Merit.Web.Pages
         public List<Person> People { get; set; }
 
         public List<Person> TheOne {  get;  set;  }
-        public List<Merit.PersonalInfoService.Merit> merits { get; set; }
+        public List<Merit.MeritService.NewMerit> merits { get; set; }
         public Person MyMan { get; set; }
 
 
