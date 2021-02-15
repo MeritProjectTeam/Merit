@@ -26,16 +26,13 @@
 <ol>
     @foreach (var x in Model.TheOne)
     {
-        <li>
-            @x.FirstName
-            @foreach (var y in x.Merits)
-	        {
-                    <h3>Merits:</h3>
-		        <li>
-                    @y.Title
-                    @y.Category
-                </li>
-	        }
-        </li>
+        @x.FirstName
+        @foreach (var y in x.Merits)
+        {
+            <li>
+                @y.Title
+                @y.Category
+            </li>
+        }
     }
 </ol>
