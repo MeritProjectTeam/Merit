@@ -28,7 +28,19 @@ namespace Merit.PersonalInfoService
                     ZipCode = "11111",
                     Street = "Aväg1",
                     PhoneNumber = "111-111111",
-                    Merits = meritList
+                    Merits = new List<Merit>()
+                    {
+                        new Merit()
+                        {
+                            Title = "Skola",
+                            Category = "Utbildning"
+                        },
+                        new Merit()
+                        {
+                            Title = "Lumpen",
+                            Category = "Militärtjänstgöring"
+                        }
+                    }
                 },
                   new Person
                 {
