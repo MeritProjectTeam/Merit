@@ -4,33 +4,30 @@
 }
 
 <h3>Find employee</h3>
-<hr />
-<form method="post">
+<form method="get">
     <div>
-        <div class="justify-content-between mb-2">
+        Enter required merits: <input type="text" asp-for="SearchMerit" />
+        <div>
             Find your candidate by entering search conditions.
         </div>
-        <div class="justify-content-between mb-2">
-            Enter required merits: <input type="text" asp-for="SearchMerit" />
-        </div>
-        <div class="justify-content-between mb-2">
+        <hr />
+        <div>
             Enter required skills: <input type="text" asp-for="SearchSkills" />
         </div>
-        <div class="justify-content-between mb-2">
+        <button asp-page-handler="">Ur funktion</button>
+        <hr />
+        <div>
             Enter required education: <input type="text" asp-for="SearchEducation" />
         </div>
+        <button asp-page-handler="">Ur funktion</button>
     </div>
-    <div class="justify-content-between mb-2">
-        <button type="submit">Search</button>
-    </div>
-    <ol>
-        @foreach (var x in Model.People)
-	{
-		 <li>
-             @x.FirstName
-         </li>
-	}
-
-
-    </ol>
 </form>
+<hr />
+<ol>
+    @foreach (var x in Model.TheOne)
+    {
+        <li>
+            @x.FirstName
+        </li>
+    }
+</ol>

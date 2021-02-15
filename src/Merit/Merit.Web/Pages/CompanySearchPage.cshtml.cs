@@ -12,7 +12,7 @@ namespace Merit.Web.Pages
     {
         private readonly IPersonalInfoService fakeService = new FakeProfileService();
 
-        [BindProperty]
+        [BindProperty(SupportsGet = true)]
         public string SearchMerit { get; set; }
         [BindProperty]
         public string SearchSkills { get; set; }
@@ -20,27 +20,45 @@ namespace Merit.Web.Pages
         public string SearchEducation { get; set; }
         public List<Person> People { get; set; }
 
-        public List<Person> theOne = new List<Person>();
+        public List<Person> TheOne {  get;  set;  }
+        public List<Merit.PersonalInfoService.Merit> merits { get; set; }
+        public Person MyMan { get; set; }
 
 
         public void OnGet()
         {
             People = fakeService.GetAll();
+            TheOne = SearchMeritFunc(SearchMerit,  People);
         }
-
+        
         public void OnPost()
         {
-            foreach (var x in People)
-            {
-                foreach (var y in x.Merits)
-                {
-                    if (y.Category == SearchMerit)
-                    {
-                        theOne.Add(x);
-                    }
-                }
-            }
+            
         }
 
+        // MAX Superfunktioner
+        public List<Person> SearchMeritFunc(string searchTerm, List<Person> people)
+        {
+            if (string.IsNullOrEmpty(searchTerm))
+            {
+                return people;
+            }
+            List<Person> PeoplesX = new List<Person>();
+            PeoplesX = people.Where(x => x.FirstName.Contains(searchTerm)).ToList();
+            return PeoplesX;
+        }
+
+        public List<Person> SearchPersonByMerit(string searchTerm, List<Person> people)
+        {
+            if (string.IsNullOrEmpty(searchTerm))
+            {
+                return people;
+            }
+
+            List<Person> PeoplesX = new List<Person>();
+
+            
+            return PeoplesX;
+        }
     }
 }

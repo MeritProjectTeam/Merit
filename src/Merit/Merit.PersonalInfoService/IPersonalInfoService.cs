@@ -13,7 +13,7 @@ namespace Merit.PersonalInfoService
         void SavePerson(string firstName, string lastName, DateTime dateOfBirth);
         int GetAgeFor(string firstName, string lastName);
         Person Get(int id);
-        public void EditPerson(Person person);
+        public Person EditPerson(Person person);
         List<Person> GetAll();
     }
 }
