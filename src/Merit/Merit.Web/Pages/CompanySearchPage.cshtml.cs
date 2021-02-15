@@ -23,7 +23,7 @@ namespace Merit.Web.Pages
 
         [BindProperty(SupportsGet= true)]
         public List<Person> TheOne {  get;  set;  }
-        public List<Merit.MeritService.NewMerit> merits { get; set; }
+        public List<NewMerit> Merits { get; set; }
         public Person MyMan { get; set; }
 
 
@@ -35,7 +35,6 @@ namespace Merit.Web.Pages
         
         public void OnPost()
         {
-            
         }
         // MAX Superfunktioner
         public List<Person> SearchMeritFunc(string searchTerm, List<Person> people)
@@ -57,7 +56,6 @@ namespace Merit.Web.Pages
             }
 
             List<Person> PeoplesX = new List<Person>();
-
             
             return PeoplesX;
         }

@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Merit.MeritService;
 using Merit.PersonalInfoService;
-using Merit.MeritService;
 
 namespace Merit.PersonalInfoService
 {
