@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Merit.MeritService;
 using Merit.PersonalInfoService;
+using Merit.MeritService;
 
 namespace Merit.PersonalInfoService
 {
@@ -19,9 +20,6 @@ namespace Merit.PersonalInfoService
         public string City { get; set; }
         public string Street { get; set; }
         public string ZipCode { get; set; }
-
         public List<NewMerit> Merits { get; set; }
-        public List<Education> Educations { get; set; }
-        public List<Skills> Skillz { get; set; }
     }
 }

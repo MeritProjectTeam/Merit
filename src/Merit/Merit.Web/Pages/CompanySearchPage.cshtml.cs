@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Merit.PersonalInfoService;
+using Merit.MeritService;
 
 namespace Merit.Web.Pages
 {
@@ -20,6 +21,7 @@ namespace Merit.Web.Pages
         public string SearchEducation { get; set; }
         public List<Person> People { get; set; }
 
+        [BindProperty(SupportsGet= true)]
         public List<Person> TheOne {  get;  set;  }
         public List<Merit.MeritService.NewMerit> merits { get; set; }
         public Person MyMan { get; set; }

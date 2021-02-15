@@ -3,12 +3,12 @@
 @{
 }
 
-<h3>Find employee</h3>
+<h3>Hitta medarbetare</h3>
 <form method="get">
     <div>
-        Enter required merits: <input type="text" asp-for="SearchMerit" />
+        Sök Meriter: <input type="text" asp-for="SearchMerit" />
         <div>
-            Find your candidate by entering search conditions.
+            <button type="submit">Sök</button>
         </div>
         <hr />
         <div>
@@ -26,8 +26,20 @@
 <ol>
     @foreach (var x in Model.TheOne)
     {
-        <li>
-            @x.FirstName
-        </li>
+        <hr />
+        <div>@x.FirstName @x.LastName</div>
+        <div> @x.City @x.Street</div>
+        <br />
+        <div>-Meritförteckning-</div>
+        <br />
+        @foreach (var y in x.Merits)
+        {
+            <div>__________________</div>
+            <li>
+                <div>@y.Category</div>
+                <div>@y.Description</div>
+            </li>
+        }
+        <br />
     }
 </ol>
