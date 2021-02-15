@@ -1,0 +1,44 @@
+﻿@page
+@model Merit.Web.Pages.CompanyModel
+@{
+}
+
+<form method="post">
+    <div>
+        <label for="companyname">Företagsnamn</label>
+        <input asp-for="CompanyName" name="companyname" type="text" placeholder="" />
+    </div>
+    <div>
+        <label for="orgnumber">Organisationsnr.</label>
+        <input asp-for="OrgNumber" name="orgnumber" type="text" placeholder="xxxxxx-xxxx" />
+    </div>
+    <div>
+        <label for="contactperson">Kontaktperson</label>
+        <input asp-for="ContactPerson" type="text" name="contactperson" value="" />
+    </div>
+    <div>
+        <label for="email">E-Post</label>
+        <input asp-for="Email" name="email" type="email" />
+    </div>
+    <div>
+        <label for="phone">Telefon</label>
+        <input asp-for="Phone" type="tel" name="phone" value="" />
+    </div>
+    <div>
+        <label for="street">Gatuadress</label>
+        <input asp-for="Street" type="text" name="street" value="" />
+    </div>
+    <div>
+        <label for="zipcode">Postnr</label>
+        <input asp-for="Zipcode" type="text" name="zipcode" value="" />
+    </div>
+    <div>
+        <label for="city">Ort</label>
+        <input asp-for="City" type="text" name="city" value="" />
+    </div>
+    <input type="submit" name="save" value="Spara" />
+
+</form>
+
+
+

@@ -14,6 +14,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Merit.PersonalInfoService",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Merit.MeritService", "Merit.MeritService\Merit.MeritService.csproj", "{26AE76E6-F5B2-4EF2-88CF-969A3D8EDDE8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Merit.CompanyService", "Merit.CompanyService\Merit.CompanyService.csproj", "{DD04EDE6-B36C-440D-ACD9-7BD661F022DD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,6 +38,10 @@ Global
 		{26AE76E6-F5B2-4EF2-88CF-969A3D8EDDE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{26AE76E6-F5B2-4EF2-88CF-969A3D8EDDE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{26AE76E6-F5B2-4EF2-88CF-969A3D8EDDE8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD04EDE6-B36C-440D-ACD9-7BD661F022DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD04EDE6-B36C-440D-ACD9-7BD661F022DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD04EDE6-B36C-440D-ACD9-7BD661F022DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD04EDE6-B36C-440D-ACD9-7BD661F022DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
