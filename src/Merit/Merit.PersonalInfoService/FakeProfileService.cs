@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Merit.MeritService;
 
 namespace Merit.PersonalInfoService
 {
@@ -15,7 +16,7 @@ namespace Merit.PersonalInfoService
 
         public FakeProfileService()
         {
-            meritList.Add(new NewMerit("lastbilschaufför", "stora bilar", "det var kul", "100 år"));
+            meritList.Add(new NewMerit());
             people = new List<Person>()
             {
                 new Person
@@ -29,7 +30,19 @@ namespace Merit.PersonalInfoService
                     ZipCode = "11111",
                     Street = "Aväg1",
                     PhoneNumber = "111-111111",
-                    Merits = meritList 
+                    Merits = new List<NewMerit>()
+                    {
+                        new NewMerit()
+                        {
+                            Category = "Utbildning",
+                            Description = "Webbutveckling"
+                        },
+                        new NewMerit()
+                        {
+                            Category = "Militärtjänstgöring",
+                            Description = "Ramboträning"
+                        }
+                    }
                 },
                   new Person
                 {
@@ -41,7 +54,20 @@ namespace Merit.PersonalInfoService
                     City = "Stockholm",
                     ZipCode = "222222",
                     Street = "Bväg2",
-                    PhoneNumber = "222-2222222"
+                    PhoneNumber = "222-2222222",
+                    Merits = new List<NewMerit>()
+                    {
+                        new NewMerit()
+                        {
+                            Category = "Utbildning",
+                            Description = "Karate"
+                        },
+                        new NewMerit()
+                        {
+                            Category = "Militärtjänstgöring",
+                            Description = "Malaj"
+                        }
+                    }
                 }
             };
         }
