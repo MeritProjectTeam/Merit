@@ -11,7 +11,6 @@ namespace Merit.Web.Pages
     public class PersonalinfoPageModel : PageModel
     {
         private readonly IPersonalInfoService profileService = new FakeProfileService();
-
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }

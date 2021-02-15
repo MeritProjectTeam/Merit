@@ -28,7 +28,7 @@ namespace Merit.PersonalInfoService
                     ZipCode = "11111",
                     Street = "Aväg1",
                     PhoneNumber = "111-111111",
-                    Merits = meritList 
+                    Merits = meritList
                 },
                   new Person
                 {

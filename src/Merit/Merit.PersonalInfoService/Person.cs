@@ -21,7 +21,5 @@ namespace Merit.PersonalInfoService
 
         //denna nedan behöver kopplas till det andra biblioteket med orginal-meriten
         public List<Merit> Merits { get; set; }
-        public List<Education> Educations { get; set; }
-        public List<Skills> Skillz { get; set; }
     }
 }

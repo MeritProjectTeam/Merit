@@ -28,6 +28,14 @@
     {
         <li>
             @x.FirstName
-        </li>
+            @foreach (var y in x.Merits)
+	        {
+                    <h3>Merits:</h3>
+		        <li>
+                    @y.Title
+                    @y.Category
+                </li>
+	        }
+        /li>
     }
 </ol>
