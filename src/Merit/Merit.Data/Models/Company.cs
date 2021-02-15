@@ -7,7 +7,7 @@ namespace Merit.Data.Models
 {
     public class Company
     {
-        public int CompanyID { get; set; }
+        public int CompanyId { get; set; }
         public string CompanyName { get; set; }
         public string OrgNumber { get; set; }
         public string ContactName { get; set; }
@@ -16,5 +16,7 @@ namespace Merit.Data.Models
         public string Street { get; set; }
         public string ZipCode { get; set; }
         public string City { get; set; }
+        public ICollection<CompanyMerit> CompanyMerits { get; set; }
+
     }
 }

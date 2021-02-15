@@ -4,14 +4,16 @@ using Merit.Data.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Merit.Data.Migrations
 {
     [DbContext(typeof(MeritContext))]
-    partial class MeritContextModelSnapshot : ModelSnapshot
+    [Migration("20210215165104_0.3")]
+    partial class _03
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -75,8 +77,6 @@ namespace Merit.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CompanyMeritId");
-
-                    b.HasIndex("CompanyId");
 
                     b.ToTable("CompanyMerits");
                 });
@@ -146,17 +146,6 @@ namespace Merit.Data.Migrations
                     b.ToTable("PersonalMerits");
                 });
 
-            modelBuilder.Entity("Merit.Data.Models.CompanyMerit", b =>
-                {
-                    b.HasOne("Merit.Data.Models.Company", "Company")
-                        .WithMany("CompanyMerits")
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Company");
-                });
-
             modelBuilder.Entity("Merit.Data.Models.PersonalMerit", b =>
                 {
                     b.HasOne("Merit.Data.Models.PersonalInfo", "PersonalInfo")
@@ -166,11 +155,6 @@ namespace Merit.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("PersonalInfo");
-                });
-
-            modelBuilder.Entity("Merit.Data.Models.Company", b =>
-                {
-                    b.Navigation("CompanyMerits");
                 });
 
             modelBuilder.Entity("Merit.Data.Models.PersonalInfo", b =>
