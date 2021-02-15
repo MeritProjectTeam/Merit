@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Merit.MeritService;
 
 namespace Merit.PersonalInfoService
 {
@@ -10,11 +11,11 @@ namespace Merit.PersonalInfoService
     {
         private Person currentPerson;
         List<Person> people;
-        List<Merit> meritList = new List<Merit>();
+        List<NewMerit> meritList = new List<NewMerit>();
 
         public FakeProfileService()
         {
-            meritList.Add(new Merit());
+            meritList.Add(new NewMerit());
             people = new List<Person>()
             {
                 new Person
@@ -28,17 +29,17 @@ namespace Merit.PersonalInfoService
                     ZipCode = "11111",
                     Street = "Aväg1",
                     PhoneNumber = "111-111111",
-                    Merits = new List<Merit>()
+                    Merits = new List<NewMerit>()
                     {
-                        new Merit()
+                        new NewMerit()
                         {
-                            Title = "Skola",
-                            Category = "Utbildning"
+                            Category = "Utbildning",
+                            Description = "Webbutveckling"
                         },
-                        new Merit()
+                        new NewMerit()
                         {
-                            Title = "Lumpen",
-                            Category = "Militärtjänstgöring"
+                            Category = "Militärtjänstgöring",
+                            Description = "Ramboträning"
                         }
                     }
                 },
@@ -53,17 +54,17 @@ namespace Merit.PersonalInfoService
                     ZipCode = "222222",
                     Street = "Bväg2",
                     PhoneNumber = "222-2222222",
-                    Merits = new List<Merit>()
+                    Merits = new List<NewMerit>()
                     {
-                        new Merit()
+                        new NewMerit()
                         {
-                            Title = "Skola",
-                            Category = "Utbildning"
+                            Category = "Utbildning",
+                            Description = "Karate"
                         },
-                        new Merit()
+                        new NewMerit()
                         {
-                            Title = "Lumpen",
-                            Category = "Militärtjänstgöring"
+                            Category = "Militärtjänstgöring",
+                            Description = "Malaj"
                         }
                     }
                 }
