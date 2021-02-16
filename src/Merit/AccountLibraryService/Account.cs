@@ -1,7 +1,10 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using Merit.Data.Data;
+using Merit.Data.Models;
 
 namespace AccountLibraryService
 {
@@ -9,8 +12,20 @@ namespace AccountLibraryService
     {
         public void AddAccount(User user)
         {
-            using StreamWriter sw = new StreamWriter("wwwroot/Datafile/MeritAccountMockar.csv", true);
-            sw.WriteLine($"{user.UserName},{user.Email},{EncryptPassword(user.Password)}");
+            //krypteringen sker på servicesidan, bör bytas till webbsidan
+            using (var db = new MeritContext())
+            {
+                user.Password = EncryptPassword(user.Password);
+                db.Add(user);
+                db.SaveChanges();
+            }
+        }
+        public User GetUser(int id)
+        {
+            using (var db = new MeritContext())
+                return db.Users
+                    .FirstOrDefault(p => p.UserID == id);
+
         }
 
         public int CheckExistingAccount(User user)

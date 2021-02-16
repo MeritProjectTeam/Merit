@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using AccountLibraryService;
-
+using Merit.Data.Models;
 
 namespace LoginWebTesting.Pages
 {
@@ -13,6 +13,9 @@ namespace LoginWebTesting.Pages
     {
         [BindProperty]
         public User NewAccount { get; set; }
+
+        [BindProperty]
+        public string PasswordCheck { get; set; }
 
         [BindProperty]
         public string RegisterMessage { get; set; }
@@ -25,7 +28,7 @@ namespace LoginWebTesting.Pages
         public void OnPost()
         {
 
-            if (NewAccount.Password == NewAccount.PasswordCheck)
+            if (NewAccount.Password == PasswordCheck)
             {
                 switch (account.CheckExistingAccount(NewAccount))
                 {

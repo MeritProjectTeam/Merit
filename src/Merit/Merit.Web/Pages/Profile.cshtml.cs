@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Merit.ProfileService;
 using Merit.Data.Interfaces;
 using Merit.Data.DbServices;
+using Merit.Data.Models;
 
 namespace Merit.Web.Pages
 {
@@ -45,6 +46,8 @@ namespace Merit.Web.Pages
 
         public void OnPost()
         {
+           
+           // APerson.UserID = 1;
             dbService.SavePersonProfile(APerson);
             //profileService.SavePerson(FirstName, LastName, DateOfBirth);
             //profileService.SaveAddress(Street, Zipcode, City);
