@@ -10,11 +10,11 @@
 
     <div class="justify-content-between mb-2">
         <label>Användarnamn: </label>
-        <input type="text" placeholder="User name" />
+        <input type="text" asp-for="UserLogin.UserName" placeholder="User name" required/>
     </div>
     <div class="justify-content-between mb-2">
         <label>Lösenord: </label>
-        <input type="text" placeholder="Password" />
+        <input type="password" asp-for="UserLogin.Password" placeholder="Password" required minlength="8"/>
     </div>
     <p></p>
     <div class="justify-content-between mb-2">
@@ -22,6 +22,6 @@
     </div>
 </form>
 
-
+<h4>@Model.LoginMessage</h4>
 
 

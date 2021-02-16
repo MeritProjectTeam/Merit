@@ -1,0 +1,48 @@
+﻿@page
+@model LoginWebTesting.Pages.RegisterModel
+@{
+}
+
+<form method="post">
+    <div>
+        <div>
+            <label for="username">Användarnamn:</label>
+        </div>
+        <div>
+            <input type="text" asp-for="NewAccount.UserName" name="username" placeholder="Användarnamn" required/>
+        </div>
+    </div>
+    <div>
+        <div>
+            <label for="email">Epost:</label>
+        </div>
+        <div>
+            <input type="email" asp-for="NewAccount.Email" name="email" placeholder="Epost" required/>
+        </div>
+    </div>
+    <div>
+        <label for="password">Lösenord:</label>
+    </div>
+    <div>
+    <div>
+        <input type="password" asp-for="NewAccount.Password" name="password" placeholder="Lösenord" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required/>
+    </div>
+    </div>
+    <div>
+        <label for="passwordcheck">Upprepa lösenordet:</label>
+    </div>
+    <div>
+    <div>
+        <input type="password" asp-for="NewAccount.PasswordCheck" name="passwordcheck" placeholder="Upprepa lösenordet" minlength="8" required/>
+    </div>
+    </div>
+
+    <input type="submit" value="Spara">
+</form>
+
+<p style="color:red">
+    @Model.RegisterMessage
+</p>
+
+<p></p>
+<p>Lösenordet måste innehålla en siffra, stor bokstav, liten bokstav och vara minst 8 tecken långt.</p>

@@ -9,7 +9,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\DataFile\MeritMockar.csv" />
+    <None Include="wwwroot\DataFile\MeritMockar.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -17,6 +19,7 @@
     <ProjectReference Include="..\Merit.MeritService\Merit.MeritService.csproj" />
     <ProjectReference Include="..\Merit.PersonalInfoService\Merit.PersonalInfoService.csproj" />
     <ProjectReference Include="..\Merit.ProfileService\Merit.ProfileService.csproj" />
+    <ProjectReference Include="D:\LoginWebTesting\AccountLibraryService\AccountLibraryService.csproj" />
   </ItemGroup>
 
 </Project>
