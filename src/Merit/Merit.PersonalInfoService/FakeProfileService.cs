@@ -20,7 +20,7 @@ namespace Merit.PersonalInfoService
             {
                 new Person
                 {
-                    Id = 1,
+                    PersonID = 1,
                     FirstName = "Anna",
                     LastName = "Annasson",
                     Email = "anna@mail.com",
@@ -45,7 +45,7 @@ namespace Merit.PersonalInfoService
                 },
                   new Person
                 {
-                    Id = 2,
+                    PersonID = 2,
                     FirstName = "Bertil",
                     LastName = "Bertilsson",
                     Email = "bertil@mail.com",
@@ -99,7 +99,7 @@ namespace Merit.PersonalInfoService
         public Person Get(int id)
         {
             return people
-                .FirstOrDefault(p => p.Id == id);
+                .FirstOrDefault(p => p.PersonID == id);
         }
         public List<Person> GetAll()
         {
@@ -108,7 +108,7 @@ namespace Merit.PersonalInfoService
         public Person EditPerson(Person editedPerson) // not working need async
         {
             var existingPerson = people
-                .FirstOrDefault(p => p.Id == editedPerson.Id);
+                .FirstOrDefault(p => p.PersonID == editedPerson.PersonID);
             if (existingPerson!=null)
             {
                 existingPerson.FirstName = editedPerson.FirstName;

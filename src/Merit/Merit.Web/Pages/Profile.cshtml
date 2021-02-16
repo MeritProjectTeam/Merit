@@ -6,46 +6,46 @@
 
         <div class="justify-content-between mb-2">
             <label for="firstname">Förnamn</label>
-            <input asp-for="FirstName" name="firstname" type="text" placeholder="Förnamn" />
+            <input asp-for="APerson.FirstName" type="text" placeholder="Förnamn" />
         </div>
         <div class="justify-content-between mb-2">
             <label for="lastname">Efternamn</label>
-            <input asp-for="LastName" name="lastname" type="text" />
+            <input asp-for="APerson.LastName" type="text" placeholder="Efternamn"/>
         </div>
         <div class="justify-content-between mb-2">
             <label for="email">E-Post</label>
-            <input asp-for="Email" name="email" type="email" />
+            <input asp-for="APerson.Email"  type="email" placeholder="E-Post"/>
         </div>
         <div class="justify-content-between mb-2">
             <label for="dateofbirth">Födelseår</label>
-            <input asp-for="DateOfBirth" type="date" name="dateofbirth" value="" />
+            <input asp-for="APerson.DateOfBirth" type="date"  value="" placeholder="Födelseår" />
         </div>
         <div class="justify-content-between mb-2">
             <label for="street">Gatuadress</label>
-            <input asp-for="Street" type="text" name="street" value="" />
+            <input asp-for="APerson.Street" type="text"  value="" placeholder="Gatuadress"/>
         </div>
         <div class="justify-content-between mb-2">
-            <label for="zipcode">Postnr</label>
-            <input asp-for="Zipcode" type="text" name="zipcode" value="" />
+            <label for="zipcode">Postnummer</label>
+            <input asp-for="APerson.ZipCode" type="text"  value="" placeholder="Postnummer"/>
         </div>
         <div class="justify-content-between mb-2">
             <label for="city">Ort</label>
-            <input asp-for="City" type="text" name="city" value="" />
+            <input asp-for="APerson.City" type="text" value="" placeholder="Ort"/>
         </div>
         <div class="justify-content-between mb-2">
             <label for="phone">Telefon</label>
-            <input asp-for="Phone" type="tel" name="phone" value="" />
+            <input asp-for="APerson.PhoneNumber" type="text" value="" placeholder="Telefon"/>
         </div>
         <div class="justify-content-between mb-2">
             <input type="submit" name="save" value="Spara" />
         </div>
     </form>
-    @if (!string.IsNullOrEmpty(Model.FirstName))
+    @*@if (!string.IsNullOrEmpty(Model.APerson.FirstName))
     {
         <p>
-            Hi, @Model.FirstName, Age: @Model.Age
+            Hi, @Model.APerson.FirstName
         </p>
-    }
+    }*@
     @{
     }
 
