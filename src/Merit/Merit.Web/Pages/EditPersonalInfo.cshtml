@@ -6,30 +6,39 @@
 <hr />
 <form method="post">
 
-    <div>
-        <div>
-            Förnamn: <input type="text" asp-for="FirstName" />
-        </div>
-        <div>
-            Efternamn: <input type="text" asp-for="LastName" />
-        </div>
-        <div class="justify-content-between mb-2">
-            E-mail: <input type="text" asp-for="Email" placeholder="E-mail" />
-        </div>
-        <div>
-            Telefon: <input type="text" asp-for="Phone" />
-        </div>
-        <div>
-            Gata: <input type="text" asp-for="Street" />
-        </div>
-        <div>
-            Postnummer: <input type="text" asp-for="Zipcode" />
-        </div>
-        <div>
-            Stad: <input type="text" asp-for="City" />
-        </div>
-        <div>
-            <button type="submit">Spara</button>
-        </div>
+    <div class="justify-content-between mb-2">
+        <label for="firstname">Förnamn</label>
+        <input asp-for="APerson.FirstName" type="text" placeholder="@Model.APerson.FirstName" />
+    </div>
+    <div class="justify-content-between mb-2">
+        <label for="lastname">Efternamn</label>
+        <input asp-for="APerson.LastName" type="text" placeholder="@Model.APerson.LastName" />
+    </div>
+    <div class="justify-content-between mb-2">
+        <label for="email">E-Post</label>
+        <input asp-for="APerson.Email" type="email" placeholder="@Model.APerson.Email" />
+    </div>
+    <div class="justify-content-between mb-2">
+        <label for="dateofbirth">Födelseår</label>
+        <input asp-for="APerson.DateOfBirth" type="date" value="" placeholder="@Model.APerson.DateOfBirth" />
+    </div>
+    <div class="justify-content-between mb-2">
+        <label for="street">Gatuadress</label>
+        <input asp-for="APerson.Street" type="text" value="" placeholder="@Model.APerson.Street" />
+    </div>
+    <div class="justify-content-between mb-2">
+        <label for="zipcode">Postnummer</label>
+        <input asp-for="APerson.ZipCode" type="text" value="" placeholder="@Model.APerson.ZipCode" />
+    </div>
+    <div class="justify-content-between mb-2">
+        <label for="city">Ort</label>
+        <input asp-for="APerson.City" type="text" value="" placeholder="@Model.APerson.City" />
+    </div>
+    <div class="justify-content-between mb-2">
+        <label for="phone">Telefon</label>
+        <input asp-for="APerson.PhoneNumber" type="text" value="" placeholder="@Model.APerson.PhoneNumber" />
+    </div>
+    <div class="justify-content-between mb-2">
+        <input type="submit" name="save" value="Spara" />
     </div>
 </form>
