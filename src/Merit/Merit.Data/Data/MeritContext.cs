@@ -9,7 +9,7 @@ using Merit.Data.Models;
 
 namespace Merit.Data.Data
 {
-    class MeritContext : DbContext
+    public class MeritContext : DbContext
     {
         readonly string connectionString = string.Empty;
 

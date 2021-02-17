@@ -10,7 +10,6 @@ namespace Merit.Data.Models
         public string Category { get; set; }
         public string SubCategory { get; set; }
         public string Description { get; set; }
-
         public int CompanyID { get; set; }
     }
 }
