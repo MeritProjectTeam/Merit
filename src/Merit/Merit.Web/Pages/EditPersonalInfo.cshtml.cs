@@ -20,7 +20,7 @@ namespace Merit.Web.Pages
             //Profile = profileService.Get(2);
 
             //nedan ska kopplas mot inloggad person
-            APerson = profileService.Get(7);
+            //APerson = profileService.Get(7);
 
         }
         public IActionResult OnPost()

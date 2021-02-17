@@ -23,17 +23,17 @@ namespace Merit.Web.Pages
         public DateTime DateOfBirth { get; set; }
 
         public List<PersonalMerit> personalMerits = new List<PersonalMerit>();
-        public void OnGet()
-        {
-            var person = profileService.Get(1);
+        //public void OnGet()
+        //{
+        //    var person = profileService.Get(1);
             
-            FirstName = person.FirstName;
-            LastName = person.LastName;
-            Street = person.Street;
-            Zipcode = person.ZipCode;
-            City = person.City;
-            Phone = person.PhoneNumber;
-            DateOfBirth = person.DateOfBirth;
-        }
+        //    FirstName = person.FirstName;
+        //    LastName = person.LastName;
+        //    Street = person.Street;
+        //    Zipcode = person.ZipCode;
+        //    City = person.City;
+        //    Phone = person.PhoneNumber;
+        //    DateOfBirth = person.DateOfBirth;
+        //}
     }
 }

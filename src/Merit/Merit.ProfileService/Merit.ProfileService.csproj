@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Merit.Data\Merit.Data.csproj" />
-    <ProjectReference Include="..\Merit.MeritService\Merit.MeritService.csproj" />
   </ItemGroup>
 
 </Project>

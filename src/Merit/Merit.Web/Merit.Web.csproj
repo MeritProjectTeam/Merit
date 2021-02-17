@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\Crudtest\**" />
+    <Content Remove="Pages\Crudtest\**" />
+    <EmbeddedResource Remove="Pages\Crudtest\**" />
+    <None Remove="Pages\Crudtest\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="wwwroot\DataFile\MeritMockar.csv" />
   </ItemGroup>
 
@@ -28,10 +35,6 @@
     <ProjectReference Include="..\Merit.MeritService2\Merit.MeritService.csproj" />
     <ProjectReference Include="..\Merit.PersonalInfoService\Merit.PersonalInfoService.csproj" />
     <ProjectReference Include="..\Merit.ProfileService\Merit.ProfileService.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Pages\Crudtest\" />
   </ItemGroup>
 
 </Project>
