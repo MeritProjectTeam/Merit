@@ -18,7 +18,6 @@ namespace Merit.CompanyService
                 City = city
             };
         }
-
         public void SaveCompany(string companyName, string orgNumber)
         {
             currentCompany = new Company()
@@ -27,7 +26,6 @@ namespace Merit.CompanyService
                 OrgNumber = orgNumber
             };
         }
-
         public void SaveContactPerson(string contactName, string email, string phone)
         {
             currentCompany = new Company()

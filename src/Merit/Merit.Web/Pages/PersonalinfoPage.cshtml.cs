@@ -28,7 +28,6 @@ namespace Merit.Web.Pages
             
             FirstName = person.FirstName;
             LastName = person.LastName;
-            Email = person.Email;
             Street = person.Street;
             Zipcode = person.ZipCode;
             City = person.City;

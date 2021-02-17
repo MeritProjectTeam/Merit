@@ -30,4 +30,8 @@
     <ProjectReference Include="..\Merit.ProfileService\Merit.ProfileService.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Pages\Crudtest\" />
+  </ItemGroup>
+
 </Project>
