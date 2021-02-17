@@ -13,7 +13,7 @@ namespace Merit.Web.Pages
 {
     public class AddMeritModel : PageModel
     {
-        IMeritDbService meritService = new Services();
+        IMeritService meritService = new MeritService.MeritService();
 
         [BindProperty]
         public PersonalMerit AMerit { get; set; }
