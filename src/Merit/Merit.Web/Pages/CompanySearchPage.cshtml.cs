@@ -11,20 +11,20 @@ namespace Merit.Web.Pages
 {
     public class CompanySearchPageModel : PageModel
     {
-        private readonly IPersonalInfoService fakeService = new FakeProfileService();
+        //private readonly IProfileService fakeService = new FakeProfileService();
 
-        [BindProperty(SupportsGet = true)]
-        public string SearchMerit { get; set; }
-        [BindProperty]
-        public string SearchSkills { get; set; }
-        [BindProperty]
-        public string SearchEducation { get; set; }
-        public List<Data.Models.PersonalInfo> People { get; set; }
+        //[BindProperty(SupportsGet = true)]
+        //public string SearchMerit { get; set; }
+        //[BindProperty]
+        //public string SearchSkills { get; set; }
+        //[BindProperty]
+        //public string SearchEducation { get; set; }
+        //public List<Data.Models.PersonalInfo> People { get; set; }
 
-        [BindProperty(SupportsGet = true)]
-        public List<Data.Models.PersonalInfo> TheOne { get; set; }
-        public List<Data.Models.PersonalMerit> Merits { get; set; }
-        public Data.Models.PersonalInfo MyMan { get; set; }
+        //[BindProperty(SupportsGet = true)]
+        //public List<Data.Models.PersonalInfo> TheOne { get; set; }
+        //public List<Data.Models.PersonalMerit> Merits { get; set; }
+        //public Data.Models.PersonalInfo MyMan { get; set; }
 
 
         public void OnGet()

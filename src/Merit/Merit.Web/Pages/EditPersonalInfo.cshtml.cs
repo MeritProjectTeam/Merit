@@ -11,10 +11,11 @@ namespace Merit.Web.Pages
 {
     public class EditPersonalInfoModel : PageModel
     {
-        private readonly IPersonalInfoService profileService = new PersonalInfoService.ProfileService();
+        private readonly IProfileService profileService = new ProfileService();
 
         public PersonalInfo APerson { get; set; }
-       
+        public User AUser { get; set; }
+
         public void OnGet()
         {
             //Profile = profileService.Get(2);

@@ -7,9 +7,12 @@ using System.Threading.Tasks;
 
 namespace Merit.PersonalInfoService
 {
-    public interface IPersonalInfoService
+    public interface IProfileService
     {
-        //PersonalInfo Get(int id);
+        public PersonalInfo Get(int id);
+
+        public List<PersonalInfo> GetAll();
+        public void SavePersonalInfo(PersonalInfo info);
 
     }
 }

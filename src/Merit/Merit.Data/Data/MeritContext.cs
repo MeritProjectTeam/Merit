@@ -28,6 +28,7 @@ namespace Merit.Data.Data
         public DbSet<Company> Companies { get; set; }
         public DbSet<CompanyMerit> CompanyMerits { get; set; }
         public DbSet<PersonalMerit> PersonalMerits { get; set; }
+       //denna nedan hade ju varit bra att ändra namn på?
         public DbSet<PersonalInfo> Persons { get; set; }
         public DbSet<User> Users { get; set; }
 

@@ -1,33 +1,33 @@
 ﻿@page
 @model Merit.Web.Pages.PersonalinfoPageModel
-@using Merit.ProfileService
+@using Merit.PersonalInfoService
 @{
 }
 
-<h3>Hej, @Model.FirstName</h3>
+<h3>Hej, @Model.PersonalInfo.FirstName @Model.PersonalInfo.LastName</h3>
 <div>
     <div>
-        Namn: @Model.FirstName @Model.LastName
+        Namn: @Model.PersonalInfo.FirstName @Model.PersonalInfo.FirstName
     </div>
     <div>
-        Födelsedatum: @Model.DateOfBirth
-    </div>
-    <hr />
-    <div>
-        Email: @Model.Email
-    </div>
-    <div>
-        Tele#: @Model.Phone
+        Födelsedatum: @Model.PersonalInfo.DateOfBirth
     </div>
     <hr />
     <div>
-        Gata: @Model.Street
+        Email: @Model.AUser.Email
     </div>
     <div>
-        Postkod: @Model.Zipcode
+        Tele#: @Model.PersonalInfo.PhoneNumber
+    </div>
+    <hr />
+    <div>
+        Gata: @Model.PersonalInfo.Street
     </div>
     <div>
-        Stad: @Model.City
+        Postkod: @Model.PersonalInfo.ZipCode
+    </div>
+    <div>
+        Stad: @Model.PersonalInfo.City
     </div>
     <button onclick="window.location.href='/EditPersonalInfo'">Uppdatera Personlig Information</button>
 </div>

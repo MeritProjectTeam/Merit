@@ -12,21 +12,19 @@ namespace Merit.Web.Pages
 {
     public class PersonalinfoPageModel : PageModel
     {
-        private readonly IPersonalInfoService profileService = new FakeProfileService();
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Email { get; set; }
-        public string Street { get; set; }
-        public string Zipcode { get; set; }
-        public string City { get; set; }
-        public string Phone { get; set; }
-        public DateTime DateOfBirth { get; set; }
+        private readonly IProfileService profileService = new ProfileService();
 
-        public List<PersonalMerit> personalMerits = new List<PersonalMerit>();
-        //public void OnGet()
-        //{
+        [BindProperty]
+        public User AUser { get; set; }
+        [BindProperty]
+        public PersonalInfo PersonalInfo { get; set; }
+        [BindProperty]
+        public List<PersonalMerit> personalMerits { get; set; }
+
+        public void OnGet()
+        {
         //    var person = profileService.Get(1);
-            
+
         //    FirstName = person.FirstName;
         //    LastName = person.LastName;
         //    Street = person.Street;
@@ -34,6 +32,6 @@ namespace Merit.Web.Pages
         //    City = person.City;
         //    Phone = person.PhoneNumber;
         //    DateOfBirth = person.DateOfBirth;
-        //}
+        }
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Merit.ProfileService;
+
 using Merit.Data.Models;
 
 namespace Merit.Web.Pages
