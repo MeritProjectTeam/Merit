@@ -1,4 +1,4 @@
-﻿using Merit.MeritService;
+﻿using Merit.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,114 +9,58 @@ namespace Merit.PersonalInfoService
 {
     public class FakeProfileService : IPersonalInfoService
     {
-        private Person currentPerson;
-        List<Person> people;
-        List<NewMerit> meritList = new List<NewMerit>();
+        //private PersonalInfo currentPerson;
+        //List<PersonalInfo> people;
+        //List<NewMerit> meritList = new List<NewMerit>();
 
-        public FakeProfileService()
-        {
-            meritList.Add(new NewMerit());
-            people = new List<Person>()
-            {
-                new Person
-                {
-                    PersonID = 1,
-                    FirstName = "Anna",
-                    LastName = "Annasson",
-                    Email = "anna@mail.com",
-                    DateOfBirth = DateTime.Parse("2001-01-01"),
-                    City = "Stockholm",
-                    ZipCode = "11111",
-                    Street = "Aväg1",
-                    PhoneNumber = "111-111111",
-                    Merits = new List<NewMerit>()
-                    {
-                        new NewMerit()
-                        {
-                            Category = "Utbildning",
-                            Description = "Webbutveckling"
-                        },
-                        new NewMerit()
-                        {
-                            Category = "Militärtjänstgöring",
-                            Description = "Ramboträning"
-                        }
-                    }
-                },
-                  new Person
-                {
-                    PersonID = 2,
-                    FirstName = "Bertil",
-                    LastName = "Bertilsson",
-                    Email = "bertil@mail.com",
-                    DateOfBirth = DateTime.Parse("2001-02-02"),
-                    City = "Stockholm",
-                    ZipCode = "222222",
-                    Street = "Bväg2",
-                    PhoneNumber = "222-2222222",
-                    Merits = new List<NewMerit>()
-                    {
-                        new NewMerit()
-                        {
-                            Category = "Utbildning",
-                            Description = "Karate"
-                        },
-                        new NewMerit()
-                        {
-                            Category = "Militärtjänstgöring",
-                            Description = "Malaj"
-                        }
-                    }
-                }
-            };
-        }
-        public void SavePerson(string firstName, string lastName, DateTime dateOfBirth)
-        {
-            currentPerson = new Person()
-            {
-                FirstName = firstName,
-                LastName = lastName,
-                DateOfBirth = dateOfBirth,
+        //public FakeProfileService()
+        //{
+        //    meritList.Add(new NewMerit());
+        //    people = new List<PersonalInfo>()
+        //    {
+        //        new PersonalInfo
+        //        {
+        //            PersonalInfoId = 1,
+        //            FirstName = "Anna",
+        //            LastName = "Annasson",
+        //            DateOfBirth = DateTime.Parse("2001-01-01"),
+        //            City = "Stockholm",
+        //            ZipCode = "11111",
+        //            Street = "Aväg1",
+        //            PhoneNumber = "111-111111",
+        //        },
+        //          new PersonalInfo
+        //        {
+        //            PersonalInfoId = 2,
+        //            FirstName = "Bertil",
+        //            LastName = "Bertilsson",
+        //            DateOfBirth = DateTime.Parse("2001-02-02"),
+        //            City = "Stockholm",
+        //            ZipCode = "222222",
+        //            Street = "Bväg2",
+        //            PhoneNumber = "222-2222222",
+        //        }
+        //    };
+        //}
+        //public void SavePerson(string firstName, string lastName, DateTime dateOfBirth)
+        //{
+        //    currentPerson = new PersonalInfo()
+        //    {
+        //        FirstName = firstName,
+        //        LastName = lastName,
+        //        DateOfBirth = dateOfBirth,
 
-            };
-        }
-        public void SaveAddress(string street, string zipcode, string city)
-        {
-            return;
-        }
-        public void SaveContactInfo(string email, string phone)
-        {
-            return;
-        }
-        public int GetAgeFor(string firstName, string lastName)
-        {
-            return 45;
-        }
-        public Person GetPerson()
-        {
-            return currentPerson;
-        }
-        public Person Get(int id)
-        {
-            return people
-                .FirstOrDefault(p => p.PersonID == id);
-        }
-        public List<Person> GetAll()
-        {
-            return people;
-        }
-        public Person EditPerson(Person editedPerson) // not working need async
-        {
-            var existingPerson = people
-                .FirstOrDefault(p => p.PersonID == editedPerson.PersonID);
-            if (existingPerson!=null)
-            {
-                existingPerson.FirstName = editedPerson.FirstName;
-                existingPerson.LastName = editedPerson.LastName;
-            }
-
-            return existingPerson;
-        }
+        //    };
+        //}
+        //public PersonalInfo GetPerson()
+        //{
+        //    return currentPerson;
+        //}
+        //public PersonalInfo Get(int id)
+        //{
+        //    return people
+        //        .FirstOrDefault(p => p.PersonalInfoId == id);
+        //}
     }
 }
 

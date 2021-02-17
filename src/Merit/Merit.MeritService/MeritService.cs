@@ -6,12 +6,17 @@ using Merit.MeritService;
 
 namespace Merit.MeritService
 {
-    public class MockMeritService : IMeritService
+    public class MeritService : IMeritService
     {
         public void SaveMerit(NewMerit merit)
         {
-            using StreamWriter sw = new StreamWriter("wwwroot/DataFile/MeritMockar.csv", true);
-            sw.WriteLine($"{merit.Category},{merit.SubCategory},{merit.Description},{merit.Duration}");
+            //behöver denna också en metod som plockar in vem som är inloggad?
+
+            using (var db = new MeritContext())
+            {
+                db.PersonalMerits.Add(merit);
+                db.SaveChanges();
+            }
         }
         public List<NewMerit> ReadMerit()
         {

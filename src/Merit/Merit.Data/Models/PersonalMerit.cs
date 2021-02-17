@@ -13,8 +13,9 @@ namespace Merit.Data.Models
         public string Description { get; set; }
         public string Duration { get; set; }
 
-        public int PersonalInfoId { get; set; } // Foreign key
-        public PersonalInfo PersonalInfo { get; set; }
+        public int UserID { get; set; } // Foreign key
+        public User User { get; set; }
+
     }
 }
 

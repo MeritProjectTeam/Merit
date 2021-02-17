@@ -5,15 +5,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Merit.ProfileService;
-using Merit.Data.Interfaces;
-using Merit.Data.DbServices;
+using Merit.Data.Models;
 
 namespace Merit.Web.Pages
 {
     public class ProfileModel : PageModel
     {
         //private readonly IProfileService profileService = new MockProfileService();
-        IMeritDbService dbService = new Services();
+        //IMeritDbService dbService = new Services();
 
         [BindProperty]
         public Data.Models.PersonalInfo APerson { get; set; }
@@ -45,7 +44,9 @@ namespace Merit.Web.Pages
 
         public void OnPost()
         {
-            dbService.SavePersonProfile(APerson);
+           
+           // APerson.UserID = 1;
+            //dbService.SavePersonProfile(APerson);
             //profileService.SavePerson(FirstName, LastName, DateOfBirth);
             //profileService.SaveAddress(Street, Zipcode, City);
             //profileService.SaveContactInfo(Email, Phone);

@@ -4,14 +4,16 @@ using Merit.Data.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Merit.Data.Migrations
 {
     [DbContext(typeof(MeritContext))]
-    partial class MeritContextModelSnapshot : ModelSnapshot
+    [Migration("20210217082838_v3")]
+    partial class v3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
