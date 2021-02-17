@@ -24,7 +24,7 @@ namespace Merit.Web.Pages
         }
         public void OnPost()
         {
-            AMerit.PersonalInfoId = 7;
+            AMerit.PersonalMeritId = 7;
             meritService.SaveMerit(AMerit);
         }
     }
