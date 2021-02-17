@@ -5,8 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Merit.ProfileService;
-using Merit.Data.Interfaces;
-using Merit.Data.DbServices;
 using Merit.Data.Models;
 using Merit.CompanyService;
 

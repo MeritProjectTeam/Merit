@@ -4,16 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Merit.Data.DbServices;
 using Merit.MeritService;
 using Merit.Data.Models;
-using Merit.Data.Interfaces;
 
 namespace Merit.Web.Pages
 {
     public class AddMeritModel : PageModel
     {
-        IMeritDbService meritService = new Services();
+        IMeritService meritService = new MeritService();
 
         [BindProperty]
         public PersonalMerit AMerit { get; set; }

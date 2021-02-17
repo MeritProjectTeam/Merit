@@ -6,8 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Merit.PersonalInfoService;
 using Merit.Data.Models;
-using Merit.Data.Interfaces;
-using Merit.Data.DbServices;
 
 namespace Merit.Web.Pages
 {
