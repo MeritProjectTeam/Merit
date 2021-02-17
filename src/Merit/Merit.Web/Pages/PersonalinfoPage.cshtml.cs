@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Merit.PersonalInfoService;
 using Merit.MeritService;
+using Merit.Data.Models;
 
 namespace Merit.Web.Pages
 {
@@ -21,7 +22,7 @@ namespace Merit.Web.Pages
         public string Phone { get; set; }
         public DateTime DateOfBirth { get; set; }
 
-        public List<NewMerit> personalMerits = new List<NewMerit>();
+        public List<PersonalMerit> personalMerits = new List<PersonalMerit>();
         public void OnGet()
         {
             var person = profileService.Get(1);
