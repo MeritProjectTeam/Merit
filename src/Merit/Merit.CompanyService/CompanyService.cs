@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Merit.Data.Data;
+using Merit.Data.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,32 +10,13 @@ namespace Merit.CompanyService
 {
     public class CompanyService : ICompanyService
     {
-        private Company currentCompany;
-        public void SaveAdress(string street, string zipCode, string city)
+        public void SaveCompany(Company company)
         {
-            currentCompany = new Company()
+            using (var db = new MeritContext())
             {
-                Street = street,
-                ZipCode = zipCode,
-                City = city
-            };
-        }
-        public void SaveCompany(string companyName, string orgNumber)
-        {
-            currentCompany = new Company()
-            {
-                CompanyName = companyName,
-                OrgNumber = orgNumber
-            };
-        }
-        public void SaveContactPerson(string contactName, string email, string phone)
-        {
-            currentCompany = new Company()
-            {
-                ContactName = contactName,
-                Email = email,
-                Phone = phone
-            };
+                db.Add(company);
+                db.SaveChanges();
+            }
         }
     }
 }
