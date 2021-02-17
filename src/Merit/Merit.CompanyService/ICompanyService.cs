@@ -1,9 +1,11 @@
-﻿namespace Merit.CompanyService
+﻿using Merit.Data.Models;
+using System;
+
+
+namespace Merit.CompanyService
 {
     public interface ICompanyService
     {
-        void SaveAdress(string street, string zipCode, string city);
-        void SaveCompany(string companyName, string orgNumber);
-        void SaveContactPerson(string contactName, string email, string phone);
+        public void SaveCompany(Company company);
     }
 }

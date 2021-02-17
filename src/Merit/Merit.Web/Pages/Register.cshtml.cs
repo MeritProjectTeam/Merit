@@ -20,7 +20,7 @@ namespace LoginWebTesting.Pages
         [BindProperty]
         public string RegisterMessage { get; set; }
         private readonly IAccount account = new Account();
-
+        
         public void OnGet()
         {
         }

@@ -4,30 +4,20 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Merit.ProfileService;
+using Merit.Data.Interfaces;
+using Merit.Data.DbServices;
+using Merit.Data.Models;
 using Merit.CompanyService;
 
 namespace Merit.Web.Pages
 {
     public class CompanyModel : PageModel
     {
-        private readonly ICompanyService companyService = new CompanyService.CompanyService();
+        private readonly ICompanyService company = new CompanyService.CompanyService();
 
         [BindProperty]
-        public string CompanyName { get; set; }
-        [BindProperty]
-        public string OrgNumber { get; set; }
-        [BindProperty]
-        public string ContactPerson { get; set; }
-        [BindProperty]
-        public string Email { get; set; }
-        [BindProperty]
-        public string Phone { get; set; }
-        [BindProperty]
-        public string Street { get; set; }
-        [BindProperty]
-        public string Zipcode { get; set; }
-        [BindProperty]
-        public string City { get; set; }
+        public Company ACompany { get; set; }
 
         public void OnGet()
         {
@@ -36,9 +26,7 @@ namespace Merit.Web.Pages
 
         public void OnPost()
         {
-            companyService.SaveCompany(CompanyName, OrgNumber);
-            companyService.SaveContactPerson(ContactPerson, Email, Phone);
-            companyService.SaveAdress(Street, Zipcode, City);
+            company.SaveCompany(ACompany);
         }
     }
 }
