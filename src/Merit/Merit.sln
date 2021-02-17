@@ -16,9 +16,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Merit.CompanyService", "Mer
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Merit.Data", "Merit.Data\Merit.Data.csproj", "{7566693F-4F19-47C0-9130-54016391395F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccountLibraryService", "AccountLibraryService\AccountLibraryService.csproj", "{C823D843-5602-4AF0-B46E-61AFF16884CB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Merit.AccountService", "AccountLibraryService\Merit.AccountService.csproj", "{C823D843-5602-4AF0-B46E-61AFF16884CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Merit.MeritService", "Merit.MeritService2\Merit.MeritService.csproj", "{564E93BD-B34F-4732-88F2-47914513BD61}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Merit.MeritService", "Merit.MeritService2\Merit.MeritService.csproj", "{564E93BD-B34F-4732-88F2-47914513BD61}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
