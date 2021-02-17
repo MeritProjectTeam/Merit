@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
-using Merit.MeritService;
 
 
 namespace Merit.Data.Models
@@ -19,9 +18,6 @@ namespace Merit.Data.Models
         public string ZipCode { get; set; }
      
         public int UserID { get; set; }
-        public User user { get; set; }
-
-
-
+        public User User { get; set; }
     }
 }

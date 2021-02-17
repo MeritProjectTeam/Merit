@@ -16,8 +16,6 @@ namespace Merit.Data.Models
         public int UserID { get; set; } // Foreign key
         public User User { get; set; }
 
-
-
     }
 }
 

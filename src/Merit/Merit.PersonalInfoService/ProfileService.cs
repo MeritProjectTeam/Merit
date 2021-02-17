@@ -1,31 +1,28 @@
 ﻿using Merit.Data.Data;
-using Merit.Data.Interfaces;
 using Merit.Data.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Linq;
 
-
-namespace Merit.Data.DbServices
+namespace Merit.PersonalInfoService
 {
-    public class EditProfileService : IProfileInfoService
+    public class ProfileService : IPersonalInfoService
     {
-        public PersonalInfo EditPerson(PersonalInfo person)
-        {
-            throw new NotImplementedException();
-        }
         public PersonalInfo Get(int id)
         {
             using (var db = new MeritContext())
                 return db.Persons
                     .FirstOrDefault(p => p.PersonalInfoId == id);
-            
         }
         public List<PersonalInfo> GetAll()
         {
-            throw new NotImplementedException();
+            using (var db = new MeritContext())
+            {
+                return db.Persons
+                    .ToList();
+            }
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using Merit.Data.Data;
 using Merit.Data.Interfaces;
 using Merit.Data.Models;
-using Merit.MeritService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +11,6 @@ namespace Merit.Data.DbServices
 {
     public class Services : IMeritDbService
     {
-       
-        
-
         public void SaveMerit(PersonalMerit merit)
         {
             using (var db = new MeritContext())
@@ -23,7 +19,6 @@ namespace Merit.Data.DbServices
                 db.SaveChanges();
             }
         }
-
         public void SavePersonProfile(PersonalInfo person)
         {
             using (var db = new MeritContext())
@@ -32,7 +27,6 @@ namespace Merit.Data.DbServices
                 db.SaveChanges();
             }
         }
-
         public void SaveCompanyMerit(CompanyMerit companyMerit)
         {
             using (var db = new MeritContext())
@@ -41,7 +35,6 @@ namespace Merit.Data.DbServices
                 db.SaveChanges();
             }
         }
-
         public void SaveCompanyProfile(Company company)
         {
             using (var db = new MeritContext())

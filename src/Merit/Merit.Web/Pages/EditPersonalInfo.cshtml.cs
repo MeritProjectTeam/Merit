@@ -13,20 +13,10 @@ namespace Merit.Web.Pages
 {
     public class EditPersonalInfoModel : PageModel
     {
-        private readonly IProfileInfoService profileService = new EditProfileService();
+        private readonly IPersonalInfoService profileService = new PersonalInfoService.ProfileService();
 
         public PersonalInfo APerson { get; set; }
-
-        //[BindProperty]
-        //public string FirstName { get; set; }
-        //public string LastName { get; set; }
-        //public string Email { get; set; }
-        //public string Street { get; set; }
-        //public string Zipcode { get; set; }
-        //public string City { get; set; }
-        //public string Phone { get; set; }
-        //public DateTime DateOfBirth { get; set; }
-
+       
         public void OnGet()
         {
             //Profile = profileService.Get(2);
