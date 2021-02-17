@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using AccountLibraryService;
+using Merit.AccountService;
 using Merit.Data.Models;
 
 namespace Merit.Web.Pages
@@ -26,7 +26,8 @@ namespace Merit.Web.Pages
 
         public void OnPost()
         {
-            if (Account.CheckLogin(UserLogin))
+            int userId = Account.CheckLogin(UserLogin);
+            if (userId != 0)
             {
                 LoginMessage = "Inloggningen lyckades!";
             }

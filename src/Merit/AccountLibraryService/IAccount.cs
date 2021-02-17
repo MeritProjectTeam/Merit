@@ -1,12 +1,12 @@
 ﻿using Merit.Data.Models;
 using System;
-namespace AccountLibraryService
+namespace Merit.AccountService
 {
     public interface IAccount
     {
         public void AddAccount(User user);
         public int CheckExistingAccount(User user);
-        public bool CheckLogin(User user);
+        public int CheckLogin(User user);
         public User GetUser(int id);
     }
 }
