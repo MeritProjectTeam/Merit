@@ -18,8 +18,12 @@ namespace Merit.AccountService
                 user.Password = EncryptPassword(user.Password);
                 db.Add(user);
                 db.SaveChanges();
+
             }
         }
+      
+
+      
         public User GetUser(int id)
         {
             using (var db = new MeritContext())

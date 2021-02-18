@@ -13,6 +13,8 @@ namespace Merit.PersonalInfoService
 
         public List<PersonalInfo> GetAll();
         public void SavePersonalInfo(PersonalInfo info);
+        public void UpdatePersonalInfo(PersonalInfo info);
+        public void CreateEmptyPersonalInfo(int userId);
 
     }
 }

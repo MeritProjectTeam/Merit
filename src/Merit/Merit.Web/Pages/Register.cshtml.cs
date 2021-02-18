@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Merit.AccountService;
 using Merit.Data.Models;
+using Merit.PersonalInfoService;
 
 namespace LoginWebTesting.Pages
 {
@@ -20,6 +21,7 @@ namespace LoginWebTesting.Pages
         [BindProperty]
         public string RegisterMessage { get; set; }
         private readonly IAccount account = new Account();
+        private readonly IProfileService profileService = new ProfileService();
         
         public void OnGet()
         {
@@ -34,6 +36,7 @@ namespace LoginWebTesting.Pages
                 {
                     case 100:
                         account.AddAccount(NewAccount);
+                        profileService.CreateEmptyPersonalInfo(NewAccount.UserID);
                         RegisterMessage = "Registreringen lyckades!";
                         break;
                     case 101:

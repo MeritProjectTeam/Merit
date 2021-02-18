@@ -8,32 +8,32 @@
 
     <div class="justify-content-between mb-2">
         <label for="firstname">Förnamn</label>
-        <input asp-for="APerson.FirstName" type="text" placeholder="@Model.APerson.FirstName" />
+        <input asp-for="APerson.FirstName" type="text" value="@Model.APerson.FirstName" />
     </div>
     <div class="justify-content-between mb-2">
         <label for="lastname">Efternamn</label>
-        <input asp-for="APerson.LastName" type="text" placeholder="@Model.APerson.LastName" />
+        <input asp-for="APerson.LastName" type="text" value="@Model.APerson.LastName" />
     </div>
     
     <div class="justify-content-between mb-2">
         <label for="dateofbirth">Födelseår</label>
-        <input asp-for="APerson.DateOfBirth" type="date" value="" placeholder="@Model.APerson.DateOfBirth" />
+        <input asp-for="APerson.DateOfBirth" type="date" value="@Model.APerson.DateOfBirth"  />
     </div>
     <div class="justify-content-between mb-2">
         <label for="street">Gatuadress</label>
-        <input asp-for="APerson.Street" type="text" value="" placeholder="@Model.APerson.Street" />
+        <input asp-for="APerson.Street" type="text" value="@Model.APerson.Street"/>
     </div>
     <div class="justify-content-between mb-2">
         <label for="zipcode">Postnummer</label>
-        <input asp-for="APerson.ZipCode" type="text" value="" placeholder="@Model.APerson.ZipCode" />
+        <input asp-for="APerson.ZipCode" type="text" value="@Model.APerson.ZipCode" />
     </div>
     <div class="justify-content-between mb-2">
         <label for="city">Ort</label>
-        <input asp-for="APerson.City" type="text" value="" placeholder="@Model.APerson.City" />
+        <input asp-for="APerson.City" type="text" value="@Model.APerson.City"/>
     </div>
     <div class="justify-content-between mb-2">
         <label for="phone">Telefon</label>
-        <input asp-for="APerson.PhoneNumber" type="text" value="" placeholder="@Model.APerson.PhoneNumber" />
+        <input asp-for="APerson.PhoneNumber" type="text" value="@Model.APerson.PhoneNumber" />
     </div>
     <div class="justify-content-between mb-2">
         <input type="submit" name="save" value="Spara" />

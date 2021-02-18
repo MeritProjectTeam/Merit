@@ -13,23 +13,21 @@ namespace Merit.Web.Pages
     {
         private readonly IProfileService profileService = new ProfileService();
 
+        [BindProperty]
         public PersonalInfo APerson { get; set; }
 
-        int userId;
+        int userId = AccountService.Account.CheckCookie();
         public void OnGet()
         {
-            userId = AccountService.Account.CheckCookie();
             if (userId != 0)
             {
                 APerson = profileService.Get(userId);
             }
+            APerson.LastName = "fsdgfs";
         }
         public void OnPost()
         {
-            if (userId != 0)
-            {
-                profileService.SavePersonalInfo(APerson);
-            }
+            profileService.UpdatePersonalInfo(APerson);
         }
     }
 }
