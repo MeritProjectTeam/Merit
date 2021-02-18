@@ -17,22 +17,22 @@
         Email: @Model.AUser.Email
     </div>
     <div>
-        Tele#: @Model.PersonalInfo.PhoneNumber
+        Tele: @Model.PersonalInfo.PhoneNumber
     </div>
     <hr />
     <div>
         Gata: @Model.PersonalInfo.Street
     </div>
     <div>
-        Postkod: @Model.PersonalInfo.ZipCode
+        Postnr: @Model.PersonalInfo.ZipCode
     </div>
     <div>
-        Stad: @Model.PersonalInfo.City
+        Ort: @Model.PersonalInfo.City
     </div>
 
 </div>
 <div class="justify-content-between mb-2">
-    <button onclick="window.location.href='/EditPersonalInfo'">Uppdatera Personlig Information</button>
+    <button class="btn btn-primary" onclick="window.location.href='/EditPersonalInfo'">Uppdatera Personlig Information</button>
 </div>
 <div class="justify-content-between mb-2">
     <h4>Meriter</h4>
@@ -43,22 +43,22 @@
     {
 
         <div>
-            @x.Category;
+            Kategori: @x.Category;
         </div>
         <div>
-            @x.SubCategory
+            Underkategori: @x.SubCategory
         </div>
         <div>
-            @x.Description
+            Beskrivning: @x.Description
         </div>
         <div>
-            @x.Description
+            Varaktighet: @x.Duration
         </div>
         <p></p>
     }
 
     <div class="justify-content-between mb-2">
-        <button onclick="window.location.href='/AddMerit'">Lägg till merit</button>
+        <button class="btn btn-primary" onclick="window.location.href='/AddMerit'">Lägg till merit</button>
     </div>
 </div>
 <hr />

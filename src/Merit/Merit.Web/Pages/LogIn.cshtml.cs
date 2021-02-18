@@ -31,14 +31,14 @@ namespace Merit.Web.Pages
             {
                 LoginMessage = "Inloggningen lyckades!";
                 AccountService.Account.CreateCookie(userId);
-
                 return Redirect("/PersonalInfoPage");
             }
             else
             {
+               
                 LoginMessage = "Felaktigt användarnamn eller lösenord";
-
                 return RedirectToPage();
+
             }
         }
 

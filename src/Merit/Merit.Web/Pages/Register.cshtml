@@ -19,46 +19,51 @@
     </div>
 </nav>
 <h3>Registrera användare</h3>
+<p></p>
+<hr />
 <form method="post">
-    <div class="justify-content-between mb-2">
-        <div>
-            <label for="username">Användarnamn:</label>
-        </div>
-        <div>
-            <input type="text" asp-for="NewAccount.UserName" name="username" placeholder="Användarnamn" required />
-        </div>
-    </div>
-    <div class="justify-content-between mb-2">
-        <div>
-            <label for="email">Epost:</label>
-        </div>
-        <div>
-            <input type="email" asp-for="NewAccount.Email" name="email" placeholder="Epost" required />
-        </div>
-    </div>
-    <div class="justify-content-between mb-2">
-        <div>
-        <label for="password">Lösenord:</label>
-    
-        </div>
-    
-        <div>
-            <input type="password" asp-for="NewAccount.Password" name="password" placeholder="Lösenord" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required />
-            <small id="emailHelp" class="form-text text-muted">Lösenordet måste innehålla en siffra, stor bokstav, liten bokstav och vara minst 8 tecken långt.</small>
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="justify-content-between mb-2">
+                <div>
+                    <label for="username">Användarnamn:</label>
+                </div>
+                <div>
+                    <input class="form-control" type="text" asp-for="NewAccount.UserName" name="username" placeholder="Användarnamn" required />
+                </div>
+            </div>
+            <div class="justify-content-between mb-2">
+                <div>
+                    <label for="email">Epost:</label>
+                </div>
+                <div>
+                    <input class="form-control" type="email" asp-for="NewAccount.Email" name="email" placeholder="Epost" required />
+                </div>
+            </div>
+            <div class="justify-content-between mb-2">
+                <div>
+                    <label for="password">Lösenord:</label>
 
-        </div>
-    </div>
-    <div class="justify-content-between mb-2">
-        <div>
-        <label for="passwordcheck">Upprepa lösenordet:</label>
-    </div>
-    
-    <div>
-        <input type="password" asp-for="PasswordCheck" name="passwordcheck" placeholder="Upprepa lösenordet" minlength="8" required/>
-    </div>
-    </div>
+                </div>
 
-    <input type="submit" value="Spara">
+                <div>
+                    <input class="form-control" type="password" asp-for="NewAccount.Password" name="password" placeholder="Lösenord" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required />
+                    <small id="emailHelp" class="form-text text-muted">Lösenordet måste innehålla en siffra, stor bokstav, liten bokstav och vara minst 8 tecken långt.</small>
+
+                </div>
+            </div>
+            <div class="justify-content-between mb-2">
+                <div>
+                    <label for="passwordcheck">Upprepa lösenordet:</label>
+                </div>
+
+                <div>
+                    <input class="form-control" type="password" asp-for="PasswordCheck" name="passwordcheck" placeholder="Upprepa lösenordet" minlength="8" required />
+                </div>
+            </div>
+            </div>
+        </div>
+        <button class="btn btn-primary" type="submit">Registrera</button>
 </form>
 
 <p style="color:red">

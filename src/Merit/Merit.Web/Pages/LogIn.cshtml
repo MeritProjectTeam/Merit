@@ -20,21 +20,30 @@
 </nav>
 
 <h3>Logga in</h3>
+<p></p>
 <hr />
 <form method="post">
+    <div class="row">
+        <div class="col-lg-3">
 
-    <div class="justify-content-between mb-2">
-        <label>Användarnamn: </label>
-        <input type="text" asp-for="UserLogin.UserName" placeholder="User name" required/>
+            <div class="justify-content-between mb-2">
+                <label>Användarnamn: </label>
+                <input class="form-control" type="text" asp-for="UserLogin.UserName" placeholder="User name" required />
+            </div>
+            <div class="justify-content-between mb-2">
+                <label>Lösenord: </label>
+                <input class="form-control" type="password" asp-for="UserLogin.Password" placeholder="Password" required minlength="8" />
+            </div>
+            <p></p>
+
+
+        </div>
+       
     </div>
     <div class="justify-content-between mb-2">
-        <label>Lösenord: </label>
-        <input type="password" asp-for="UserLogin.Password" placeholder="Password" required minlength="8"/>
+        <button class="btn btn-primary" type="submit">Logga in</button>
     </div>
-    <p></p>
-    <div class="justify-content-between mb-2">
-        <button type="submit">Logga in</button>
-    </div>
+
 </form>
 
 <h6>@Model.LoginMessage</h6>
