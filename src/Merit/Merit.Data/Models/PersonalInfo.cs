@@ -15,7 +15,7 @@ namespace Merit.Data.Models
         public DateTime DateOfBirth { get; set; } = default;
         public string City { get; set; } = "-";
         public string Street { get; set; } = "-";
-        public string ZipCode { get; set; } = "-";
+        public string ZipCode { get; set; } = "--";
      
         public int UserID { get; set; }
         public User User { get; set; }

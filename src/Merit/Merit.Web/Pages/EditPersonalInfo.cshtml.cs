@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Merit.PersonalInfoService;
 using Merit.Data.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Merit.Web.Pages
 {
@@ -23,11 +24,12 @@ namespace Merit.Web.Pages
             {
                 APerson = profileService.Get(userId);
             }
-            APerson.LastName = "fsdgfs";
         }
         public void OnPost()
         {
+           APerson.UserID = AccountService.Account.CheckCookie();
             profileService.UpdatePersonalInfo(APerson);
+
         }
     }
 }

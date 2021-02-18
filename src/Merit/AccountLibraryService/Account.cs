@@ -83,7 +83,7 @@ namespace Merit.AccountService
             return 0;
         }
 
-        public static void CreateCookie(int userId)
+        public static void CreateCookie(int? userId)
         {
             using StreamWriter sw = new StreamWriter("wwwroot/DataFile/cookie.txt", false);
             sw.WriteLine(userId);
@@ -99,5 +99,7 @@ namespace Merit.AccountService
             }
             return 0;
         }
+
+        
     }
 }

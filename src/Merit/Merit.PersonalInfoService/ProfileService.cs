@@ -47,14 +47,17 @@ namespace Merit.PersonalInfoService
             }
         }
 
-        public void UpdatePersonalInfo(PersonalInfo newInfo)
+       public void UpdatePersonalInfo(PersonalInfo newInfo)
         {
             using (var db = new MeritContext())
             { 
                 PersonalInfo dbPersonalInfo = db.Persons.FirstOrDefault(x => x.UserID == newInfo.UserID);
-                dbPersonalInfo = newInfo;
+                db.Persons.Remove(dbPersonalInfo);
+                db.Persons.Add(newInfo);
                 db.SaveChanges();
             };
         }
+
+
     }
 }

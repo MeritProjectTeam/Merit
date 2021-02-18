@@ -24,17 +24,21 @@ namespace Merit.Web.Pages
         {
         }
 
-        public void OnPost()
+        public IActionResult OnPost()
         {
             int userId = Account.CheckLogin(UserLogin);
             if (userId != 0)
             {
                 LoginMessage = "Inloggningen lyckades!";
                 AccountService.Account.CreateCookie(userId);
+
+                return Redirect("/PersonalInfoPage");
             }
             else
             {
                 LoginMessage = "Felaktigt användarnamn eller lösenord";
+
+                return RedirectToPage();
             }
         }
 
