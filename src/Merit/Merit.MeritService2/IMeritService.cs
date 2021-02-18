@@ -13,7 +13,5 @@ namespace Merit.MeritService
         void SaveMeritBusiness(CompanyMerit bMerit);
         List<PersonalMerit> ReadPersonalMerits(int userId);
         List<CompanyMerit> ReadCompanyMerits(int companyUserId);
-
-
     }
 }

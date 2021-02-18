@@ -30,7 +30,6 @@ namespace Merit.Data.Data
         public DbSet<PersonalMerit> PersonalMerits { get; set; }
         public DbSet<PersonalInfo> Persons { get; set; }
         public DbSet<User> Users { get; set; }
-
         public DbSet<CompanyUser> CompanyUsers { get; set; }
 
     }

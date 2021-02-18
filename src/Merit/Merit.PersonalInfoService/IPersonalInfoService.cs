@@ -9,7 +9,6 @@ namespace Merit.PersonalInfoService
 {
     public interface IPersonalInfoService
     {
-        //PersonalInfo Get(int id);
-
+        PersonalInfo Get(int id);
     }
 }

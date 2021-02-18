@@ -61,6 +61,10 @@ namespace Merit.PersonalInfoService
         //    return people
         //        .FirstOrDefault(p => p.PersonalInfoId == id);
         //}
+        public PersonalInfo Get(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 
