@@ -10,12 +10,8 @@ namespace Merit.MeritService
 {
     public class MeritService : IMeritService
     {
-        
-
         public void SaveMerit(PersonalMerit merit)
         {
-            //behöver denna också en metod som plockar in vem som är inloggad?
-
             using (var db = new MeritContext())
             {
                 db.PersonalMerits.Add(merit);

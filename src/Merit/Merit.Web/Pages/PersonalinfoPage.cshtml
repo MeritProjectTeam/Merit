@@ -5,9 +5,9 @@
 }
 
 <h3>Hej, @Model.PersonalInfo.FirstName @Model.PersonalInfo.LastName</h3>
-<div>
-    <div>
-        Namn: @Model.PersonalInfo.FirstName @Model.PersonalInfo.FirstName
+<div class="justify-content-between mb-2">
+    <div class="justify-content-between mb-2">
+        Namn: @Model.PersonalInfo.FirstName @Model.PersonalInfo.LastName
     </div>
     <div>
         Födelsedatum: @Model.PersonalInfo.DateOfBirth
@@ -29,26 +29,35 @@
     <div>
         Stad: @Model.PersonalInfo.City
     </div>
-    <button onclick="window.location.href='/EditPersonalInfo'">Uppdatera Personlig Information</button>
+    <div class="justify-content-between mb-2">
+        <button onclick="window.location.href='/EditPersonalInfo'">Uppdatera Personlig Information</button>
+    </div>
 </div>
-<div>
+<div class="justify-content-between mb-2">
     Meriter
 </div>
-<div>
+<div class="justify-content-between mb-2">
     <ol>
         @foreach (var x in Model.personalMerits)
-	    {
-		 <li>
-             @x.Category;
-         </li>
-         <li>
-             @x.SubCategory
-         </li>
-         <li>
-             @x.Description
-         </li>
-	    }
+        {
+
+            <div>
+                @x.Category;
+            </div>
+            <div>
+                @x.SubCategory
+            </div>
+            <div>
+                @x.Description
+            </div>
+            <div>
+                @x.Description
+            </div>
+            <p></p>
+        }
     </ol>
-    <button>Lägg till merit</button>
-</div>
-<hr />
+    <div class="justify-content-between mb-2">
+        <button>Lägg till merit</button>
+        </div>
+    </div>
+    <hr />

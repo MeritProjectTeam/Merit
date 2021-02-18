@@ -14,7 +14,7 @@ namespace Merit.PersonalInfoService
         {
             using (var db = new MeritContext())
                 return db.Persons
-                    .FirstOrDefault(p => p.PersonalInfoId == id);
+                    .FirstOrDefault(p => p.UserID == id);
         }
         public List<PersonalInfo> GetAll()
         {

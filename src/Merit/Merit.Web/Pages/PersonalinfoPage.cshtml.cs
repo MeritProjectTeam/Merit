@@ -7,12 +7,15 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Merit.PersonalInfoService;
 using Merit.MeritService;
 using Merit.Data.Models;
+using Merit.AccountService;
 
 namespace Merit.Web.Pages
 {
     public class PersonalinfoPageModel : PageModel
     {
-        private readonly IProfileService profileService = new ProfileService();
+        private IProfileService profileService = new ProfileService();
+        private IAccount accountService = new Account();
+        private IMeritService meritService = new MeritService.MeritService();
 
         [BindProperty]
         public User AUser { get; set; }
@@ -20,18 +23,17 @@ namespace Merit.Web.Pages
         public PersonalInfo PersonalInfo { get; set; }
         [BindProperty]
         public List<PersonalMerit> personalMerits { get; set; }
-
+        
         public void OnGet()
         {
-        //    var person = profileService.Get(1);
-
-        //    FirstName = person.FirstName;
-        //    LastName = person.LastName;
-        //    Street = person.Street;
-        //    Zipcode = person.ZipCode;
-        //    City = person.City;
-        //    Phone = person.PhoneNumber;
-        //    DateOfBirth = person.DateOfBirth;
+           int userId = Account.CheckCookie();
+            AUser = accountService.GetUser(userId);
+            PersonalInfo = profileService.Get(userId);
+            if (PersonalInfo == null)
+            {
+                PersonalInfo = new PersonalInfo();
+            }
+            personalMerits = meritService.ReadPersonalMerits(userId);
         }
     }
 }

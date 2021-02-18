@@ -78,5 +78,22 @@ namespace Merit.AccountService
             }
             return 0;
         }
+
+        public static void CreateCookie(int userId)
+        {
+            using StreamWriter sw = new StreamWriter("wwwroot/DataFile/cookie.txt", false);
+            sw.WriteLine(userId);
+        }
+
+        public static int CheckCookie()
+        {
+            using StreamReader sr = new StreamReader("wwwroot/DataFile/cookie.txt");
+            bool ok = int.TryParse(sr.ReadLine(), out int id);
+            if(ok)
+            {
+                return id;
+            }
+            return 0;
+        }
     }
 }

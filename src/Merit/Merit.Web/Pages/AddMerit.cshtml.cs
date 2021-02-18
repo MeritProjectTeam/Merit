@@ -12,6 +12,7 @@ namespace Merit.Web.Pages
     public class AddMeritModel : PageModel
     {
         IMeritService meritService = new MeritService.MeritService();
+        
 
         [BindProperty]
         public PersonalMerit AMerit { get; set; }
@@ -22,8 +23,13 @@ namespace Merit.Web.Pages
         }
         public void OnPost()
         {
-            AMerit.PersonalMeritId = 7;
-            meritService.SaveMerit(AMerit);
+            int userId = AccountService.Account.CheckCookie();
+            if (userId != 0)
+            {
+                AMerit.UserID = userId;
+                meritService.SaveMerit(AMerit); 
+            }
+            
         }
     }
 }

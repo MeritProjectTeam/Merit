@@ -14,19 +14,22 @@ namespace Merit.Web.Pages
         private readonly IProfileService profileService = new ProfileService();
 
         public PersonalInfo APerson { get; set; }
-        public User AUser { get; set; }
 
+        int userId;
         public void OnGet()
         {
-            //Profile = profileService.Get(2);
-
-            //nedan ska kopplas mot inloggad person
-            //APerson = profileService.Get(7);
-
+            userId = AccountService.Account.CheckCookie();
+            if (userId != 0)
+            {
+                APerson = profileService.Get(userId);
+            }
         }
-        public IActionResult OnPost()
+        public void OnPost()
         {
-            return RedirectToPage("EditPersonalInfo");
+            if (userId != 0)
+            {
+                profileService.SavePersonalInfo(APerson);
+            }
         }
     }
 }

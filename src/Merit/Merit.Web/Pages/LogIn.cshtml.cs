@@ -30,6 +30,7 @@ namespace Merit.Web.Pages
             if (userId != 0)
             {
                 LoginMessage = "Inloggningen lyckades!";
+                AccountService.Account.CreateCookie(userId);
             }
             else
             {
