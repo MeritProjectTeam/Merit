@@ -16,10 +16,11 @@ namespace Merit.Web.Pages
 
         [BindProperty]
         public PersonalMerit AMerit { get; set; }
-
+        [BindProperty]
+        public string Information { get; set; }
         public void OnGet()
         {
-            
+            Information = "";
         }
         public void OnPost()
         {
@@ -27,7 +28,8 @@ namespace Merit.Web.Pages
             if (userId != 0)
             {
                 AMerit.UserID = userId;
-                meritService.SaveMerit(AMerit); 
+                meritService.SaveMerit(AMerit);
+                Information = "Merit sparad.";
             }
             
         }

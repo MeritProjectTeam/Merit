@@ -10,7 +10,7 @@
         Namn: @Model.PersonalInfo.FirstName @Model.PersonalInfo.LastName
     </div>
     <div>
-        Födelsedatum: @Model.PersonalInfo.DateOfBirth
+        Födelsedatum: @Model.PersonalInfo.DateOfBirth.Date.ToString().Substring(0, 10)
     </div>
     <hr />
     <div>
@@ -29,35 +29,36 @@
     <div>
         Stad: @Model.PersonalInfo.City
     </div>
-    <div class="justify-content-between mb-2">
-        <button onclick="window.location.href='/EditPersonalInfo'">Uppdatera Personlig Information</button>
-    </div>
-</div>
-<div class="justify-content-between mb-2">
-    Meriter
-</div>
-<div class="justify-content-between mb-2">
-    
-        @foreach (var x in Model.personalMerits)
-        {
 
-            <div>
-                @x.Category;
-            </div>
-            <div>
-                @x.SubCategory
-            </div>
-            <div>
-                @x.Description
-            </div>
-            <div>
-                @x.Description
-            </div>
-            <p></p>
-        }
-    
+</div>
+<div class="justify-content-between mb-2">
+    <button onclick="window.location.href='/EditPersonalInfo'">Uppdatera Personlig Information</button>
+</div>
+<div class="justify-content-between mb-2">
+    <h4>Meriter</h4>
+</div>
+<div class="justify-content-between mb-2">
+
+    @foreach (var x in Model.personalMerits)
+    {
+
+        <div>
+            @x.Category;
+        </div>
+        <div>
+            @x.SubCategory
+        </div>
+        <div>
+            @x.Description
+        </div>
+        <div>
+            @x.Description
+        </div>
+        <p></p>
+    }
+
     <div class="justify-content-between mb-2">
         <button onclick="window.location.href='/AddMerit'">Lägg till merit</button>
-        </div>
     </div>
-    <hr />
+</div>
+<hr />
