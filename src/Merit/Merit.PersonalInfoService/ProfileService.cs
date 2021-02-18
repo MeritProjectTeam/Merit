@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Merit.PersonalInfoService
 {
-    public class ProfileService : IPersonalInfoService
+    public class ProfileService : IProfileService
     {
         public PersonalInfo Get(int id)
         {
@@ -22,6 +22,15 @@ namespace Merit.PersonalInfoService
             {
                 return db.Persons
                     .ToList();
+            }
+        }
+
+        public void SavePersonalInfo(PersonalInfo info)
+        {
+            using (var db = new MeritContext())
+            {
+                db.Persons.Add(info);
+                db.SaveChanges();
             }
         }
     }

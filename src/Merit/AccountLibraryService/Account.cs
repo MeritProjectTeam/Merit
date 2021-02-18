@@ -6,13 +6,13 @@ using System.Text;
 using Merit.Data.Data;
 using Merit.Data.Models;
 
-namespace AccountLibraryService
+namespace Merit.AccountService
 {
     public class Account : IAccount
     {
         public void AddAccount(User user)
         {
-            //krypteringen sker på servicesidan, bör bytas till webbsidan
+            //krypteringen sker på server-sidan, bör bytas till klient-sidan
             using (var db = new MeritContext())
             {
                 user.Password = EncryptPassword(user.Password);
@@ -30,21 +30,25 @@ namespace AccountLibraryService
 
         public int CheckExistingAccount(User user)
         {
-            string input;
-            using StreamReader sr = new StreamReader("wwwroot/Datafile/MeritAccountMockar.csv");
-            while ((input = sr.ReadLine()) != null)
+            using var db = new MeritContext() ;
+
+            var userNameExists = db.Users
+                .FirstOrDefault(x => x.UserName.ToLower() == user.UserName.ToLower());
+            var emailExists = db.Users
+                .FirstOrDefault(x => x.Email.ToLower() == user.Email.ToLower());
+
+            if (userNameExists != null)
             {
-                string[] splitInput = input.Split(",");
-                if (splitInput[0].ToLower() == user.UserName.ToLower())
-                {
-                    return 101;
-                }
-                if (splitInput[1].ToLower() == user.Email.ToLower())
-                {
-                    return 102;
-                }
+                return 101;
             }
-            return 100;
+            else if (emailExists != null)
+            {
+                return 102;
+            }
+            else
+            {
+                return 100;
+            }
         }
 
         public static string EncryptPassword(string password)
@@ -63,19 +67,16 @@ namespace AccountLibraryService
             return result;
         }
 
-        public bool CheckLogin(User user)
+        public int CheckLogin(User user)
         {
-            string input;
-            using StreamReader sr = new StreamReader("wwwroot/Datafile/MeritAccountMockar.csv");
-            while ((input = sr.ReadLine()) != null)
+            using var db = new MeritContext();
+            var validLogin = db.Users
+                .FirstOrDefault(x => x.UserName.ToLower() == user.UserName.ToLower() && x.Password == EncryptPassword(user.Password));
+            if (validLogin != null)
             {
-                string[] splitInput = input.Split(",");
-                if (splitInput[0].ToLower() == user.UserName.ToLower() && splitInput[2] == EncryptPassword(user.Password))
-                {
-                    return true;
-                }
+                return validLogin.UserID;
             }
-            return false;
+            return 0;
         }
     }
 }
