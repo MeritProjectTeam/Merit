@@ -3,7 +3,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Merit.Web", "Merit.Web\Merit.Web.csproj", "{E2E45C80-E5DB-436D-AC03-C568E6BB54E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Merit.Web", "Merit.Web\Merit.Web.csproj", "{E2E45C80-E5DB-436D-AC03-C568E6BB54E5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B9793B29-156C-4242-8D27-D862291149A2} = {B9793B29-156C-4242-8D27-D862291149A2}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Merit.PersonalInfoService", "Merit.PersonalInfoService\Merit.PersonalInfoService.csproj", "{B9793B29-156C-4242-8D27-D862291149A2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Merit.CompanyService", "Merit.CompanyService\Merit.CompanyService.csproj", "{DD04EDE6-B36C-440D-ACD9-7BD661F022DD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Merit.Data", "Merit.Data\Merit.Data.csproj", "{7566693F-4F19-47C0-9130-54016391395F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Merit.AccountService", "AccountLibraryService\Merit.AccountService.csproj", "{C823D843-5602-4AF0-B46E-61AFF16884CB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Merit.MeritService", "Merit.MeritService2\Merit.MeritService.csproj", "{564E93BD-B34F-4732-88F2-47914513BD61}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +28,26 @@ Global
 		{E2E45C80-E5DB-436D-AC03-C568E6BB54E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E2E45C80-E5DB-436D-AC03-C568E6BB54E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E2E45C80-E5DB-436D-AC03-C568E6BB54E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9793B29-156C-4242-8D27-D862291149A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9793B29-156C-4242-8D27-D862291149A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9793B29-156C-4242-8D27-D862291149A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9793B29-156C-4242-8D27-D862291149A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD04EDE6-B36C-440D-ACD9-7BD661F022DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD04EDE6-B36C-440D-ACD9-7BD661F022DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD04EDE6-B36C-440D-ACD9-7BD661F022DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD04EDE6-B36C-440D-ACD9-7BD661F022DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7566693F-4F19-47C0-9130-54016391395F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7566693F-4F19-47C0-9130-54016391395F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7566693F-4F19-47C0-9130-54016391395F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7566693F-4F19-47C0-9130-54016391395F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C823D843-5602-4AF0-B46E-61AFF16884CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C823D843-5602-4AF0-B46E-61AFF16884CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C823D843-5602-4AF0-B46E-61AFF16884CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C823D843-5602-4AF0-B46E-61AFF16884CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{564E93BD-B34F-4732-88F2-47914513BD61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{564E93BD-B34F-4732-88F2-47914513BD61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{564E93BD-B34F-4732-88F2-47914513BD61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{564E93BD-B34F-4732-88F2-47914513BD61}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

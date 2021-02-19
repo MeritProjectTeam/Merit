@@ -1,7 +1,39 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Pages\Crudtest\**" />
+    <Content Remove="Pages\Crudtest\**" />
+    <EmbeddedResource Remove="Pages\Crudtest\**" />
+    <None Remove="Pages\Crudtest\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\DataFile\MeritMockar.csv" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\DataFile\MeritMockar.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AccountLibraryService\Merit.AccountService.csproj" />
+    <ProjectReference Include="..\Merit.CompanyService\Merit.CompanyService.csproj" />
+    <ProjectReference Include="..\Merit.Data\Merit.Data.csproj" />
+    <ProjectReference Include="..\Merit.MeritService2\Merit.MeritService.csproj" />
+    <ProjectReference Include="..\Merit.PersonalInfoService\Merit.PersonalInfoService.csproj" />
+  </ItemGroup>
 
 </Project>

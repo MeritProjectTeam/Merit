@@ -1,0 +1,64 @@
+﻿@page
+@model Merit.Web.Pages.PersonalinfoPageModel
+@using Merit.PersonalInfoService
+@{
+}
+
+<h3>Hej, @Model.PersonalInfo.FirstName @Model.PersonalInfo.LastName</h3>
+<div class="justify-content-between mb-2">
+    <div class="justify-content-between mb-2">
+        Namn: @Model.PersonalInfo.FirstName @Model.PersonalInfo.LastName
+    </div>
+    <div>
+        Födelsedatum: @Model.PersonalInfo.DateOfBirth.Date.ToString().Substring(0, 10)
+    </div>
+    <hr />
+    <div>
+        Email: @Model.AUser.Email
+    </div>
+    <div>
+        Tele: @Model.PersonalInfo.PhoneNumber
+    </div>
+    <hr />
+    <div>
+        Gata: @Model.PersonalInfo.Street
+    </div>
+    <div>
+        Postnr: @Model.PersonalInfo.ZipCode
+    </div>
+    <div>
+        Ort: @Model.PersonalInfo.City
+    </div>
+
+</div>
+<div class="justify-content-between mb-2">
+    <button class="btn btn-primary" onclick="window.location.href='/EditPersonalInfo'">Uppdatera Personlig Information</button>
+</div>
+<div class="justify-content-between mb-2">
+    <h4>Meriter</h4>
+</div>
+<div class="justify-content-between mb-2">
+
+    @foreach (var x in Model.personalMerits)
+    {
+
+        <div>
+            Kategori: @x.Category;
+        </div>
+        <div>
+            Underkategori: @x.SubCategory
+        </div>
+        <div>
+            Beskrivning: @x.Description
+        </div>
+        <div>
+            Varaktighet: @x.Duration
+        </div>
+        <p></p>
+    }
+
+    <div class="justify-content-between mb-2">
+        <button class="btn btn-primary" onclick="window.location.href='/AddMerit'">Lägg till merit</button>
+    </div>
+</div>
+<hr />
