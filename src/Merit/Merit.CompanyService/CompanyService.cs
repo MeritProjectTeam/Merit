@@ -20,7 +20,7 @@ namespace Merit.CompanyService
         {
             using (var db = new MeritContext())
             {
-                db.Companies.Add(companyInfo);
+                db.Companies.Add(company);
                 db.SaveChanges();
             }
         }
