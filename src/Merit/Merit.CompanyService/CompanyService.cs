@@ -20,9 +20,24 @@ namespace Merit.CompanyService
         {
             using (var db = new MeritContext())
             {
-                db.Add(company);
+                db.Companies.Add(companyInfo);
                 db.SaveChanges();
             }
         }
+        public void UpdateCompanyInfo(Company newCompanyInfo)
+        {
+            using (var db = new MeritContext())
+            {
+                Company dbCompanyInfo = db.Companies.FirstOrDefault(x => x.CompanyUserID == newCompanyInfo.CompanyUserID);
+                db.Companies.Remove(dbCompanyInfo);
+                db.Companies.Add(newCompanyInfo);
+                db.SaveChanges();
+            };
+        }
+        
+
+
     }
+
+
 }
