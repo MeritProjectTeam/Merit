@@ -10,6 +10,12 @@ namespace Merit.CompanyService
 {
     public class CompanyService : ICompanyService
     {
+        public Company Get(int id)
+        {
+            using (var db = new MeritContext())
+                return db.Companies
+                    .FirstOrDefault(c => c.CompanyUserID == id);
+        }
         public void SaveCompany(Company company)
         {
             using (var db = new MeritContext())
