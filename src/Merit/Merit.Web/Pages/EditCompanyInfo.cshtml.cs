@@ -18,19 +18,19 @@ namespace Merit.Web.Pages
         [BindProperty]
         public Company ACompany { get; set; }
 
-        int companyId = AccountService.Account.CheckCookie();
+        int companyUserId = AccountService.Account.CheckCookie();
         public void OnGet()
         {
             Information = "";
-            if (companyId != 0)
+            if (companyUserId != 0)
             {
-                ACompany = companyService.Get(companyId);
+                ACompany = companyService.Get(companyUserId);
             }
         }
         public void OnPost()
         {
             Information = "Företagsinfo sparad.";
-            ACompany.CompanyId = AccountService.Account.CheckCookie();
+            ACompany.CompanyUserID = AccountService.Account.CheckCookie();
             companyService.UpdateCompanyInfo(ACompany);
 
         }
