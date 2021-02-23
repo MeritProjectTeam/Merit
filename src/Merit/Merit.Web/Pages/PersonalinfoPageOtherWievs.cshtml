@@ -1,5 +1,5 @@
 ﻿@page
-@model Merit.Web.Pages.PersonalinfoPageModel
+@model Merit.Web.Pages.PersonalinfoPageOtherWievsModel
 @using Merit.PersonalInfoService
 @{
 }
@@ -16,9 +16,8 @@
             <!-- /.col-lg-8 -->
             <div class="col-lg-5">
                 <hr />
-                <h3>Välkommen, @Model.PersonalInfo.FirstName @Model.PersonalInfo.LastName!</h3>
-                <p>Här kan du uppdatera din profilinformation, lägga till meriter samt lägga till Wants.</p>
-                <a class="btn btn-primary" href="#">Ladda upp profilbild</a>
+                <h3>Namn @*@Model.PersonalInfo.FirstName @Model.PersonalInfo.LastName*@!</h3>
+                
                 <p></p>
                 <hr />
             </div>
@@ -37,27 +36,20 @@
                         </div>
                         <p></p>
 
-                        <div>Namn: @Model.PersonalInfo.FirstName @Model.PersonalInfo.LastName</div>
-                        <div>Födelsedatum: @Model.PersonalInfo.DateOfBirth.Date.ToString().Substring(0, 10)</div>
+                        <div>Namn: @*@Model.PersonalInfo.FirstName @Model.PersonalInfo.LastName*@</div>
 
+                        <hr />
+
+                        <div>Email: @*@Model.AUser.Email*@</div>
+
+                        <div>Tele: @*@Model.PersonalInfo.PhoneNumber*@</div>
 
 
                         <hr />
 
-                        <div>Email: @Model.AUser.Email</div>
-
-                        <div>Tele: @Model.PersonalInfo.PhoneNumber</div>
-
-
-                        <hr />
-                        <div>Gata: @Model.PersonalInfo.Street</div>
-
-                        <div>Postnr: @Model.PersonalInfo.ZipCode</div>
-
-                        <div>Ort: @Model.PersonalInfo.City</div>
                     </div>
                     <div class="card-footer">
-                        <a href="/EditPersonalInfo" class="btn btn-primary btn-sm">Uppdatera profil</a>
+                      
                     </div>
                 </div>
             </div>
@@ -70,27 +62,27 @@
                         </div>
                         <p></p>
                         <p class="card-text">
-                            @foreach (var x in Model.personalMerits)
-                            {
+                            @*@foreach (var x in Model.personalMerits)
+            {
 
-                                <div>
-                                    Kategori: @x.Category;
-                                </div>
-                                <div>
-                                    Underkategori: @x.SubCategory
-                                </div>
-                                <div>
-                                    Beskrivning: @x.Description
-                                </div>
-                                <div>
-                                    Varaktighet: @x.Duration
-                                </div>
-                                <hr />
-                            }
+                <div>
+                    Kategori: @x.Category;
+                </div>
+                <div>
+                    Underkategori: @x.SubCategory
+                </div>
+                <div>
+                    Beskrivning: @x.Description
+                </div>
+                <div>
+                    Varaktighet: @x.Duration
+                </div>
+                <hr />
+            }*@
                         </p>
                     </div>
                     <div class="card-footer">
-                        <a href="/AddMerit" class="btn btn-primary btn-sm">Redigera meriter</a>
+                       
                     </div>
                 </div>
             </div>
@@ -98,16 +90,14 @@
             <div class="col-md-4 mb-5">
                 <div class="card h-100">
                     <div class="card-body">
-                        
-                            <div class="card-header">
-                                <h4 class="card-title">Wants</h4>
-                            </div>
-                            <p></p>
-                        
-                        <p class="card-text">Vad önskar du ifrån en framtida arbetsgivare? Sätt upp dina öneskemål, dina Wants.</p>
+                        <div class="card-header">
+                            <h4 class="card-title">Wants</h4>
+                        </div>
+                        <p></p>
+                        <p class="card-text">....</p>
                     </div>
                     <div class="card-footer">
-                        <a href="#" class="btn btn-primary btn-sm">Redigera Wants</a>
+                        
                     </div>
                 </div>
             </div>
