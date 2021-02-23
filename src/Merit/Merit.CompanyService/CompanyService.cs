@@ -10,7 +10,7 @@ namespace Merit.CompanyService
 {
     public class CompanyService : ICompanyService
     {
-        public void SaveCompany(Company company)
+        public void SaveCompany(CompanyInfo company)
         {
             using (var db = new MeritContext())
             {

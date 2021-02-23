@@ -10,7 +10,7 @@ namespace Merit.AccountService
 {
     public class Account : IAccount
     {
-        public void AddAccount(User user)
+        public void AddAccount(PersonalUser user)
         {
             //krypteringen sker på server-sidan, bör bytas till klient-sidan
             using (var db = new MeritContext())
@@ -21,24 +21,55 @@ namespace Merit.AccountService
 
             }
         }
-      
+        public void AddAccount(CompanyUser user)
+        {
+            //krypteringen sker på server-sidan, bör bytas till klient-sidan
+            using (var db = new MeritContext())
+            {
+                user.Password = EncryptPassword(user.Password);
+                db.Add(user);
+                db.SaveChanges();
 
-      
-        public User GetUser(int id)
+            }
+        }
+        public PersonalUser GetUser(int id)
         {
             using (var db = new MeritContext())
-                return db.Users
-                    .FirstOrDefault(p => p.UserID == id);
+                return db.PersonalUsers
+                    .FirstOrDefault(p => p.PersonalUserId == id);
 
         }
 
-        public int CheckExistingAccount(User user)
+        public int CheckExistingAccount(PersonalUser user)
         {
             using var db = new MeritContext() ;
 
-            var userNameExists = db.Users
+            var userNameExists = db.PersonalUsers
                 .FirstOrDefault(x => x.UserName.ToLower() == user.UserName.ToLower());
-            var emailExists = db.Users
+            var emailExists = db.PersonalUsers
+                .FirstOrDefault(x => x.Email.ToLower() == user.Email.ToLower());
+
+            if (userNameExists != null)
+            {
+                return 101;
+            }
+            else if (emailExists != null)
+            {
+                return 102;
+            }
+            else
+            {
+                return 100;
+            }
+        }
+
+        public int CheckExistingAccount(CompanyUser user)
+        {
+            using var db = new MeritContext();
+
+            var userNameExists = db.CompanyUsers
+                .FirstOrDefault(x => x.UserName.ToLower() == user.UserName.ToLower());
+            var emailExists = db.CompanyUsers
                 .FirstOrDefault(x => x.Email.ToLower() == user.Email.ToLower());
 
             if (userNameExists != null)
@@ -71,14 +102,14 @@ namespace Merit.AccountService
             return result;
         }
 
-        public int CheckLogin(User user)
+        public int CheckLogin(PersonalUser user)
         {
             using var db = new MeritContext();
-            var validLogin = db.Users
+            var validLogin = db.PersonalUsers
                 .FirstOrDefault(x => x.UserName.ToLower() == user.UserName.ToLower() && x.Password == EncryptPassword(user.Password));
             if (validLogin != null)
             {
-                return validLogin.UserID;
+                return validLogin.PersonalUserId;
             }
             return 0;
         }
@@ -100,6 +131,5 @@ namespace Merit.AccountService
             return 0;
         }
 
-        
     }
 }

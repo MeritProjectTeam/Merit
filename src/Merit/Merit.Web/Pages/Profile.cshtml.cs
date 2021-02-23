@@ -28,7 +28,7 @@ namespace Merit.Web.Pages
             int userId = AccountService.Account.CheckCookie();
             if (userId != 0)
             {
-                APerson.UserID = userId;
+                APerson.PersonalUserID = userId;
                 profileService.SavePersonalInfo(APerson);
             }
 

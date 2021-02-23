@@ -18,7 +18,7 @@ namespace Merit.Web.Pages
         private IMeritService meritService = new MeritService.MeritService();
 
         [BindProperty]
-        public User AUser { get; set; }
+        public PersonalUser AUser { get; set; }
         [BindProperty]
         public PersonalInfo PersonalInfo { get; set; }
         [BindProperty]

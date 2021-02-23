@@ -25,12 +25,11 @@ namespace Merit.Data.Data
             optionsBuilder.UseSqlServer(connectionString);
         }
 
-        public DbSet<Company> Companies { get; set; }
+        public DbSet<CompanyInfo> CompanyInfo { get; set; }
         public DbSet<CompanyMerit> CompanyMerits { get; set; }
         public DbSet<PersonalMerit> PersonalMerits { get; set; }
-       //denna nedan hade ju varit bra att ändra namn på?
-        public DbSet<PersonalInfo> Persons { get; set; }
-        public DbSet<User> Users { get; set; }
+        public DbSet<PersonalInfo> PersonalInfo { get; set; }
+        public DbSet<PersonalUser> PersonalUsers { get; set; }
         public DbSet<CompanyUser> CompanyUsers { get; set; }
 
     }

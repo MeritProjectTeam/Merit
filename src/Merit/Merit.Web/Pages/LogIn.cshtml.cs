@@ -13,7 +13,7 @@ namespace Merit.Web.Pages
     {
 
         [BindProperty]
-        public User UserLogin { get; set; }
+        public PersonalUser UserLogin { get; set; }
 
         private readonly IAccount Account = new Account();
 

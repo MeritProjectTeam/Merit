@@ -31,7 +31,7 @@ namespace Merit.Web.Pages
         public void OnPost()
         {
             Information = "Profilinfo sparad.";
-           APerson.UserID = AccountService.Account.CheckCookie();
+            APerson.PersonalUserID = AccountService.Account.CheckCookie();
             profileService.UpdatePersonalInfo(APerson);
 
         }

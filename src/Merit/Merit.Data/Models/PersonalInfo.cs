@@ -17,7 +17,7 @@ namespace Merit.Data.Models
         public string Street { get; set; } = "-";
         public string ZipCode { get; set; } = "--";
      
-        public int UserID { get; set; }
-        public User User { get; set; }
+        public int PersonalUserID { get; set; }
+        public PersonalUser PersonalUser { get; set; }
     }
 }

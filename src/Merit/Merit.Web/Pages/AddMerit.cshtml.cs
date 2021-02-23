@@ -27,7 +27,7 @@ namespace Merit.Web.Pages
             int userId = AccountService.Account.CheckCookie();
             if (userId != 0)
             {
-                AMerit.UserID = userId;
+                AMerit.PersonalUserId = userId;
                 meritService.SaveMerit(AMerit);
                 Information = "Merit sparad.";
             }
