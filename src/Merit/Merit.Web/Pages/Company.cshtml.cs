@@ -24,7 +24,7 @@ namespace Merit.Web.Pages
 
         public void OnPost()
         {
-            company.SaveCompany(ACompany);
+            company.SaveCompanyInfo(ACompany);
         }
     }
 }
