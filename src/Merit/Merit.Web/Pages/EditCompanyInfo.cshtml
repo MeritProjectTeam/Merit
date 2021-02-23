@@ -1,0 +1,46 @@
+﻿@page
+@model Merit.Web.Pages.EditCompanyInfoModel
+@{
+}
+<h3>Uppdatera företagsinformation</h3>
+<hr />
+<form method="post">
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="justify-content-between mb-2">
+                <label for="firstname">Förnamn</label>
+                <input class="form-control" asp-for="ACompany.CompanyName" type="text" value="@Model.ACompany.CompanyName" />
+            </div>
+            <div class="justify-content-between mb-2">
+                <label for="lastname">Efternamn</label>
+                <input class="form-control" asp-for="ACompany.OrgNumber" type="text" value="@Model.ACompany.OrgNumber" />
+            </div>
+
+            <div class="justify-content-between mb-2">
+                <label for="dateofbirth">Födelseår</label>
+                <input class="form-control" asp-for="ACompany.ContactName" type="date" value="@Model.ACompany.ContactName" />
+            </div>
+            <div class="justify-content-between mb-2">
+                <label for="street">Gatuadress</label>
+                <input class="form-control" asp-for="ACompany.Phone" type="text" value="@Model.ACompany.Phone" />
+            </div>
+            <div class="justify-content-between mb-2">
+                <label for="zipcode">Postnummer</label>
+                <input class="form-control" asp-for="ACompany.Street" type="text" value="@Model.ACompany.Street" />
+            </div>
+            <div class="justify-content-between mb-2">
+                <label for="city">Ort</label>
+                <input class="form-control" asp-for="ACompany.ZipCode" type="text" value="@Model.ACompany.ZipCode" />
+            </div>
+            <div class="justify-content-between mb-2">
+                <label for="phone">Telefon</label>
+                <input class="form-control" asp-for="ACompany.City" type="text" value="@Model.ACompany.City" />
+            </div>
+        </div>
+    </div>
+    <p></p>
+    <div class="justify-content-between mb-2">
+        <button class="btn btn-primary" type="submit">Spara</button>
+    </div>
+</form>
+<div><p style="color:red">@Model.Information</p></div>
