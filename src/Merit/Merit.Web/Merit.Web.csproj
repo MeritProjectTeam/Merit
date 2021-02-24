@@ -34,6 +34,7 @@
     <ProjectReference Include="..\Merit.Data\Merit.Data.csproj" />
     <ProjectReference Include="..\Merit.MeritService2\Merit.MeritService.csproj" />
     <ProjectReference Include="..\Merit.PersonalInfoService\Merit.PersonalInfoService.csproj" />
+    <ProjectReference Include="..\Merit.WantsService2\Merit.WantsService.csproj" />
   </ItemGroup>
 
 </Project>
