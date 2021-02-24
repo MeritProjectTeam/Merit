@@ -18,7 +18,6 @@ namespace Merit.PersonalInfoService
         }
         public void CreateEmptyPersonalInfo(int userId)
         {
-            
                 using (var db = new MeritContext())
                 {
                     PersonalInfo info = new PersonalInfo();
@@ -26,9 +25,7 @@ namespace Merit.PersonalInfoService
                     db.Add(info);
                     db.SaveChanges();
                 }
-            
         }
-        
         public List<PersonalInfo> GetAll()
         {
             using (var db = new MeritContext())
@@ -37,7 +34,6 @@ namespace Merit.PersonalInfoService
                     .ToList();
             }
         }
-
         public void SavePersonalInfo(PersonalInfo info)
         {
             using (var db = new MeritContext())
@@ -46,7 +42,6 @@ namespace Merit.PersonalInfoService
                 db.SaveChanges();
             }
         }
-
        public void UpdatePersonalInfo(PersonalInfo newInfo)
         {
             using (var db = new MeritContext())
@@ -57,7 +52,5 @@ namespace Merit.PersonalInfoService
                 db.SaveChanges();
             };
         }
-
-
     }
 }
