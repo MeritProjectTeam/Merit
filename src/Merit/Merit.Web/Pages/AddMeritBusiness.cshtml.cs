@@ -30,13 +30,13 @@ namespace Merit.Web.Pages
         public void OnPost()
         {
             SavedBusinessMerit = true;
-            int companyUserId = AccountService.Account.CheckCookie();
-            if (companyUserId != 0)
-            {
-                //ACompanyMerit.CompanyUserId = companyUserId;          TA BORT KOMMENTARTECKNEN EFTER MERGE MED NYA DATABASEN!!!
-                CompanyMeritService.SaveMeritBusiness(ACompanyMerit);
-                Information = "Merit sparad.";
-            }
+            //int companyUserId = AccountService.Account.CheckCookie();
+            //if (companyUserId != 0)
+            //{
+            //    //ACompanyMerit.CompanyUserId = companyUserId;          TA BORT KOMMENTARTECKNEN EFTER MERGE MED NYA DATABASEN!!!
+            //    CompanyMeritService.SaveMeritBusiness(ACompanyMerit);
+            //    Information = "Merit sparad.";
+            //}
 
         }
     }
