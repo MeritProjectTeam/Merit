@@ -11,7 +11,7 @@ namespace Merit.Data.Models
         public string Category { get; set; }
         public string SubCategory { get; set; }
         public string Description { get; set; }
-        public int CompanyUserID { get; set; }
+        public int CompanyUserId { get; set; }
         public CompanyUser CompanyUser { get; set; }
     }
 }
