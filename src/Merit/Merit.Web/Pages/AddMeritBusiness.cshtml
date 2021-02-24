@@ -3,51 +3,36 @@
 @{
 }
 
-@if (!Model.SavedBusinessMerit)
-{
-    <h3>Skapa merit (Företag)</h3>
+<h3>Lägg till en merit</h3>
+<hr />
 
-    <form method="post">
-        <div class="row">
-            <div class="col-lg-5">
-                <div class="justify-content-between mb-2">
-                    <label>Kategori:</label>
-                    <input class="form-control" type="text" asp-for="ACompanyMerit.Category" placeholder="Kategori" />
-                </div>
-                <div class="justify-content-between mb-2">
-                    <label>Underkategori:</label>
-                    <input class="form-control" type="text" asp-for="ACompanyMerit.SubCategory" placeholder="Underkategori" />
-                </div>
-                <div class="justify-content-between mb-2">
-                    <label>Beskrivning:</label>
-                    <textarea class="form-control" type="text" asp-for="ACompanyMerit.Description" placeholder="Beskrivning" id="exampleFormControlTextarea1" rows="3"></textarea>
-                </div>
+<form method="post">
+    <div class="row">
+        <div class="col-lg-5">
+            <div class="justify-content-between mb-2">
+                <label>Kategori:</label>
+                <input class="form-control" type="text" asp-for="ACompanyMerit.Category" placeholder="Kategori" />
             </div>
-
+            <div class="justify-content-between mb-2">
+                <label>Underkategori:</label>
+                <input class="form-control" type="text" asp-for="ACompanyMerit.SubCategory" placeholder="Underkategori" />
+            </div>
+            <div class="justify-content-between mb-2">
+                <label>Beskrivning:</label>
+                <textarea style="resize: none" class="form-control" type="text" asp-for="ACompanyMerit.Description" placeholder="Beskrivning" id="exampleFormControlTextarea1" rows="3"></textarea>
+            </div>
         </div>
-        <p></p>
-        <div class="justify-content-between mb-2">
-            <button class="btn btn-primary" type="submit">Lägg till merit</button>
-        </div>
-    </form>
-    <div><p style="color:red">@Model.Information</p></div>
-}
-@if (Model.SavedBusinessMerit)
-{
-    <h3>Merit sparad!</h3>
-
-    <table>
-        <tr>
-            <td>
-                <form action="/AddMeritBusiness">
-                    <input type="submit" value="Skapa ny merit" />
-                </form>
-            </td>
-            <td>
-                <form action="/CompanyInfoPage">
-                    <input type="submit" value="Till företagsinfo" />
-                </form>
-            </td>
-        </tr>
-    </table>
-}
+    </div>
+    <p></p>
+    <div class="justify-content-between mb-2">
+        <button class="btn btn-primary" type="submit">Lägg till merit</button>
+        <a class="btn btn-primary" asp-page="/companyinfopage">Företagsinfo</a>
+        @if (Model.SavedBusinessMerit)
+        {
+            <meta http-equiv="refresh" content="1">
+            <div style="color: limegreen">
+                <b>Merit skapad!</b>
+            </div>
+        }
+    </div>
+</form>
