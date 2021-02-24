@@ -13,31 +13,41 @@ namespace Merit.Web.Pages
     public class EditPersonalMeritsModel : PageModel
     {
         private readonly IMeritService meritService = new MeritService.MeritService();
+        [BindProperty(SupportsGet  = true)]
         public List<PersonalMerit> MeritList { get; set; }
         public PersonalInfo APerson { get; set; }
-        public PersonalMerit SelectedMerit { get; set;  }
         [BindProperty(SupportsGet=true)]
         public int SelectedMeritID { get; set; }
 
-        public string SaveCategory { get; set; }
-        public string SaveSubCategory { get; set; }
-        public string SaveDescription { get; set; }
-        public string SaveDuration { get; set; }
+        public string CategoryText { get; set; }
+        public string SubCategoryText { get; set; }
+        public string DescriptionText { get; set; }
+        public string DurationText { get; set; }
 
         int userId = AccountService.Account.CheckCookie();
+
         public void OnGet()
         {
             MeritList = meritService.ReadPersonalMerits(userId);
-            SelectedMeritID = -1;
+            foreach (var x in MeritList)
+            {
+                if (x.PersonalMeritId == SelectedMeritID)
+                {
+                    CategoryText = x.Category;
+                    SubCategoryText = x.SubCategory;
+                    DescriptionText = x.Description;
+                    DurationText = x.Duration;
+                }
+            }
         }
         public void OnPostEdit()
         {
             PersonalMerit personalMerit = new PersonalMerit();
             personalMerit.PersonalMeritId = SelectedMeritID;
-            personalMerit.Category = SaveCategory;
-            personalMerit.SubCategory = SaveSubCategory;
-            personalMerit.Description = SaveDescription;
-            personalMerit.Duration = SaveDuration;
+            personalMerit.Category = CategoryText;
+            personalMerit.SubCategory = SubCategoryText;
+            personalMerit.Description = DescriptionText;
+            personalMerit.Duration = DurationText;
 
             meritService.UpdatePersonalMerit(personalMerit);
         }
