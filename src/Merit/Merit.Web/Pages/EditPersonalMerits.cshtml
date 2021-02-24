@@ -21,15 +21,15 @@
                 </ol>
             </div>
             <div class="col-lg-3" row="10">
-                <div><input type="text" value="@Model.CategoryText" asp-for="CategoryText"/></div>
-                <div><input type="text" value="@Model.SubCategoryText" asp-for="SubCategoryText"/></div>
-                <div><input type="text" value="@Model.DescriptionText" asp-for="DescriptionText"/></div>
-                <div><input type="text" value="@Model.DurationText" asp-for="DurationText"/></div>
+                <input type="hidden" asp-for="PMerit.PersonalMeritId" />
+                <div><input type="text" value="@Model.CategoryText" asp-for="PMerit.Category"/></div>
+                <div><input type="text" value="@Model.SubCategoryText" asp-for="PMerit.SubCategory"/></div>
+                <div><input type="text" value="@Model.DescriptionText" asp-for="PMerit.Description"/></div>
+                <div><input type="text" value="@Model.DurationText" asp-for="PMerit.Duration"/></div>
                 <span>
                     <button type="submit" asp-page-handler="Edit">Edit</button>
                     <button type="submit" asp-page-handler="Delete">Delete</button>
                 </span>
-
             </div>
         </div>
     </div>

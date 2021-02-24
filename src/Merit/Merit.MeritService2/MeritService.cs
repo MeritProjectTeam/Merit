@@ -1,5 +1,6 @@
 ﻿using Merit.Data.Data;
 using Merit.Data.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,10 +54,12 @@ namespace Merit.MeritService
             using (var db = new MeritContext())
             {
                 var existingMerit = GetPersonalMerit(merit.PersonalMeritId);
-                
+
                 if (existingMerit!= null)
                 {
-                    existingMerit.Category = merit.Category;
+                    db.Entry(existingMerit).State = EntityState.Modified;
+
+                    existingMerit.Category = merit.Category; 
                     existingMerit.SubCategory = merit.SubCategory;
                     existingMerit.Description = merit.Description;
                     existingMerit.Duration = merit.Duration;
