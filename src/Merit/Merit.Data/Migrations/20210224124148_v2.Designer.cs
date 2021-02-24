@@ -4,14 +4,16 @@ using Merit.Data.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Merit.Data.Migrations
 {
     [DbContext(typeof(MeritContext))]
-    partial class MeritContextModelSnapshot : ModelSnapshot
+    [Migration("20210224124148_v2")]
+    partial class v2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -112,7 +114,7 @@ namespace Merit.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CompanyUserId")
+                    b.Property<int>("CompanyUserID")
                         .HasColumnType("int");
 
                     b.Property<string>("Want")
@@ -120,7 +122,7 @@ namespace Merit.Data.Migrations
 
                     b.HasKey("CompanyWantsId");
 
-                    b.HasIndex("CompanyUserId");
+                    b.HasIndex("CompanyUserID");
 
                     b.ToTable("CompanyWants");
                 });
@@ -260,7 +262,7 @@ namespace Merit.Data.Migrations
                 {
                     b.HasOne("Merit.Data.Models.CompanyUser", "CompanyUser")
                         .WithMany("CompanyWants")
-                        .HasForeignKey("CompanyUserId")
+                        .HasForeignKey("CompanyUserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

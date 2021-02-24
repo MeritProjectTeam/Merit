@@ -42,7 +42,7 @@ namespace Merit.MeritService
             using (var db = new MeritContext())
             {
                 var l = db.CompanyMerits
-                    .Where(l => l.CompanyUserId == companyUserId)
+                    .Where(l => l.CompanyUserID == companyUserId)
                     .AsEnumerable()
                     .ToList();
                 return l;

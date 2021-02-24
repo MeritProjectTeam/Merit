@@ -14,5 +14,7 @@ namespace Merit.Data.Models
         public string Password { get; set; }
         public PersonalInfo PersonalInfo { get; set; }
         public ICollection<PersonalMerit> PersonalMerits { get; set; }
+
+        public ICollection<PersonalWants> PersonalWants { get; set; }
     }
 }

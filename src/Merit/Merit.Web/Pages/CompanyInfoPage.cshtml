@@ -81,13 +81,22 @@
             <div class="col-md-4 mb-5">
                 <div class="card h-100">
                     <div class="card-body">
-
                         <div class="card-header">
                             <h4 class="card-title">Wants</h4>
                         </div>
                         <p></p>
+                        <p class="card-text">
+                            <ul>
+                                @foreach (var x in Model.CompanyWants)
+                                {
+                                    <li>
+                                        @x.Want
+                                    </li>
 
-                        <p class="card-text">Vad önskar du ifrån en framtida arbetsgivare? Sätt upp dina öneskemål, dina Wants.</p>
+                                }
+                            </ul>
+
+                        </p>
                     </div>
                     <div class="card-footer">
                         <a href="#" class="btn btn-primary btn-sm">Redigera Wants</a>

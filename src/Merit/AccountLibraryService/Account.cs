@@ -47,7 +47,7 @@ namespace Merit.AccountService
                 try
                 {
                     CompanyInfo info = new CompanyInfo();
-                    info.CompanyUserID = user.CompanyUserID;
+                    info.CompanyUserID = user.CompanyUserId;
                     db.Add(info);
                     db.SaveChanges();
                 }
@@ -69,7 +69,7 @@ namespace Merit.AccountService
         {
             using (var db = new MeritContext())
                 return db.CompanyUsers
-                    .FirstOrDefault(p => p.CompanyUserID == id);
+                    .FirstOrDefault(p => p.CompanyUserId == id);
         }
 
         public int CheckExistingAccount(PersonalUser user)
@@ -161,7 +161,7 @@ namespace Merit.AccountService
             else if (companyUserValid != null)
             {
                 
-                userIdAndUserType[0] = companyUserValid.CompanyUserID;
+                userIdAndUserType[0] = companyUserValid.CompanyUserId;
                 userIdAndUserType[1] = 2;
                 return userIdAndUserType;
             }
