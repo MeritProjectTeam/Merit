@@ -8,33 +8,34 @@
     <h3>Skapa merit (Företag)</h3>
 
     <form method="post">
-        <div>
-            <table>
-                <tr>
-                    <td><label>Kategori: </label></td>
-                    <td><input type="text" asp-for="BusinessMerit.Category" placeholder="Kategori" /></td>
-                </tr>
-                <tr>
-                    <td><label>Underkategori: </label></td>
-                    <td><input type="text" asp-for="BusinessMerit.SubCategory" placeholder="Underkategori" /></td>
-                </tr>
-                <tr>
-                    <td><label>Beskrivning: </label></td>
-                    <td><input type="text" asp-for="BusinessMerit.Description" placeholder="Beskrivning" /></td>
-                </tr>
-                <tr>
-                    <td>
-                    <td><button type="submit">Skapa Merit</button></td></td>
-                </tr>
-
-            </table>
+        <div class="row">
+            <div class="col-lg-5">
+                <div class="justify-content-between mb-2">
+                    <label>Kategori:</label>
+                    <input class="form-control" type="text" asp-for="ACompanyMerit.Category" placeholder="Kategori" />
+                </div>
+                <div class="justify-content-between mb-2">
+                    <label>Underkategori:</label>
+                    <input class="form-control" type="text" asp-for="ACompanyMerit.SubCategory" placeholder="Underkategori" />
+                </div>
+                <div class="justify-content-between mb-2">
+                    <label>Beskrivning:</label>
+                    <textarea class="form-control" type="text" asp-for="ACompanyMerit.Description" placeholder="Beskrivning" id="exampleFormControlTextarea1" rows="3"></textarea>
+                </div>
+            </div>
 
         </div>
+        <p></p>
+        <div class="justify-content-between mb-2">
+            <button class="btn btn-primary" type="submit">Lägg till merit</button>
+        </div>
     </form>
+    <div><p style="color:red">@Model.Information</p></div>
 }
 @if (Model.SavedBusinessMerit)
 {
-    <h4>Merit skapad!</h4>
+    <h3>Merit sparad!</h3>
+
     <table>
         <tr>
             <td>
@@ -43,8 +44,8 @@
                 </form>
             </td>
             <td>
-                <form action="/Index">
-                    <input type="submit" value="Till startsidan" />
+                <form action="/CompanyInfoPage">
+                    <input type="submit" value="Till företagsinfo" />
                 </form>
             </td>
         </tr>

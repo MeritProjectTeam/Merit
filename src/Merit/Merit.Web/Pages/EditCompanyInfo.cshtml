@@ -1,0 +1,46 @@
+﻿@page
+@model Merit.Web.Pages.EditCompanyInfoModel
+@{
+}
+<h3>Uppdatera företagsinformation</h3>
+<hr />
+<form method="post">
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="justify-content-between mb-2">
+                <label for="companyname">Företagsnamn:</label>
+                <input class="form-control" asp-for="ACompany.CompanyName" type="text" />
+            </div>
+            <div class="justify-content-between mb-2">
+                <label for="orgnumber">Organisationsnummer:</label>
+                <input class="form-control" asp-for="ACompany.OrgNumber" type="text" />
+            </div>
+
+            <div class="justify-content-between mb-2">
+                <label for="Contactname">Kontaktperson:</label>
+                <input class="form-control" asp-for="ACompany.ContactName" type="text"  />
+            </div>
+            <div class="justify-content-between mb-2">
+                <label for="phone">Telefon:</label>
+                <input class="form-control" asp-for="ACompany.Phone" type="text" />
+            </div>
+            <div class="justify-content-between mb-2">
+                <label for="Street">Gatuadress:</label>
+                <input class="form-control" asp-for="ACompany.Street" type="text"  />
+            </div>
+            <div class="justify-content-between mb-2">
+                <label for="zipcode">Postnummer:</label>
+                <input class="form-control" asp-for="ACompany.ZipCode" type="text"  />
+            </div>
+            <div class="justify-content-between mb-2">
+                <label for="city">Stad:</label>
+                <input class="form-control" asp-for="ACompany.City" type="text" />
+            </div>
+        </div>
+    </div>
+    <p></p>
+    <div class="justify-content-between mb-2">
+        <button class="btn btn-primary" type="submit">Spara</button>
+    </div>
+</form>
+<div><p style="color:red">@Model.Information</p></div>
