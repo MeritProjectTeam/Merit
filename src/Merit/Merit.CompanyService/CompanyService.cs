@@ -18,5 +18,11 @@ namespace Merit.CompanyService
                 db.SaveChanges();
             }
         }
+        public CompanyInfo Get(int id)
+        {
+            using (var db = new MeritContext())
+                return db.CompanyInfo
+                    .FirstOrDefault(p => p.CompanyUserID == id);
+        }
     }
 }

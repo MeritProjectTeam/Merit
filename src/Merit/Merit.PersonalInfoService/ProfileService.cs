@@ -16,28 +16,6 @@ namespace Merit.PersonalInfoService
                 return db.PersonalInfo
                     .FirstOrDefault(p => p.PersonalUserID == id);
         }
-        public void CreateEmptyPersonalInfo(int userId)
-        {
-            
-                using (var db = new MeritContext())
-                {
-                    PersonalInfo info = new PersonalInfo();
-                    info.PersonalUserID = userId;
-                    db.Add(info);
-                    db.SaveChanges();
-                }
-            
-        }
-        
-        public List<PersonalInfo> GetAll()
-        {
-            using (var db = new MeritContext())
-            {
-                return db.PersonalInfo
-                    .ToList();
-            }
-        }
-
         public void SavePersonalInfo(PersonalInfo info)
         {
             using (var db = new MeritContext())
@@ -57,7 +35,5 @@ namespace Merit.PersonalInfoService
                 db.SaveChanges();
             };
         }
-
-
     }
 }

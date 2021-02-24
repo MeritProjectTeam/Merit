@@ -9,7 +9,7 @@ namespace Merit.AccountService
         public PersonalUser GetUser(int id);
         public int CheckExistingAccount(PersonalUser user);
         public int CheckExistingAccount(CompanyUser user);
-        public int CheckLogin(PersonalUser user);
+        public int[] CheckLogin(User user);
         
     }
 }

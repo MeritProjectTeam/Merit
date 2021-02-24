@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using Merit.Data.Data;
 using Merit.Data.Models;
+using Merit.CompanyService;
 
 namespace Merit.AccountService
 {
@@ -19,16 +20,42 @@ namespace Merit.AccountService
                 db.Add(user);
                 db.SaveChanges();
 
+                try
+                {
+                    PersonalInfo info = new PersonalInfo();
+                    info.PersonalUserID = user.PersonalUserId;
+                    db.Add(info);
+                    db.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    db.Remove(user);
+                    db.SaveChanges();
+                }
             }
         }
         public void AddAccount(CompanyUser user)
         {
             //krypteringen sker på server-sidan, bör bytas till klient-sidan
+
             using (var db = new MeritContext())
             {
                 user.Password = EncryptPassword(user.Password);
                 db.Add(user);
                 db.SaveChanges();
+
+                try
+                {
+                    CompanyInfo info = new CompanyInfo();
+                    info.CompanyUserID = user.CompanyUserID;
+                    db.Add(info);
+                    db.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    db.Remove(user);
+                    db.SaveChanges();
+                }
 
             }
         }
@@ -37,7 +64,6 @@ namespace Merit.AccountService
             using (var db = new MeritContext())
                 return db.PersonalUsers
                     .FirstOrDefault(p => p.PersonalUserId == id);
-
         }
 
         public int CheckExistingAccount(PersonalUser user)
@@ -49,11 +75,16 @@ namespace Merit.AccountService
             var emailExists = db.PersonalUsers
                 .FirstOrDefault(x => x.Email.ToLower() == user.Email.ToLower());
 
-            if (userNameExists != null)
-            {
+            var companyUserNameExists = db.CompanyUsers
+                .FirstOrDefault(x => x.UserName.ToLower() == user.UserName.ToLower());
+            var companyEmailExists = db.CompanyUsers
+                .FirstOrDefault(x => x.Email.ToLower() == user.Email.ToLower());
+
+            if (userNameExists != null || companyUserNameExists != null)
+            {   
                 return 101;
             }
-            else if (emailExists != null)
+            else if (emailExists != null || companyEmailExists != null)
             {
                 return 102;
             }
@@ -67,16 +98,21 @@ namespace Merit.AccountService
         {
             using var db = new MeritContext();
 
-            var userNameExists = db.CompanyUsers
+            var userNameExists = db.PersonalUsers
                 .FirstOrDefault(x => x.UserName.ToLower() == user.UserName.ToLower());
-            var emailExists = db.CompanyUsers
+            var emailExists = db.PersonalUsers
                 .FirstOrDefault(x => x.Email.ToLower() == user.Email.ToLower());
 
-            if (userNameExists != null)
+            var companyUserNameExists = db.CompanyUsers
+                .FirstOrDefault(x => x.UserName.ToLower() == user.UserName.ToLower());
+            var companyEmailExists = db.CompanyUsers
+                .FirstOrDefault(x => x.Email.ToLower() == user.Email.ToLower());
+
+            if (userNameExists != null || companyUserNameExists != null)
             {
                 return 101;
             }
-            else if (emailExists != null)
+            else if (emailExists != null || companyEmailExists != null)
             {
                 return 102;
             }
@@ -102,16 +138,29 @@ namespace Merit.AccountService
             return result;
         }
 
-        public int CheckLogin(PersonalUser user)
+        public int[] CheckLogin(User user)
         {
             using var db = new MeritContext();
-            var validLogin = db.PersonalUsers
+            var personalUserValid = db.PersonalUsers
                 .FirstOrDefault(x => x.UserName.ToLower() == user.UserName.ToLower() && x.Password == EncryptPassword(user.Password));
-            if (validLogin != null)
+            var companyUserValid = db.CompanyUsers
+                .FirstOrDefault(x => x.UserName.ToLower() == user.UserName.ToLower() && x.Password == EncryptPassword(user.Password));
+
+            int[] userIdAndUserType = new int[] {0,0};
+            if (personalUserValid != null)
             {
-                return validLogin.PersonalUserId;
+                userIdAndUserType[0] = personalUserValid.PersonalUserId;
+                userIdAndUserType[1] = 1;
+                return userIdAndUserType;
             }
-            return 0;
+            else if (companyUserValid != null)
+            {
+                
+                userIdAndUserType[0] = companyUserValid.CompanyUserID;
+                userIdAndUserType[1] = 2;
+                return userIdAndUserType;
+            }
+            return  userIdAndUserType;
         }
 
         public static void CreateCookie(int? userId)
