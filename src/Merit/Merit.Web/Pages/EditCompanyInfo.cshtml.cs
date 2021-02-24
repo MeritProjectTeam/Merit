@@ -16,7 +16,7 @@ namespace Merit.Web.Pages
         [BindProperty]
         public string Information { get; set; }
         [BindProperty]
-        public Company ACompany { get; set; }
+        public CompanyInfo ACompany { get; set; }
 
         int companyUserId = AccountService.Account.CheckCookie();
         public void OnGet()

@@ -59,11 +59,17 @@ namespace Merit.AccountService
 
             }
         }
-        public PersonalUser GetUser(int id)
+        public PersonalUser GetPersonalUser(int id)
         {
             using (var db = new MeritContext())
                 return db.PersonalUsers
                     .FirstOrDefault(p => p.PersonalUserId == id);
+        }
+        public CompanyUser GetCompanyUser(int id)
+        {
+            using (var db = new MeritContext())
+                return db.CompanyUsers
+                    .FirstOrDefault(p => p.CompanyUserID == id);
         }
 
         public int CheckExistingAccount(PersonalUser user)

@@ -27,7 +27,7 @@ namespace Merit.Web.Pages
         public void OnGet()
         {
            int userId = Account.CheckCookie();
-            AUser = accountService.GetUser(userId);
+            AUser = accountService.GetPersonalUser(userId);
             PersonalInfo = profileService.Get(userId);
             if (PersonalInfo == null)
             {

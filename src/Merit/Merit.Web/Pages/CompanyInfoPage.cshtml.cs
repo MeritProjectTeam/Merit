@@ -18,20 +18,20 @@ namespace Merit.Web.Pages
         private IMeritService meritService = new MeritService.MeritService();
 
         [BindProperty]
-        public User AUser { get; set; }
+        public CompanyUser AUser { get; set; }
         [BindProperty]
-        public Company CompanyInfo { get; set; }
+        public CompanyInfo CompanyInfo { get; set; }
         [BindProperty]
         public List<CompanyMerit> CompanyMerits { get; set; }
 
         public void OnGet()
         {
             int userId = Account.CheckCookie();
-            AUser = accountService.GetUser(userId);
+            AUser = accountService.GetCompanyUser(userId);
             CompanyInfo = companyService.Get(userId);
             if (CompanyInfo == null)
             {
-                CompanyInfo = new Company();
+                CompanyInfo = new CompanyInfo();
             }
             CompanyMerits = meritService.ReadCompanyMerits(userId);
         }

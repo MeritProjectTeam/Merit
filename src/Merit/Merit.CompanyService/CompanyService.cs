@@ -10,14 +10,13 @@ namespace Merit.CompanyService
 {
     public class CompanyService : ICompanyService
     {
-        public void SaveCompany(CompanyInfo company)
-        public Company Get(int id)
+        public CompanyInfo Get(int id)
         {
             using (var db = new MeritContext())
-                return db.Companies
+                return db.CompanyInfo
                     .FirstOrDefault(c => c.CompanyUserID == id);
         }
-        public void SaveCompany(Company company)
+        public void SaveCompany(CompanyInfo company)
         {
             using (var db = new MeritContext())
             {
@@ -25,13 +24,13 @@ namespace Merit.CompanyService
                 db.SaveChanges();
             }
         }
-        public void UpdateCompanyInfo(Company newCompanyInfo)
+        public void UpdateCompanyInfo(CompanyInfo newCompanyInfo)
         {
             using (var db = new MeritContext())
             {
-                Company dbCompanyInfo = db.Companies.FirstOrDefault(x => x.CompanyUserID == newCompanyInfo.CompanyUserID);
-                db.Companies.Remove(dbCompanyInfo);
-                db.Companies.Add(newCompanyInfo);
+                CompanyInfo dbCompanyInfo = db.CompanyInfo.FirstOrDefault(x => x.CompanyUserID == newCompanyInfo.CompanyUserID);
+                db.CompanyInfo.Remove(dbCompanyInfo);
+                db.CompanyInfo.Add(newCompanyInfo);
                 db.SaveChanges();
             };
         }
