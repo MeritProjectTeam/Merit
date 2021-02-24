@@ -1,0 +1,36 @@
+﻿@page
+@model Merit.Web.Pages.EditPersonalMeritsModel
+@{
+}
+<form method="post">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-5" row="10">
+                <ol>
+                    <h3>Merits</h3>
+                    @foreach (var merit in Model.MeritList)
+                    {
+                    <hr />
+                        <li>@merit.Category</li>
+                        <li>@merit.SubCategory</li>
+                        <li>@merit.Description</li>
+                        <li>@merit.Duration</li>
+                        <li><a href="?SelectedMeritID=@merit.PersonalMeritId">Select</a></li>
+                    }
+                    <hr />
+                </ol>
+            </div>
+            <div class="col-lg-3" row="10">
+                <div><input type="text" value="@Model.SelectedMerit.Category" asp-for="SaveCategory"/></div>
+                <div><input type="text" value="@Model.SelectedMerit.SubCategory" asp-for="SaveSubCategory"/></div>
+                <div><input type="text" value="@Model.SelectedMerit.Description" asp-for="SaveDescription"/></div>
+                <div><input type="text" value="@Model.SelectedMerit.Duration" asp-for="SaveDuration"/></div>
+                <span>
+                    <button type="submit" asp-page-handler="Edit">Edit</button>
+                    <button type="submit" asp-page-handler="Delete">Delete</button>
+                </span>
+
+            </div>
+        </div>
+    </div>
+</form>

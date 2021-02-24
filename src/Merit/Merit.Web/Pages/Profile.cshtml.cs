@@ -31,7 +31,6 @@ namespace Merit.Web.Pages
                 APerson.PersonalUserID = userId;
                 profileService.SavePersonalInfo(APerson);
             }
-
         }
     }
 }

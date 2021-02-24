@@ -8,5 +8,6 @@ namespace Merit.CompanyService
     {
         public CompanyInfo Get(int id);
         public void SaveCompany(CompanyInfo company);
+        public void UpdateCompanyInfo(Company newCompanyInfo);
     }
 }

@@ -11,25 +11,25 @@ namespace Merit.Web.Pages
 {
     public class AddMeritModel : PageModel
     {
+        public bool MeritSaved { get; set; } = false;
         IMeritService meritService = new MeritService.MeritService();
         
 
         [BindProperty]
         public PersonalMerit AMerit { get; set; }
-        [BindProperty]
-        public string Information { get; set; }
         public void OnGet()
         {
-            Information = "";
+            
         }
         public void OnPost()
         {
+            MeritSaved = true;
             int userId = AccountService.Account.CheckCookie();
             if (userId != 0)
             {
                 AMerit.PersonalUserId = userId;
                 meritService.SaveMerit(AMerit);
-                Information = "Merit sparad.";
+                
             }
             
         }

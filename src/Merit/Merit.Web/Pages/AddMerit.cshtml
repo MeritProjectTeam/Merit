@@ -2,38 +2,50 @@
 @model Merit.Web.Pages.AddMeritModel
 @{
 }
-<h3>Lägg till en merit</h3>
-<hr />
-<form method="post">
-    <div class="row">
-        <div class="col-lg-5">
-            <div class="justify-content-between mb-2">
-                <label>Kategori:</label>
-                <input class="form-control" type="text" asp-for="AMerit.Category" placeholder="Kategori" />
-            </div>
-            <div class="justify-content-between mb-2">
-                <label>Underkategori:</label>
-                <input class="form-control" type="text" asp-for="AMerit.SubCategory" placeholder="Underkategori" />
-            </div>
-            <div class="justify-content-between mb-2">
-                <label>Beskrivning:</label>
-                
-                <textarea class="form-control" type="text" asp-for="AMerit.Description" placeholder="Beskrivning" id="exampleFormControlTextarea1" rows="3"></textarea>
 
+@if(!Model.MeritSaved)
+{ 
+    <h3>Lägg till en merit</h3>
+    <hr />
+    <form method="post">
+        <div class="row">
+            <div class="col-lg-5">
+                <div class="justify-content-between mb-2">
+                    <label>Kategori:</label>
+                    <input class="form-control" type="text" asp-for="AMerit.Category" placeholder="Kategori" />
+                </div>
+                <div class="justify-content-between mb-2">
+                    <label>Underkategori:</label>
+                    <input class="form-control" type="text" asp-for="AMerit.SubCategory" placeholder="Underkategori" />
+                </div>
+                <div class="justify-content-between mb-2">
+                    <label>Beskrivning:</label>
+
+                    <textarea class="form-control" type="text" asp-for="AMerit.Description" placeholder="Beskrivning" id="exampleFormControlTextarea1" rows="3"></textarea>
+
+                </div>
+                <div class="justify-content-between mb-2">
+                    <label>Varaktighet:</label>
+                    <input class="form-control" type="text" asp-for="AMerit.Duration" placeholder="Varaktighet" />
+                </div>
             </div>
-            <div class="justify-content-between mb-2">
-                <label>Varaktighet:</label>
-                <input class="form-control" type="text" asp-for="AMerit.Duration" placeholder="Varaktighet" />
-            </div>
+
         </div>
-      
-    </div>
-    <p></p>
+        <p></p>
         <div class="justify-content-between mb-2">
             <button class="btn btn-primary" type="submit">Lägg till merit</button>
         </div>
-</form>
-<div><p style="color:red">@Model.Information</p></div>
+    </form>
+}
+
+
+@if (Model.MeritSaved)
+{
+    <h3>Merit sparad!</h3>
+    <p>Du kan snart skapa en till merit.</p>
+    <meta http-equiv="refresh" content="1">
+
+}
 
 
 

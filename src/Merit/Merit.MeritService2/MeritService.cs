@@ -18,7 +18,6 @@ namespace Merit.MeritService
                 db.SaveChanges();
             }
         }
-        
         public void SaveMeritBusiness(CompanyMerit merit)
         {
             using (var db = new MeritContext())
@@ -27,7 +26,6 @@ namespace Merit.MeritService
                 db.SaveChanges();
             }
         }
-
         public List<PersonalMerit> ReadPersonalMerits(int userId)
         {
             using (var db = new MeritContext())
@@ -39,7 +37,6 @@ namespace Merit.MeritService
                 return l;
             }
         }
-
         public List<CompanyMerit> ReadCompanyMerits(int companyUserId)
         {
             using (var db = new MeritContext())
@@ -49,6 +46,30 @@ namespace Merit.MeritService
                     .AsEnumerable()
                     .ToList();
                 return l;
+            }
+        }
+        public void UpdatePersonalMerit(PersonalMerit merit)
+        {
+            using (var db = new MeritContext())
+            {
+                var existingMerit = GetPersonalMerit(merit.PersonalMeritId);
+                
+                if (existingMerit!= null)
+                {
+                    existingMerit.Category = merit.Category;
+                    existingMerit.SubCategory = merit.SubCategory;
+                    existingMerit.Description = merit.Description;
+                    existingMerit.Duration = merit.Duration;
+                    db.SaveChanges();
+                }
+            }
+        }
+        public PersonalMerit GetPersonalMerit(int id)
+        {
+            using (var db = new MeritContext())
+            {
+                return db.PersonalMerits
+                    .FirstOrDefault(m => m.PersonalMeritId == id);
             }
         }
     }

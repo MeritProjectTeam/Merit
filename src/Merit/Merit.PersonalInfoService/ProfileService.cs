@@ -24,7 +24,6 @@ namespace Merit.PersonalInfoService
                 db.SaveChanges();
             }
         }
-
        public void UpdatePersonalInfo(PersonalInfo newInfo)
         {
             using (var db = new MeritContext())

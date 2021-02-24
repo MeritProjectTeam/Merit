@@ -121,7 +121,6 @@ namespace Merit.AccountService
                 return 100;
             }
         }
-
         public static string EncryptPassword(string password)
         {
             MD5 mD5 = MD5.Create();
@@ -162,13 +161,11 @@ namespace Merit.AccountService
             }
             return  userIdAndUserType;
         }
-
         public static void CreateCookie(int? userId)
         {
             using StreamWriter sw = new StreamWriter("wwwroot/DataFile/cookie.txt", false);
             sw.WriteLine(userId);
         }
-
         public static int CheckCookie()
         {
             using StreamReader sr = new StreamReader("wwwroot/DataFile/cookie.txt");
