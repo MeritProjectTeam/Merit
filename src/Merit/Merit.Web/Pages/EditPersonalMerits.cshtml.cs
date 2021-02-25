@@ -13,26 +13,36 @@ namespace Merit.Web.Pages
     public class EditPersonalMeritsModel : PageModel
     {
         private readonly IMeritService meritService = new MeritService.MeritService();
+
+        private int sMeritId;
+
+
         [BindProperty(SupportsGet  = true)]
         public List<PersonalMerit> MeritList { get; set; }
-        public PersonalInfo APerson { get; set; }
         [BindProperty(SupportsGet=true)]
         public int SelectedMeritID { get; set; }
-
+        [BindProperty]
         public string CategoryText { get; set; }
+        [BindProperty]
         public string SubCategoryText { get; set; }
+        [BindProperty]
         public string DescriptionText { get; set; }
+        [BindProperty]
         public string DurationText { get; set; }
+        [BindProperty]
+        public PersonalMerit PMerit { get; set; }
 
         int userId = AccountService.Account.CheckCookie();
 
         public void OnGet()
         {
             MeritList = meritService.ReadPersonalMerits(userId);
+          
             foreach (var x in MeritList)
             {
-                if (x.PersonalMeritId == SelectedMeritID)
+                if (x.PersonalMeritId == SelectedMeritID) 
                 {
+
                     CategoryText = x.Category;
                     SubCategoryText = x.SubCategory;
                     DescriptionText = x.Description;
@@ -42,19 +52,15 @@ namespace Merit.Web.Pages
         }
         public void OnPostEdit()
         {
-            PersonalMerit personalMerit = new PersonalMerit();
-            personalMerit.PersonalMeritId = SelectedMeritID;
-            personalMerit.Category = CategoryText;
-            personalMerit.SubCategory = SubCategoryText;
-            personalMerit.Description = DescriptionText;
-            personalMerit.Duration = DurationText;
+            PMerit.PersonalMeritId = sMeritId; //Om man hårdkodar detta fungerar det, vet ej hur jag passar in querystringen i OnPostEdit /Seb
 
-            meritService.UpdatePersonalMerit(personalMerit);
-        }
+            //personalMerit.PersonalMeritId = SelectedMeritID;
+            //personalMerit.Category = CategoryText;
+            //personalMerit.SubCategory = SubCategoryText;
+            //personalMerit.Description = DescriptionText;
+            //personalMerit.Duration = DurationText;
 
-        public void OnPostDelete()
-        {
-            
+            meritService.UpdatePersonalMerit(PMerit);
         }
     }
 }

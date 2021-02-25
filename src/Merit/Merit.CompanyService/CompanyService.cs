@@ -1,5 +1,6 @@
 ﻿using Merit.Data.Data;
 using Merit.Data.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,10 +35,27 @@ namespace Merit.CompanyService
                 db.SaveChanges();
             };
         }
-        
+        public void EditCompanyInfo(CompanyInfo info)
+        {
+            using (var db = new MeritContext())
+            {
+                var existingInfo = Get(info.CompanyInfoId);
 
+                if (existingInfo != null)
+                {
+                    db.Entry(existingInfo).State = EntityState.Modified;
 
+                    existingInfo.CompanyName = info.CompanyName;
+                    existingInfo.ContactName = info.ContactName;
+                    existingInfo.Phone = info.Phone;
+                    existingInfo.Street = info.Street;
+                    existingInfo.ZipCode = info.ZipCode;
+                    existingInfo.OrgNumber = info.OrgNumber;
+                    existingInfo.City = info.City;
+
+                    db.SaveChanges();
+                }
+            }
+        }
     }
-
-
 }

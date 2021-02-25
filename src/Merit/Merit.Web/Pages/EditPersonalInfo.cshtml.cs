@@ -32,7 +32,7 @@ namespace Merit.Web.Pages
         {
             Information = "Profilinfo sparad.";
             APerson.PersonalUserID = AccountService.Account.CheckCookie();
-            profileService.UpdatePersonalInfo(APerson);
+            profileService.EditPersonalInfo(APerson);
         }
     }
 }

@@ -7,6 +7,9 @@
 <form method="post">
     <div class="row">
         <div class="col-lg-3">
+            
+            <input type="hidden" asp-for="ACompany.CompanyInfoId" /> @*Needs to exist, property needs to be set*@
+
             <div class="justify-content-between mb-2">
                 <label for="companyname">Företagsnamn:</label>
                 <input class="form-control" asp-for="ACompany.CompanyName" type="text" />
@@ -18,7 +21,7 @@
 
             <div class="justify-content-between mb-2">
                 <label for="Contactname">Kontaktperson:</label>
-                <input class="form-control" asp-for="ACompany.ContactName" type="text"  />
+                <input class="form-control" asp-for="ACompany.ContactName" type="text" />
             </div>
             <div class="justify-content-between mb-2">
                 <label for="phone">Telefon:</label>
@@ -26,11 +29,11 @@
             </div>
             <div class="justify-content-between mb-2">
                 <label for="Street">Gatuadress:</label>
-                <input class="form-control" asp-for="ACompany.Street" type="text"  />
+                <input class="form-control" asp-for="ACompany.Street" type="text" />
             </div>
             <div class="justify-content-between mb-2">
                 <label for="zipcode">Postnummer:</label>
-                <input class="form-control" asp-for="ACompany.ZipCode" type="text"  />
+                <input class="form-control" asp-for="ACompany.ZipCode" type="text" />
             </div>
             <div class="justify-content-between mb-2">
                 <label for="city">Stad:</label>
