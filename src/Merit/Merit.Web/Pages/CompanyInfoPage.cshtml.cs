@@ -48,7 +48,7 @@ namespace Merit.Web.Pages
                 string imageBase64Data = Convert.ToBase64String(img.ImageData);
                 ImageUrl = string.Format($"data:image/jpg;base64, {imageBase64Data}");
             }
-            CompanyWants = wantsService.GetCompanyWants(userId);
+            CompanyWants = wantsService.GetAllCompanyWants(userId);
            
             CompanyMerits = meritService.ReadCompanyMerits(userId);
         }
