@@ -1,0 +1,31 @@
+﻿@page
+@model Merit.Web.Pages.AddWantModel
+@{
+}
+<h3>Lägg till Want</h3>
+<hr />
+<div class="justify-content-between mb-2 col-6">En want är ett nyckelord för något önskemål du har för ditt framtida arbete eller arbetsgivare. Detta skulle kunna vara ex. "pingisbord", "5 veckor semester", "utvecklingspotential", "pubquiz", "interna utbildningar" osv.</div>
+<p></p>
+<form method="post">
+    <div class="row">
+        <div class="col-lg-5">
+            <div class="justify-content-between mb-2">
+                <label>Nyckelord för Want:</label>
+                <input class="form-control" type="text" asp-for="PersonalWant.Want" placeholder="Want" />
+            </div>
+           
+        </div>
+    </div>
+    <p></p>
+    <div class="justify-content-between mb-2">
+        <button class="btn btn-primary" type="submit">Lägg till Want</button>
+        <a class="btn btn-primary" asp-page="/personalinfopage">Profilinfo</a>
+        @if (Model.WantSaved)
+        {
+            <meta http-equiv="refresh" content="1">
+            <div style="color: limegreen">
+                <b>Want skapad!</b>
+            </div>
+        }
+    </div>
+</form>

@@ -9,8 +9,8 @@ namespace Merit.WantsService
 {
     public interface IWantsService
     {
-        public void CreatePersonalWant(string want, int userId);
-        public void CreateCompanyWant(string want, int userId);
+        public void CreatePersonalWant(PersonalWants personalWant);
+        public void CreateCompanyWant(CompanyWants companyWant);
 
         public List<PersonalWants> GetPersonalWants(int userId);
         public List<CompanyWants> GetCompanyWants(int userId);
