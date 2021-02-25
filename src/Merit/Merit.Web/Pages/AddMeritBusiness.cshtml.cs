@@ -33,7 +33,7 @@ namespace Merit.Web.Pages
             int companyUserId = AccountService.Account.CheckCookie();
             if (companyUserId != 0)
             {
-                ACompanyMerit.CompanyUserID = companyUserId;          //TA BORT KOMMENTARTECKNEN EFTER MERGE MED NYA DATABASEN!!!
+                ACompanyMerit.CompanyUserId = companyUserId;          //TA BORT KOMMENTARTECKNEN EFTER MERGE MED NYA DATABASEN!!!
                 CompanyMeritService.SaveMeritBusiness(ACompanyMerit);
                 Information = "Merit sparad.";
             }

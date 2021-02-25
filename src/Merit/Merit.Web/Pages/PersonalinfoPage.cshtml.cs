@@ -24,7 +24,7 @@ namespace Merit.Web.Pages
         [BindProperty]
         public PersonalInfo PersonalInfo { get; set; }
         [BindProperty]
-        public List<PersonalMerit> personalMerits { get; set; }
+        public List<PersonalMerit> PersonalMerits { get; set; }
 
         [BindProperty]
         public List<PersonalWants> PersonalWants { get; set; }
@@ -39,7 +39,7 @@ namespace Merit.Web.Pages
             //{
             //    PersonalInfo = new PersonalInfo();
             //}
-            personalMerits = meritService.ReadPersonalMerits(userId);
+            PersonalMerits = meritService.ReadPersonalMerits(userId);
         }
     }
 }
