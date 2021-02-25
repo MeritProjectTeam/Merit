@@ -42,10 +42,7 @@ namespace Merit.Web.Pages
             {
                 if (x.PersonalMeritId == SelectedMeritID) 
                 {
-                    if (SelectedMeritID != 0) 
-                    {
-                        sMeritId = SelectedMeritID;
-                    }
+
                     CategoryText = x.Category;
                     SubCategoryText = x.SubCategory;
                     DescriptionText = x.Description;
@@ -53,9 +50,10 @@ namespace Merit.Web.Pages
                 }
             }
         }
-        public void OnPost()
+        public void OnPostEdit()
         {
-            //PMerit.PersonalMeritId = id;
+            PMerit.PersonalMeritId = sMeritId; //Om man hårdkodar detta fungerar det, vet ej hur jag passar in querystringen i OnPostEdit /Seb
+
             //personalMerit.PersonalMeritId = SelectedMeritID;
             //personalMerit.Category = CategoryText;
             //personalMerit.SubCategory = SubCategoryText;

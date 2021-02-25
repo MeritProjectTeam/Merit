@@ -7,6 +7,7 @@
 <form method="post">
     <div class="row">
         <div class="col-lg-3">
+            <input type="hidden" asp-for="APerson.PersonalInfoId" />
             <div class="justify-content-between mb-2">
                 <label for="firstname">Förnamn</label>
                 <input class="form-control" asp-for="APerson.FirstName" type="text" value="@Model.APerson.FirstName" />
@@ -36,7 +37,7 @@
                 <label for="phone">Telefon</label>
                 <input class="form-control" asp-for="APerson.PhoneNumber" type="text" value="@Model.APerson.PhoneNumber" />
             </div>
-            </div>
+        </div>
         </div>
     <p></p>
         <div class="justify-content-between mb-2">
