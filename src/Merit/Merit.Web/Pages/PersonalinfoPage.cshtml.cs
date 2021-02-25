@@ -34,11 +34,8 @@ namespace Merit.Web.Pages
            int userId = Account.CheckCookie();
             AUser = accountService.GetPersonalUser(userId);
             PersonalInfo = profileService.Get(userId);
-            //PersonalWants = wantsService.GetPersonalWants(userId);
-            //if (PersonalInfo == null)
-            //{
-            //    PersonalInfo = new PersonalInfo();
-            //}
+            PersonalWants = wantsService.GetPersonalWants(userId);
+            
             PersonalMerits = meritService.ReadPersonalMerits(userId);
         }
     }
