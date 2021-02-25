@@ -30,16 +30,13 @@ namespace Merit.Web.Pages
         public void OnGet()
         {
             CompanyMeritList = meritService.ReadCompanyMerits(userId);
-
         }
-
         public IActionResult OnPostEdit()
         {
             meritService.UpdateCompanyMerit(CMerit);
 
             return RedirectToAction("Index");
         }
-
         public IActionResult OnPostDelete()
         {
             meritService.DeleteCompanyMerit(CMerit);

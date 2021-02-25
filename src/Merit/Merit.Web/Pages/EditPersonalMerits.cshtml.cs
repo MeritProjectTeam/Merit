@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Merit.MeritService;
 using Merit.Data.Models;
 using Merit.PersonalInfoService;
+using Microsoft.EntityFrameworkCore;
 
 namespace Merit.Web.Pages
 {
@@ -16,6 +17,7 @@ namespace Merit.Web.Pages
 
         [BindProperty(SupportsGet  = true)]
         public List<PersonalMerit> MeritList { get; set; }
+
         [BindProperty(SupportsGet=true)]
         public int SelectedMeritID { get; set; }
         [BindProperty]
@@ -49,6 +51,7 @@ namespace Merit.Web.Pages
         }
         public IActionResult OnPostEdit()
         {
+           
             meritService.UpdatePersonalMerit(PMerit);
             return RedirectToPage("EditPersonalMerits");
         }
@@ -56,7 +59,6 @@ namespace Merit.Web.Pages
         public IActionResult OnPostDelete()
         {
             meritService.DeletePersonalMerit(PMerit);
-
             return RedirectToPage("EditPersonalMerits");
         }
     }

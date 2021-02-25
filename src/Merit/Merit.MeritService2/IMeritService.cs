@@ -17,7 +17,7 @@ namespace Merit.MeritService
         void UpdatePersonalMerit(PersonalMerit personalMerit);
         void UpdateCompanyMerit(CompanyMerit merit);
         CompanyMerit GetCompanyMerit(int id);
-        void DeleteCompanyMerit(CompanyMerit Cmerit);
-        void DeletePersonalMerit(PersonalMerit Pmerit);
+        void DeleteCompanyMerit(CompanyMerit cMerit);
+        void DeletePersonalMerit(PersonalMerit pMerit);
     }
 }

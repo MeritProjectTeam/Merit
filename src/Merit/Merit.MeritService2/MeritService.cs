@@ -105,8 +105,11 @@ namespace Merit.MeritService
                 var q = db.CompanyMerits
                     .FirstOrDefault(q => q.CompanyMeritId == merit.CompanyMeritId);
 
-                db.Remove(q);
-                db.SaveChanges();
+                if (q !=null)
+                {
+                    db.Remove(q);
+                    db.SaveChanges();
+                }
             }
         }
 
@@ -117,8 +120,11 @@ namespace Merit.MeritService
                 var q = db.PersonalMerits
                     .FirstOrDefault(q => q.PersonalMeritId == merit.PersonalMeritId);
 
-                db.Remove(q);
-                db.SaveChanges();
+                if (q != null)
+                {
+                    db.Remove(q);
+                    db.SaveChanges();
+                }
             }
         }
     }
