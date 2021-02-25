@@ -52,7 +52,7 @@ namespace Merit.Web.Pages
         public IActionResult OnPostEdit()
         {
            
-            meritService.UpdatePersonalMerit(PMerit);
+            meritService.EditPersonalMerit(PMerit);
             return RedirectToPage("EditPersonalMerits");
         }
 

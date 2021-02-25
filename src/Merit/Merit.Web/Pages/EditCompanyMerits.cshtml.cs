@@ -12,28 +12,41 @@ namespace Merit.Web.Pages
     public class EditCompanyMeritsModel : PageModel
     {
         private IMeritService meritService = new MeritService.MeritService();
+        
+        
+        [BindProperty(SupportsGet = true)]
         public List<CompanyMerit> CompanyMeritList { get; set; }
         [BindProperty]
         public CompanyMerit CMerit { get; set; }
         
         [BindProperty(SupportsGet = true)]
         public int SelectedMeritID { get; set; }
+        [BindProperty]
         public string CategoryText { get; set; }
         [BindProperty]
         public string SubCategoryText { get; set; }
         [BindProperty]
         public string DescriptionText { get; set; }
-        [BindProperty]
-        public string DurationText { get; set; }
 
         int userId = AccountService.Account.CheckCookie();
         public void OnGet()
         {
             CompanyMeritList = meritService.ReadCompanyMerits(userId);
+
+            foreach (var merit in CompanyMeritList)
+            {
+                if (merit.CompanyMeritId == SelectedMeritID)
+                {
+                    SelectedMeritID = merit.CompanyMeritId;
+                    CategoryText = merit.Category;
+                    SubCategoryText = merit.SubCategory;
+                    DescriptionText = merit.Description;
+                }
+            }
         }
         public IActionResult OnPostEdit()
         {
-            meritService.UpdateCompanyMerit(CMerit);
+            meritService.EditCompanyMerit(CMerit);
 
             return RedirectToAction("Index");
         }

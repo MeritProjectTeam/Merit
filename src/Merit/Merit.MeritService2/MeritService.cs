@@ -47,7 +47,7 @@ namespace Merit.MeritService
                 return l;
             }
         }
-        public void UpdatePersonalMerit(PersonalMerit merit)
+        public void EditPersonalMerit(PersonalMerit merit)
         {
             using (var db = new MeritContext())
             {
@@ -81,11 +81,11 @@ namespace Merit.MeritService
                     .FirstOrDefault(c => c.CompanyMeritId == id);
             }
         }
-        public void UpdateCompanyMerit(CompanyMerit merit)
+        public void EditCompanyMerit(CompanyMerit merit)
         {
             using (var db = new MeritContext())
             {
-                var existingMerit = GetPersonalMerit(merit.CompanyMeritId);
+                var existingMerit = GetCompanyMerit(merit.CompanyMeritId);
 
                 if (existingMerit != null)
                 {
