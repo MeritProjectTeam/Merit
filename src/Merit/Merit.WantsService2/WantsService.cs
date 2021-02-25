@@ -10,13 +10,9 @@ namespace Merit.WantsService
     {
 
 
-        public void CreateCompanyWant(string want, int userId)
+        public void CreateCompanyWant(CompanyWants companyWant)
         {
-            CompanyWants companyWant = new CompanyWants();
-
-            companyWant.Want = want;
-            companyWant.CompanyUserId = userId;
-
+            
             using (var db = new MeritContext())
             {
                 db.Add(companyWant);
@@ -28,13 +24,8 @@ namespace Merit.WantsService
 
 
 
-        public void CreatePersonalWant(string want, int userId)
+        public void CreatePersonalWant(PersonalWants personalWant)
         {
-            PersonalWants personalWant = new PersonalWants();
-
-            personalWant.Want = want;
-            personalWant.PersonalUserId = userId;
-
             using (var db = new MeritContext())
             {
                 db.Add(personalWant);
