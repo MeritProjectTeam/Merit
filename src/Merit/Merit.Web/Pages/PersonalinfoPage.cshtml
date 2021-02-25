@@ -5,6 +5,19 @@
 }
 
 <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
+        <a class="navbar-brand js-scroll-trigger" href="#page-top">
+            <span class="d-block d-lg-none">MERIT</span>
+            <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="/images/merit2.png" alt="" /></span>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-page="/PersonalinfoPage">Profilsida</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-page="/LogOut">Logga ut</a></li>
+            </ul>
+        </div>
+    </nav>
     <!-- Page Content -->
     <div class="container">
 
@@ -26,7 +39,6 @@
         </div>
         <!-- /.row -->
         <!-- Call to Action Well -->
-       
         <!-- Content Row -->
         <div class="row">
             <div class="col-md-4 mb-5">
@@ -105,17 +117,18 @@
                         </div>
                         <p></p>
                         <p class="card-text">
-                            @*<ul>
+                            <ul>
                                 @foreach (var x in Model.PersonalWants)
                                 {
                                     <li>
                                         @x.Want
-                                    </li>        
+                                    </li>
+
                                 }
-                            </ul>*@
-                            
-                         </p>
-                     </div>
+                            </ul>
+
+                        </p>
+                    </div>
                     <div class="card-footer">
                         <a href="/AddWant" class="btn btn-primary btn-sm">Lägg till Want</a>
                         <a href="#" class="btn btn-primary btn-sm">Redigera Wants</a>
@@ -126,14 +139,10 @@
 
         </div>
         <!-- /.row -->
-
-    
-    <!-- /.container -->
-    <!-- Footer -->
-   
-
-    <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- /.container -->
+        <!-- Footer -->
+        <!-- Bootstrap core JavaScript -->
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 </body>
