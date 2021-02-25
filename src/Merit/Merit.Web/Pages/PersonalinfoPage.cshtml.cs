@@ -1,14 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Merit.AccountService;
+using Merit.Data.Models;
+using Merit.MeritService;
+using Merit.PersonalInfoService;
+using Merit.WantsService;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Merit.PersonalInfoService;
-using Merit.MeritService;
-using Merit.Data.Models;
-using Merit.AccountService;
-using Merit.WantsService;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace Merit.Web.Pages
 {
@@ -18,6 +19,8 @@ namespace Merit.Web.Pages
         private IAccount accountService = new Account();
         private IMeritService meritService = new MeritService.MeritService();
         private IWantsService wantsService = new WantsService.WantsService();
+        private ProfileService profil = new ProfileService();
+
 
         [BindProperty]
         public PersonalUser AUser { get; set; }
@@ -29,14 +32,53 @@ namespace Merit.Web.Pages
         [BindProperty]
         public List<PersonalWants> PersonalWants { get; set; }
 
+        [BindProperty]
+        public string ImageUrl { get; set; }
         public void OnGet()
         {
-           int userId = Account.CheckCookie();
+            int userId = Account.CheckCookie();
+
             AUser = accountService.GetPersonalUser(userId);
+            PersonalImage img = profileService.GetImage(AUser);
+            if (img == null)
+            {
+                ImageUrl = "http://placehold.it/300x300";
+            }
+            else
+            {
+                string imageBase64Data = Convert.ToBase64String(img.ImageData);
+                ImageUrl = string.Format($"data:image/jpg;base64, {imageBase64Data}");
+            }
             PersonalInfo = profileService.Get(userId);
             PersonalWants = wantsService.GetPersonalWants(userId);
-            
+
             PersonalMerits = meritService.ReadPersonalMerits(userId);
         }
+        public void OnPost()
+        {
+            int userId = Account.CheckCookie();
+            AUser = accountService.GetPersonalUser(userId);
+            UploadImage();
+        }
+
+        public IActionResult UploadImage()
+        {
+            PersonalImage img = new PersonalImage();
+            var files = Request.Form.Files;
+            var file = files[0];
+            img.ImageTitle = file.FileName;
+            img.PersonalUserId = AUser.PersonalUserId;
+            
+            using (MemoryStream ms = new MemoryStream())
+            {
+                file.CopyTo(ms);
+                img.ImageData = ms.ToArray();
+            }
+            profil.SaveImage(img);
+
+            return RedirectToPage("/Test");
+        }
+        
+       
     }
 }

@@ -16,5 +16,11 @@ namespace Merit.Data.Models
         public ICollection<PersonalMerit> PersonalMerits { get; set; }
 
         public ICollection<PersonalWants> PersonalWants { get; set; }
+
+        public PersonalImage PersonalImage { get; set; }
+
+
+
+
     }
 }
