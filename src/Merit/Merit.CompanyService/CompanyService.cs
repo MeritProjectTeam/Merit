@@ -25,16 +25,6 @@ namespace Merit.CompanyService
                 db.SaveChanges();
             }
         }
-        public void UpdateCompanyInfo(CompanyInfo newCompanyInfo)
-        {
-            using (var db = new MeritContext())
-            {
-                CompanyInfo dbCompanyInfo = db.CompanyInfo.FirstOrDefault(x => x.CompanyUserID == newCompanyInfo.CompanyUserID);
-                db.CompanyInfo.Remove(dbCompanyInfo);
-                db.CompanyInfo.Add(newCompanyInfo);
-                db.SaveChanges();
-            };
-        }
         public void EditCompanyInfo(CompanyInfo info)
         {
             using (var db = new MeritContext())

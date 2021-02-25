@@ -33,7 +33,6 @@ namespace Merit.MeritService
             {
                 var l = db.PersonalMerits
                     .Where(l => l.PersonalUserId == userId)
-                    .AsEnumerable()
                     .ToList();
                 return l;
             }
@@ -44,7 +43,6 @@ namespace Merit.MeritService
             {
                 var l = db.CompanyMerits
                     .Where(l => l.CompanyUserId == companyUserId)
-                    .AsEnumerable()
                     .ToList();
                 return l;
             }
@@ -73,6 +71,54 @@ namespace Merit.MeritService
             {
                 return db.PersonalMerits
                     .FirstOrDefault(m => m.PersonalMeritId == id);
+            }
+        }
+        public CompanyMerit GetCompanyMerit(int id)
+        {
+            using (var db = new MeritContext())
+            {
+                return db.CompanyMerits
+                    .FirstOrDefault(c => c.CompanyMeritId == id);
+            }
+        }
+        public void UpdateCompanyMerit(CompanyMerit merit)
+        {
+            using (var db = new MeritContext())
+            {
+                var existingMerit = GetPersonalMerit(merit.CompanyMeritId);
+
+                if (existingMerit != null)
+                {
+                    db.Entry(existingMerit).State = EntityState.Modified;
+
+                    existingMerit.Category = merit.Category;
+                    existingMerit.SubCategory = merit.SubCategory;
+                    existingMerit.Description = merit.Description;
+                    db.SaveChanges();
+                }
+            }
+        }
+        public void DeleteCompanyMerit(CompanyMerit merit)
+        {
+            using (var db = new MeritContext())
+            {
+                var q = db.CompanyMerits
+                    .FirstOrDefault(q => q.CompanyMeritId == merit.CompanyMeritId);
+
+                db.Remove(q);
+                db.SaveChanges();
+            }
+        }
+
+        public void DeletePersonalMerit(PersonalMerit merit)
+        {
+            using (var db = new MeritContext())
+            {
+                var q = db.PersonalMerits
+                    .FirstOrDefault(q => q.PersonalMeritId == merit.PersonalMeritId);
+
+                db.Remove(q);
+                db.SaveChanges();
             }
         }
     }

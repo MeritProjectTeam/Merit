@@ -11,7 +11,6 @@ namespace Merit.PersonalInfoService
     {
         public PersonalInfo Get(int id);
         public void SavePersonalInfo(PersonalInfo info);
-        public void UpdatePersonalInfo(PersonalInfo info);
         public void EditPersonalInfo(PersonalInfo info);
     }
 }

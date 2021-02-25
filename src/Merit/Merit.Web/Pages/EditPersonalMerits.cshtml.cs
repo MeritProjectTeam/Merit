@@ -14,9 +14,6 @@ namespace Merit.Web.Pages
     {
         private readonly IMeritService meritService = new MeritService.MeritService();
 
-        private int sMeritId;
-
-
         [BindProperty(SupportsGet  = true)]
         public List<PersonalMerit> MeritList { get; set; }
         [BindProperty(SupportsGet=true)]
@@ -38,29 +35,29 @@ namespace Merit.Web.Pages
         {
             MeritList = meritService.ReadPersonalMerits(userId);
           
-            foreach (var x in MeritList)
+            foreach (var merit in MeritList)
             {
-                if (x.PersonalMeritId == SelectedMeritID) 
+                if (merit.PersonalMeritId == SelectedMeritID) 
                 {
-
-                    CategoryText = x.Category;
-                    SubCategoryText = x.SubCategory;
-                    DescriptionText = x.Description;
-                    DurationText = x.Duration;
+                    SelectedMeritID = merit.PersonalMeritId;
+                    CategoryText = merit.Category;
+                    SubCategoryText = merit.SubCategory;
+                    DescriptionText = merit.Description;
+                    DurationText = merit.Duration;
                 }
             }
         }
-        public void OnPostEdit()
+        public IActionResult OnPostEdit()
         {
-            PMerit.PersonalMeritId = sMeritId; //Om man hårdkodar detta fungerar det, vet ej hur jag passar in querystringen i OnPostEdit /Seb
-
-            //personalMerit.PersonalMeritId = SelectedMeritID;
-            //personalMerit.Category = CategoryText;
-            //personalMerit.SubCategory = SubCategoryText;
-            //personalMerit.Description = DescriptionText;
-            //personalMerit.Duration = DurationText;
-
             meritService.UpdatePersonalMerit(PMerit);
+            return RedirectToPage("EditPersonalMerits");
+        }
+
+        public IActionResult OnPostDelete()
+        {
+            meritService.DeletePersonalMerit(PMerit);
+
+            return RedirectToPage("EditPersonalMerits");
         }
     }
 }

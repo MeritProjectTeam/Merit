@@ -21,7 +21,7 @@
                 </ol>
             </div>
             <div class="col-lg-3" row="10">
-                <input type="hidden" asp-for="PMerit.PersonalMeritId" />
+                <input type="hidden" value="@Model.SelectedMeritID" asp-for="PMerit.PersonalMeritId" />
                 <div><input type="text" value="@Model.CategoryText" asp-for="PMerit.Category"/></div>
                 <div><input type="text" value="@Model.SubCategoryText" asp-for="PMerit.SubCategory"/></div>
                 <div><input type="text" value="@Model.DescriptionText" asp-for="PMerit.Description"/></div>

@@ -31,8 +31,7 @@ namespace Merit.Web.Pages
         {
             Information = "Företagsinfo sparad.";
             ACompany.CompanyUserID = AccountService.Account.CheckCookie();
-            companyService.UpdateCompanyInfo(ACompany);
-
+            companyService.EditCompanyInfo(ACompany);
         }
     }
 }
