@@ -13,7 +13,7 @@ namespace Merit.Web.Pages
     {
         public bool MeritSaved { get; set; } = false;
         IMeritService meritService = new MeritService.MeritService();
-        
+        public string Status { get; set; } = "Success!"; 
 
         [BindProperty]
         public PersonalMerit AMerit { get; set; }

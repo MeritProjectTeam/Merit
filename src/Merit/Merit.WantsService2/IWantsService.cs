@@ -11,9 +11,9 @@ namespace Merit.WantsService
     {
         public void CreatePersonalWant(PersonalWants personalWant);
         public void CreateCompanyWant(CompanyWants companyWant);
-
-        public List<PersonalWants> GetPersonalWants(int userId);
-        public List<CompanyWants> GetCompanyWants(int userId);
-
+        public List<PersonalWants> GetAllPersonalWants(int userId);
+        public List<CompanyWants> GetAllCompanyWants(int userId);
+        PersonalWants GetPersonalWant(int id);
+        CompanyWants GetCompanyWant(int id);
     }
 }

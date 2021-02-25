@@ -34,7 +34,7 @@ namespace Merit.Web.Pages
             int userId = Account.CheckCookie();
             AUser = accountService.GetCompanyUser(userId);
             CompanyInfo = companyService.Get(userId);
-            CompanyWants = wantsService.GetCompanyWants(userId);
+            CompanyWants = wantsService.GetAllCompanyWants(userId);
             //if (CompanyInfo == null)
             //{
             //    CompanyInfo = new CompanyInfo();

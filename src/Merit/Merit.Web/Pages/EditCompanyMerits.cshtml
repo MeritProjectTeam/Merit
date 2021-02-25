@@ -21,7 +21,7 @@
                 </ol>
             </div>
             <div class="col-lg-3" row="10">
-                <input type="text" value="@Model.SelectedMeritID" asp-for="CMerit.CompanyMeritId" />
+                <input type="hidden" value="@Model.SelectedMeritID" asp-for="CMerit.CompanyMeritId" />
                 <div><input type="text" value="@Model.CategoryText" asp-for="CMerit.Category" /></div>
                 <div><input type="text" value="@Model.SubCategoryText" asp-for="CMerit.SubCategory" /></div>
                 <div><input type="text" value="@Model.DescriptionText" asp-for="CMerit.Description" /></div>
