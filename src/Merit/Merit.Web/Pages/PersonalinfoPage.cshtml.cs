@@ -19,7 +19,9 @@ namespace Merit.Web.Pages
         private IAccount accountService = new Account();
         private IMeritService meritService = new MeritService.MeritService();
         private IWantsService wantsService = new WantsService.WantsService();
-        private ProfileService profil = new ProfileService();
+        
+        
+        
 
 
         [BindProperty]
@@ -74,9 +76,9 @@ namespace Merit.Web.Pages
                 file.CopyTo(ms);
                 img.ImageData = ms.ToArray();
             }
-            profil.SaveImage(img);
+            profileService.SaveImage(img);
 
-            return RedirectToPage("/Test");
+            return RedirectToPage();
         }
         
        

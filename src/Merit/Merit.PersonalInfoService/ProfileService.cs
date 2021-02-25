@@ -52,6 +52,10 @@ namespace Merit.PersonalInfoService
         {
             using (var db = new MeritContext())
             {
+                if (db.CompanyImages.FirstOrDefault(x => x.CompanyUserId == image.CompanyUserId) != null)
+                {
+                    db.CompanyImages.Remove(db.CompanyImages.FirstOrDefault(x => x.CompanyUserId == image.CompanyUserId));
+                }
                 db.Add(image);
                 db.SaveChanges();
             }
