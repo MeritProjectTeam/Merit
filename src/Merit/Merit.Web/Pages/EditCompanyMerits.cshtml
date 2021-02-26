@@ -20,7 +20,57 @@
 <form method="post">
     <div class="container">
         <div class="row">
-            <div class="col-lg-5" row="10">
+            
+
+
+                <div class="col-md-4 mb-5">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <div class="card-header">
+                                <h4 class="card-title">Meriter</h4>
+                            </div>
+                            <p></p>
+                            <p class="card-text">
+                                @foreach (var merit in Model.CompanyMeritList)
+                                {
+
+                                    <div>
+                                        Kategori: @merit.Category
+                                    </div>
+                                    <div>
+                                        Underkategori: @merit.SubCategory
+                                    </div>
+                                    <div>
+                                        Beskrivning: @merit.Description
+                                    </div>
+                                    
+                                    <div><a href="?SelectedMeritID=@merit.CompanyMeritId">Välj att redigera</a></div>
+                                    <hr />
+                                }
+                            </p>
+                        </div>
+                        <div class="card-footer">
+
+                        </div>
+                    </div>
+                </div>
+
+           
+                <div class="col-lg-3" row="10">
+                    <p><h4 c>Redigera</h4></p>
+                    <input type="hidden" value="@Model.SelectedMeritID" asp-for="CMerit.CompanyMeritId" />
+                    <div><input type="text" value="@Model.CategoryText" asp-for="CMerit.Category" /></div>
+                    <div><input type="text" value="@Model.SubCategoryText" asp-for="CMerit.SubCategory" /></div>
+                    <div><input type="text" value="@Model.DescriptionText" asp-for="CMerit.Description" /></div>
+                    
+
+                    <span class="justify-content-between mb-2">
+
+                        <button type="submit" class="btn btn-primary btn-sm" asp-page-handler="Edit">Ändra</button>
+                        <button type="submit" class="btn btn-primary btn-sm" asp-page-handler="Delete">Delete</button>
+                    </span>
+                </div>
+                @*<div class="col-lg-5" row="10">
                 <ol>
                     <h3>Merits</h3>
                     @foreach (var merit in Model.CompanyMeritList)
@@ -43,7 +93,7 @@
                     <button type="submit" asp-page-handler="Edit">Edit</button>
                     <button type="submit" asp-page-handler="Delete">Delete</button>
                 </span>
+            </div>*@
             </div>
         </div>
-    </div>
 </form>
