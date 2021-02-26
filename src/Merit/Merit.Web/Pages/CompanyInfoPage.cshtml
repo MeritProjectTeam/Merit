@@ -24,14 +24,22 @@
         <!-- Heading Row -->
         <div class="row align-items-center my-5">
             <div class="col-lg-4">
-                <img class="img-fluid rounded mb-4 mb-lg-0" src="http://placehold.it/300x300" alt="">
+                <img height="300" width="300" src="@Model.ImageUrl" alt="">
             </div>
             <!-- /.col-lg-8 -->
             <div class="col-lg-5">
                 <hr />
                 <h3>Välkommen, @Model.CompanyInfo.CompanyName!</h3>
                 <p>Här kan du uppdatera din profilinformation, lägga till meriter samt lägga till Wants.</p>
-                <a class="btn btn-primary" href="#">Ladda upp profilbild</a>
+                <div>
+                    <form method="post"
+                          enctype="multipart/form-data">
+                        <input type="file" id="file1"
+                               name="file1" />
+                        <button type="submit" class="btn btn-primary">Ladda upp bild</button>
+                    </form>
+                </div>
+                
                 <p></p>
                 <hr />
             </div>

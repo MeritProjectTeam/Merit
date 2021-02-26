@@ -34,6 +34,7 @@ namespace Merit.Data.Data
 
         public DbSet<CompanyWants> CompanyWants { get; set; }
         public DbSet<PersonalWants> PersonalWants { get; set; }
-
+        public DbSet<CompanyImage> CompanyImages { get; set; }
+        public DbSet<PersonalImage> PersonalImages { get; set; }
     }
 }
