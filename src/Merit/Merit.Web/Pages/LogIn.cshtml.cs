@@ -26,21 +26,20 @@ namespace Merit.Web.Pages
 
         public IActionResult OnPost()
         {
-            int userId = Account.CheckLogin(UserLogin);
-            if (userId != 0)
+            int[] userIdAndUserType = Account.CheckLogin(UserLogin);
+
+            if (userIdAndUserType[0] != 0)
             {
+
                 LoginMessage = "Inloggningen lyckades!";
-                AccountService.Account.CreateCookie(userId);
-                return Redirect("/PersonalInfoPage");
+                AccountService.Account.CreateCookie(userIdAndUserType[0]);
+                if (userIdAndUserType[1] == 1)
+                { return Redirect("/PersonalInfoPage"); }
+                else if (userIdAndUserType[1] == 2)
+                { return Redirect("/CompanyInfoPage"); }
             }
-            else
-            {
-               
-                LoginMessage = "Felaktigt användarnamn eller lösenord";
-                return RedirectToPage();
-
-            }
+            LoginMessage = "Felaktigt användarnamn eller lösenord";
+            return RedirectToPage();
         }
-
     }
 }

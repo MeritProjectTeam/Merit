@@ -6,13 +6,21 @@ using System.Threading.Tasks;
 
 namespace Merit.Data.Models
 {
-    public class User
+    public class PersonalUser
     {
-        public int UserID { get; set; }
+        public int PersonalUserId { get; set; }
         public string UserName { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
         public PersonalInfo PersonalInfo { get; set; }
         public ICollection<PersonalMerit> PersonalMerits { get; set; }
+
+        public ICollection<PersonalWants> PersonalWants { get; set; }
+
+        public PersonalImage PersonalImage { get; set; }
+
+
+
+
     }
 }

@@ -10,11 +10,15 @@ namespace Merit.PersonalInfoService
     public interface IProfileService
     {
         public PersonalInfo Get(int id);
-
-        public List<PersonalInfo> GetAll();
         public void SavePersonalInfo(PersonalInfo info);
-        public void UpdatePersonalInfo(PersonalInfo info);
-        public void CreateEmptyPersonalInfo(int userId);
+        public void EditPersonalInfo(PersonalInfo info);
 
+        public void SaveImage(PersonalImage image);
+
+        public CompanyImage GetImage(CompanyUser companyUser);
+
+        public void SaveImage(CompanyImage image);
+
+        public PersonalImage GetImage(PersonalUser personalUser);
     }
 }

@@ -7,22 +7,25 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Merit.AccountService;
 using Merit.Data.Models;
 using Merit.PersonalInfoService;
+using Merit.CompanyService;
 
 namespace LoginWebTesting.Pages
 {
     public class RegisterModel : PageModel
     {
         [BindProperty]
-        public User NewAccount { get; set; }
+        public User NewUser { get; set; }
 
         [BindProperty]
         public string PasswordCheck { get; set; }
+        [BindProperty]
+        public int AccountType { get; set; }
 
         [BindProperty]
         public string RegisterMessage { get; set; }
         private readonly IAccount account = new Account();
         private readonly IProfileService profileService = new ProfileService();
-        
+
         public void OnGet()
         {
         }
@@ -30,23 +33,45 @@ namespace LoginWebTesting.Pages
         public void OnPost()
         {
 
-            if (NewAccount.Password == PasswordCheck)
+            if (NewUser.Password == PasswordCheck)
             {
-                switch (account.CheckExistingAccount(NewAccount))
+                if (AccountType == 1)
                 {
-                    case 100:
-                        account.AddAccount(NewAccount);
-                        profileService.CreateEmptyPersonalInfo(NewAccount.UserID);
-                        RegisterMessage = "Registreringen lyckades!";
-                        break;
-                    case 101:
-                        RegisterMessage = "Användarnamnet upptaget.";
-                        break;
-                    case 102:
-                        RegisterMessage = "Epost-adressen finns redan registrerad.";
-                        break;
-                    default:
-                        break;
+                    PersonalUser NewAccount = new PersonalUser() { UserName = NewUser.UserName, Email = NewUser.Email, Password = NewUser.Password };
+                    switch (account.CheckExistingAccount(NewAccount))
+                    {
+                        case 100:
+                            account.AddAccount(NewAccount);
+                            RegisterMessage = "Registreringen lyckades!";
+                            break;
+                        case 101:
+                            RegisterMessage = "Användarnamnet upptaget.";
+                            break;
+                        case 102:
+                            RegisterMessage = "Epost-adressen finns redan registrerad.";
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                else if (AccountType == 2)
+                {
+                    CompanyUser NewAccount = new CompanyUser() { UserName = NewUser.UserName, Email = NewUser.Email, Password = NewUser.Password };
+                    switch (account.CheckExistingAccount(NewAccount))
+                    {
+                        case 100:
+                            account.AddAccount(NewAccount);
+                            RegisterMessage = "Registreringen lyckades!";
+                            break;
+                        case 101:
+                            RegisterMessage = "Användarnamnet upptaget.";
+                            break;
+                        case 102:
+                            RegisterMessage = "Epost-adressen finns redan registrerad.";
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
             else

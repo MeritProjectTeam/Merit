@@ -5,12 +5,13 @@ using System.Security.Cryptography;
 using System.Text;
 using Merit.Data.Data;
 using Merit.Data.Models;
+using Merit.CompanyService;
 
 namespace Merit.AccountService
 {
     public class Account : IAccount
     {
-        public void AddAccount(User user)
+        public void AddAccount(PersonalUser user)
         {
             //krypteringen sker på server-sidan, bör bytas till klient-sidan
             using (var db = new MeritContext())
@@ -19,33 +20,77 @@ namespace Merit.AccountService
                 db.Add(user);
                 db.SaveChanges();
 
+                try
+                {
+                    PersonalInfo info = new PersonalInfo();
+                    info.PersonalUserID = user.PersonalUserId;
+                    db.Add(info);
+                    db.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    db.Remove(user);
+                    db.SaveChanges();
+                }
             }
         }
-      
+        public void AddAccount(CompanyUser user)
+        {
+            //krypteringen sker på server-sidan, bör bytas till klient-sidan
 
-      
-        public User GetUser(int id)
+            using (var db = new MeritContext())
+            {
+                user.Password = EncryptPassword(user.Password);
+                db.Add(user);
+                db.SaveChanges();
+
+                try
+                {
+                    CompanyInfo info = new CompanyInfo();
+                    info.CompanyUserID = user.CompanyUserId;
+                    db.Add(info);
+                    db.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    db.Remove(user);
+                    db.SaveChanges();
+                }
+
+            }
+        }
+        public PersonalUser GetPersonalUser(int id)
         {
             using (var db = new MeritContext())
-                return db.Users
-                    .FirstOrDefault(p => p.UserID == id);
-
+                return db.PersonalUsers
+                    .FirstOrDefault(p => p.PersonalUserId == id);
+        }
+        public CompanyUser GetCompanyUser(int id)
+        {
+            using (var db = new MeritContext())
+                return db.CompanyUsers
+                    .FirstOrDefault(p => p.CompanyUserId == id);
         }
 
-        public int CheckExistingAccount(User user)
+        public int CheckExistingAccount(PersonalUser user)
         {
             using var db = new MeritContext() ;
 
-            var userNameExists = db.Users
+            var userNameExists = db.PersonalUsers
                 .FirstOrDefault(x => x.UserName.ToLower() == user.UserName.ToLower());
-            var emailExists = db.Users
+            var emailExists = db.PersonalUsers
                 .FirstOrDefault(x => x.Email.ToLower() == user.Email.ToLower());
 
-            if (userNameExists != null)
-            {
+            var companyUserNameExists = db.CompanyUsers
+                .FirstOrDefault(x => x.UserName.ToLower() == user.UserName.ToLower());
+            var companyEmailExists = db.CompanyUsers
+                .FirstOrDefault(x => x.Email.ToLower() == user.Email.ToLower());
+
+            if (userNameExists != null || companyUserNameExists != null)
+            {   
                 return 101;
             }
-            else if (emailExists != null)
+            else if (emailExists != null || companyEmailExists != null)
             {
                 return 102;
             }
@@ -55,6 +100,33 @@ namespace Merit.AccountService
             }
         }
 
+        public int CheckExistingAccount(CompanyUser user)
+        {
+            using var db = new MeritContext();
+
+            var userNameExists = db.PersonalUsers
+                .FirstOrDefault(x => x.UserName.ToLower() == user.UserName.ToLower());
+            var emailExists = db.PersonalUsers
+                .FirstOrDefault(x => x.Email.ToLower() == user.Email.ToLower());
+
+            var companyUserNameExists = db.CompanyUsers
+                .FirstOrDefault(x => x.UserName.ToLower() == user.UserName.ToLower());
+            var companyEmailExists = db.CompanyUsers
+                .FirstOrDefault(x => x.Email.ToLower() == user.Email.ToLower());
+
+            if (userNameExists != null || companyUserNameExists != null)
+            {
+                return 101;
+            }
+            else if (emailExists != null || companyEmailExists != null)
+            {
+                return 102;
+            }
+            else
+            {
+                return 100;
+            }
+        }
         public static string EncryptPassword(string password)
         {
             MD5 mD5 = MD5.Create();
@@ -71,24 +143,35 @@ namespace Merit.AccountService
             return result;
         }
 
-        public int CheckLogin(User user)
+        public int[] CheckLogin(User user)
         {
             using var db = new MeritContext();
-            var validLogin = db.Users
+            var personalUserValid = db.PersonalUsers
                 .FirstOrDefault(x => x.UserName.ToLower() == user.UserName.ToLower() && x.Password == EncryptPassword(user.Password));
-            if (validLogin != null)
-            {
-                return validLogin.UserID;
-            }
-            return 0;
-        }
+            var companyUserValid = db.CompanyUsers
+                .FirstOrDefault(x => x.UserName.ToLower() == user.UserName.ToLower() && x.Password == EncryptPassword(user.Password));
 
+            int[] userIdAndUserType = new int[] {0,0};
+            if (personalUserValid != null)
+            {
+                userIdAndUserType[0] = personalUserValid.PersonalUserId;
+                userIdAndUserType[1] = 1;
+                return userIdAndUserType;
+            }
+            else if (companyUserValid != null)
+            {
+                
+                userIdAndUserType[0] = companyUserValid.CompanyUserId;
+                userIdAndUserType[1] = 2;
+                return userIdAndUserType;
+            }
+            return  userIdAndUserType;
+        }
         public static void CreateCookie(int? userId)
         {
             using StreamWriter sw = new StreamWriter("wwwroot/DataFile/cookie.txt", false);
             sw.WriteLine(userId);
         }
-
         public static int CheckCookie()
         {
             using StreamReader sr = new StreamReader("wwwroot/DataFile/cookie.txt");
@@ -100,6 +183,5 @@ namespace Merit.AccountService
             return 0;
         }
 
-        
     }
 }

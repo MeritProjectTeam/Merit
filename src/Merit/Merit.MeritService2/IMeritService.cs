@@ -9,9 +9,15 @@ namespace Merit.MeritService
 {
     public interface IMeritService
     {
+        PersonalMerit GetPersonalMerit(int id);
         void SaveMerit(PersonalMerit merit);
         void SaveMeritBusiness(CompanyMerit bMerit);
         List<PersonalMerit> ReadPersonalMerits(int userId);
         List<CompanyMerit> ReadCompanyMerits(int companyUserId);
+        void EditPersonalMerit(PersonalMerit personalMerit);
+        void EditCompanyMerit(CompanyMerit merit);
+        CompanyMerit GetCompanyMerit(int id);
+        void DeleteCompanyMerit(CompanyMerit cMerit);
+        void DeletePersonalMerit(PersonalMerit pMerit);
     }
 }

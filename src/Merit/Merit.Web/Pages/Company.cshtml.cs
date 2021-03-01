@@ -15,7 +15,7 @@ namespace Merit.Web.Pages
         private readonly ICompanyService company = new CompanyService.CompanyService();
 
         [BindProperty]
-        public Company ACompany { get; set; }
+        public CompanyInfo ACompany { get; set; }
 
         public void OnGet()
         {

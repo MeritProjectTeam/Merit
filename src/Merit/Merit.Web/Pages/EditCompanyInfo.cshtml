@@ -1,0 +1,64 @@
+﻿@page
+@model Merit.Web.Pages.EditCompanyInfoModel
+@{
+}
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
+    <a class="navbar-brand js-scroll-trigger" href="#page-top">
+        <span class="d-block d-lg-none">MERIT</span>
+        <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="/images/merit2.png" alt="" /></span>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-page="/CompanyInfoPage">Företagssida</a></li>
+
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-page="/LogOut">Logga ut</a></li>
+
+        </ul>
+    </div>
+</nav>
+<h3>Uppdatera företagsinformation</h3>
+<hr />
+<form method="post">
+    <div class="row">
+        <div class="col-lg-3">
+            
+            <input type="hidden" asp-for="ACompany.CompanyInfoId" />
+
+            <div class="justify-content-between mb-2">
+                <label for="companyname">Företagsnamn:</label>
+                <input class="form-control" asp-for="ACompany.CompanyName" type="text" />
+            </div>
+            <div class="justify-content-between mb-2">
+                <label for="orgnumber">Organisationsnummer:</label>
+                <input class="form-control" asp-for="ACompany.OrgNumber" type="text" />
+            </div>
+
+            <div class="justify-content-between mb-2">
+                <label for="Contactname">Kontaktperson:</label>
+                <input class="form-control" asp-for="ACompany.ContactName" type="text" />
+            </div>
+            <div class="justify-content-between mb-2">
+                <label for="phone">Telefon:</label>
+                <input class="form-control" asp-for="ACompany.Phone" type="text" />
+            </div>
+            <div class="justify-content-between mb-2">
+                <label for="Street">Gatuadress:</label>
+                <input class="form-control" asp-for="ACompany.Street" type="text" />
+            </div>
+            <div class="justify-content-between mb-2">
+                <label for="zipcode">Postnummer:</label>
+                <input class="form-control" asp-for="ACompany.ZipCode" type="text" />
+            </div>
+            <div class="justify-content-between mb-2">
+                <label for="city">Stad:</label>
+                <input class="form-control" asp-for="ACompany.City" type="text" />
+            </div>
+        </div>
+    </div>
+    <p></p>
+    <div class="justify-content-between mb-2">
+        <button class="btn btn-primary" type="submit">Spara</button>
+    </div>
+</form>
+<div><p style="color:limegreen">@Model.Information</p></div>

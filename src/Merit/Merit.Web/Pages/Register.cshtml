@@ -14,6 +14,7 @@
 
             <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-page="/LogIn">Logga in</a></li>
             <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-page="/Register">Registrera</a></li>
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-page="/Team">Team</a></li>
 
         </ul>
     </div>
@@ -29,7 +30,7 @@
                     <label for="username">Användarnamn:</label>
                 </div>
                 <div>
-                    <input class="form-control" type="text" asp-for="NewAccount.UserName" name="username" placeholder="Användarnamn" required />
+                    <input class="form-control" type="text" asp-for="NewUser.UserName" name="username" placeholder="Användarnamn" required />
                 </div>
             </div>
             <div class="justify-content-between mb-2">
@@ -37,7 +38,7 @@
                     <label for="email">Epost:</label>
                 </div>
                 <div>
-                    <input class="form-control" type="email" asp-for="NewAccount.Email" name="email" placeholder="Epost" required />
+                    <input class="form-control" type="email" asp-for="NewUser.Email" name="email" placeholder="Epost" required />
                 </div>
             </div>
             <div class="justify-content-between mb-2">
@@ -47,7 +48,7 @@
                 </div>
 
                 <div>
-                    <input class="form-control" type="password" asp-for="NewAccount.Password" name="password" placeholder="Lösenord" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required />
+                    <input class="form-control" type="password" asp-for="NewUser.Password" name="password" placeholder="Lösenord" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required />
                     <small id="emailHelp" class="form-text text-muted">Lösenordet måste innehålla en siffra, stor bokstav, liten bokstav och vara minst 8 tecken långt.</small>
 
                 </div>
@@ -61,7 +62,14 @@
                     <input class="form-control" type="password" asp-for="PasswordCheck" name="passwordcheck" placeholder="Upprepa lösenordet" minlength="8" required />
                 </div>
             </div>
+            <div class="form-group">
+                <label for="accountType">Välj kontotyp</label>
+                <select class="form-control" id="accountType" asp-for="AccountType">
+                    <option value="1">Personligt konto</option>
+                    <option value="2">Företagskonto</option>
+                </select>
             </div>
+        </div>
         </div>
         <button class="btn btn-primary" type="submit">Registrera</button>
 </form>
