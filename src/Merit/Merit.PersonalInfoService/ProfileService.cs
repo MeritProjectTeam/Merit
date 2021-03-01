@@ -33,7 +33,6 @@ namespace Merit.PersonalInfoService
                 }
             }
         }
-
         public PersonalInfo Get(int id)
         {
             using (var db = new MeritContext())
@@ -80,7 +79,6 @@ namespace Merit.PersonalInfoService
                 db.SaveChanges();
             }
         }
-
         public void SavePersonalInfo(PersonalInfo info)
         {
             using (var db = new MeritContext())

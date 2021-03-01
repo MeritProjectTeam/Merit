@@ -29,9 +29,7 @@ namespace Merit.Web.Pages
             {
                 AMerit.PersonalUserId = userId;
                 meritService.SaveMerit(AMerit);
-                
             }
-            
         }
     }
 }

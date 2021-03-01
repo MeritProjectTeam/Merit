@@ -112,7 +112,6 @@ namespace Merit.MeritService
                 }
             }
         }
-
         public void DeletePersonalMerit(PersonalMerit merit)
         {
             using (var db = new MeritContext())

@@ -21,7 +21,7 @@ namespace Merit.Web.Pages
         
         [BindProperty(SupportsGet = true)]
         public int SelectedMeritID { get; set; }
-        [BindProperty]
+        [BindProperty]         
         public string CategoryText { get; set; }
         [BindProperty]
         public string SubCategoryText { get; set; }
