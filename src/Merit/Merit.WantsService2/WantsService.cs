@@ -24,12 +24,10 @@ namespace Merit.WantsService
         public void EditPersonalWant(PersonalWants updatedWant)
         {
             using var db = new MeritContext();
-            var existingWant = GetPersonalWant(updatedWant.PersonalWantsID);
-
+            var existingWant = db.PersonalWants
+                .FirstOrDefault(p => p.PersonalWantsID == updatedWant.PersonalWantsID);
             if (existingWant != null)
             {
-                db.Entry(existingWant).State = EntityState.Modified;
-
                 existingWant.Want = updatedWant.Want;
 
                 db.SaveChanges();
@@ -38,13 +36,12 @@ namespace Merit.WantsService
         public void EditCompanyWant(CompanyWants updatedWant)
         {
             using var db = new MeritContext();
-            
-            var existingWant = GetCompanyWant(updatedWant.CompanyWantsId);
+
+            var existingWant = db.CompanyWants
+                .FirstOrDefault(w => w.CompanyWantsId == updatedWant.CompanyWantsId);
 
             if (existingWant != null)
             {
-                db.Entry(existingWant).State = EntityState.Modified;
-
                 existingWant.Want = updatedWant.Want;
 
                 db.SaveChanges();
@@ -76,7 +73,6 @@ namespace Merit.WantsService
                 .Where(p => p.PersonalUserId == userId)
                 .ToList();
         }
-
         public void DeleteCompanyWant(CompanyWants companyWant)
         {
             using (var db = new MeritContext())

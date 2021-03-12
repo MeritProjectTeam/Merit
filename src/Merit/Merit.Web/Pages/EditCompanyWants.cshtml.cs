@@ -25,7 +25,10 @@ namespace Merit.Web.Pages
         [BindProperty]
         public CompanyWants CWant { get; set; }
 
+        public string Message { get; set; }
 
+        [BindProperty(SupportsGet = true)]
+        public bool Visi { get; set; } = false;
 
         int companyUserId = AccountService.Account.CheckCookie();
 
@@ -44,16 +47,22 @@ namespace Merit.Web.Pages
             }
         }
 
-        public IActionResult OnPostEdit()
+        public void OnPostEdit()
         {
             wService.EditCompanyWant(CWant);
-            return RedirectToAction("index");
+            Visi = true;
+            Message = "Merit altered successfully";
+            SelectedCompanyWantId = 0;
+            OnGet();
         }
 
-        public IActionResult OnPostDelete()
+        public void OnPostDelete()
         {
             wService.DeleteCompanyWant(CWant);
-            return RedirectToAction("index");
+            Visi = true;
+            Message = "Merit deleted successfully";
+            SelectedCompanyWantId = 0;
+            OnGet();
         }
     }
 }

@@ -40,7 +40,8 @@ namespace Merit.PersonalInfoService
         {
             using var db = new MeritContext();
 
-            return db.CompanyImages.FirstOrDefault(i => i.CompanyUserId == companyUser.CompanyUserId);
+            return db.CompanyImages
+                .FirstOrDefault(i => i.CompanyUserId == companyUser.CompanyUserId);
         }
         public void SaveImage(CompanyImage image)
         {
@@ -64,7 +65,8 @@ namespace Merit.PersonalInfoService
 
             if (db.PersonalImages.FirstOrDefault(x => x.PersonalUserId == image.PersonalUserId) != null)
             {
-                db.PersonalImages.Remove(db.PersonalImages.FirstOrDefault(x => x.PersonalUserId == image.PersonalUserId));
+                db.PersonalImages
+                    .Remove(db.PersonalImages.FirstOrDefault(x => x.PersonalUserId == image.PersonalUserId));
             }
             db.Add(image);
             db.SaveChanges();

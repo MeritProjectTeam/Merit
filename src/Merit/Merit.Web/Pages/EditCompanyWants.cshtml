@@ -51,11 +51,40 @@
                 <input type="hidden" value="@Model.SelectedCompanyWantId" asp-for="CWant.CompanyWantsId" />
                 <div><input type="text" value="@Model.WantText" asp-for="CWant.Want" /></div>
 
-                <span class="justify-content-between mb-2">
+                @if (Model.SelectedCompanyWantId > 0)
+                {
+                    <span class="justify-content-between mb-2">
+                        <span style="display:none" id="x">
+                            <button type="submit" class="btn btn-primary" asp-page-handler="Edit">Yes</button>
+                            <a href="#" onclick="ConfirmQ(false)" class="btn btn-primary">No</a>
+                        </span>
+                        <span id="y">
+                            <a href="#" onclick="ConfirmQ(true)" class="btn btn-danger">Change Merit</a>
+                        </span>
+                    </span>
 
-                    <button type="submit" class="btn btn-primary btn-sm" asp-page-handler="Edit">Ändra</button>
-                    <button type="submit" class="btn btn-primary btn-sm" asp-page-handler="Delete">Delete</button>
-                </span>
+                    <span class="justify-content-between mb-2">
+                        <span style="display:none" id="a">
+                            <button type="submit" class="btn btn-primary" asp-page-handler="Delete">Yes</button>
+                            <a href="#" onclick="ConfirmX(false)" class="btn btn-primary">No</a>
+                        </span>
+                        <span id="b">
+                            <a href="#" onclick="ConfirmX(true)" class="btn btn-danger">Delete Merit</a>
+                        </span>
+                    </span>
+
+
+                }
+                <div>
+                    @if (Model.Visi)
+                    {
+                        <br />
+                        <br />
+                        <div class="alert alert-success">
+                            @Model.Message
+                        </div>
+                    }
+                </div>
             </div>
         </div>
     </div>

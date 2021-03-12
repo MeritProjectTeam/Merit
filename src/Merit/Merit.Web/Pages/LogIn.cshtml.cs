@@ -20,6 +20,8 @@ namespace Merit.Web.Pages
         [BindProperty]
         public string LoginMessage { get; set; }
 
+        public bool Visi { get; set; } = false;
+
         public void OnGet()
         {
         }
