@@ -28,6 +28,11 @@ namespace Merit.Web.Pages
         [BindProperty]
         public string DescriptionText { get; set; }
 
+        public string Message { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public bool Visi { get; set; } = false;
+
         int userId = AccountService.Account.CheckCookie();
         public void OnGet()
         {
@@ -44,17 +49,15 @@ namespace Merit.Web.Pages
                 }
             }
         }
-        public IActionResult OnPostEdit()
+        public void OnPostEdit()
         {
             meritService.EditCompanyMerit(CMerit);
 
-            return RedirectToAction("Index");
         }
-        public IActionResult OnPostDelete()
+        public void OnPostDelete()
         {
             meritService.DeleteCompanyMerit(CMerit);
 
-            return RedirectToAction("Index");
         }
     }
 }
