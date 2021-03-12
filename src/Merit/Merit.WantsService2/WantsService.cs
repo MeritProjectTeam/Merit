@@ -97,12 +97,27 @@ namespace Merit.WantsService
                 var q = db.CompanyWants
                     .FirstOrDefault(q => q.CompanyWantsId == companyWant.CompanyWantsId);
 
-                if(q != null)
+                if (q != null)
                 {
                     db.Remove(q);
                     db.SaveChanges();
                 }
-                    
+
+            }
+        }
+        public void DeletePersonalWant(PersonalWants personalWant)
+        {
+            using (var db = new MeritContext())
+            {
+                var q = db.PersonalWants
+                    .FirstOrDefault(q => q.PersonalWantsID == personalWant.PersonalWantsID);
+
+                if (q != null)
+                {
+                    db.Remove(q);
+                    db.SaveChanges();
+                }
+
             }
         }
     }
