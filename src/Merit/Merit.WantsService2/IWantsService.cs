@@ -15,5 +15,7 @@ namespace Merit.WantsService
         public List<CompanyWants> GetAllCompanyWants(int userId);
         PersonalWants GetPersonalWant(int id);
         CompanyWants GetCompanyWant(int id);
+        public void EditCompanyWant(CompanyWants updatedWant);
+        public void DeleteCompanyWant(CompanyWants deleteWant);
     }
 }
