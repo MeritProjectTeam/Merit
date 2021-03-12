@@ -25,15 +25,28 @@
         <div class="col-lg-5">
             <div class="justify-content-between mb-2">
                 <label>Roll:</label>
-                <input class="form-control" type="text" asp-for="@Model.CompanyAdd.Profession" placeholder="Kategori" />
+                <input class="form-control" type="text" asp-for="@Model.CompanyAdd.Profession" placeholder="Yrkesroll" />
             </div>
             <div class="justify-content-between mb-2">
                 <label>Placering:</label>
-                <input class="form-control" type="text" asp-for="@Model.CompanyAdd.Place" placeholder="Underkategori" />
+                <input class="form-control" type="text" asp-for="@Model.CompanyAdd.Place" placeholder="Placering/ort" />
             </div>
             <div class="justify-content-between mb-2">
+                <label>Omfattning:</label>
+                <input class="form-control" type="text" asp-for="@Model.CompanyAdd.Extent" placeholder="Heltid, deltid etc" />
+            </div>
+            <div class="justify-content-between mb-2">
+                <label>Varaktighet:</label>
+                <input class="form-control" type="text" asp-for="@Model.CompanyAdd.Duration" placeholder="3 mån, Fast tjänst etc" />
+            </div>
+            <div class="justify-content-between mb-2">
+                <label>Anställningsform:</label>
+                <input class="form-control" type="text" asp-for="@Model.CompanyAdd.FormOfEmployment" placeholder="Tillsvidareanställning, vikariat etc" />
+            </div>
+
+            <div class="justify-content-between mb-2">
                 <label>Information:</label>
-                <textarea style="resize: none" class="form-control" type="text" asp-for="@Model.CompanyAdd.Information" placeholder="Beskrivning" id="exampleFormControlTextarea1" rows="3"></textarea>
+                <textarea style="resize: none" class="form-control" type="text" asp-for="@Model.CompanyAdd.Information" placeholder="Beskrivning av tjänsten" id="exampleFormControlTextarea1" rows="3"></textarea>
             </div>
             <div class="form-group">
                 <label for="accountType">Lägg till merit</label><br />
@@ -50,6 +63,10 @@
                     <input name="WantsId" type="checkbox" value="@want.CompanyWantsId" />
                     <label>@want.Want</label><br />
                 }
+            </div>
+            <div class="justify-content-between mb-2">
+                <label>Lön:</label>
+                <input class="form-control" type="text" asp-for="@Model.CompanyAdd.Salary" placeholder="Löneinformation" />
             </div>
         </div>
     </div>
