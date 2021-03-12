@@ -10,7 +10,7 @@
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav">
-            <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-page="/CompanyInfoPage">Företagssida</a></li>
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-page="/PersonalInfoPage">Profilsida</a></li>
 
             <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-page="/LogOut">Logga ut</a></li>
 
@@ -54,11 +54,38 @@
                 <input type="hidden" value="@Model.SelectedPersonalWantId" asp-for="PWant.PersonalWantsID" />
                 <div><input type="text" value="@Model.WantText" asp-for="PWant.Want" /></div>
 
-                <span class="justify-content-between mb-2">
+                @if (Model.SelectedPersonalWantId > 0)
+                {
+                    <span class="justify-content-between mb-2">
+                        <span style="display:none" id="x">
+                            <button type="submit" class="btn btn-primary" asp-page-handler="Edit">Yes</button>
+                            <a href="#" onclick="ConfirmQ(false)" class="btn btn-primary">No</a>
+                        </span>
+                        <span id="y">
+                            <a href="#" onclick="ConfirmQ(true)" class="btn btn-danger">Change Merit</a>
+                        </span>
+                    </span>
 
-                    <button type="submit" class="btn btn-primary btn-sm" asp-page-handler="Edit">Ändra</button>
-                    <button type="submit" class="btn btn-primary btn-sm" asp-page-handler="Delete">Delete</button>
-                </span>
+                    <span class="justify-content-between mb-2">
+                        <span style="display:none" id="a">
+                            <button type="submit" class="btn btn-primary" asp-page-handler="Delete">Yes</button>
+                            <a href="#" onclick="ConfirmX(false)" class="btn btn-primary">No</a>
+                        </span>
+                        <span id="b">
+                            <a href="#" onclick="ConfirmX(true)" class="btn btn-danger">Delete Merit</a>
+                        </span>
+                    </span>
+                }
+                <div>
+                    @if (Model.Visi)
+                    {
+                        <br />
+                        <br />
+                        <div class="alert alert-success">
+                            @Model.Message
+                        </div>
+                    }
+                </div>
             </div>
         </div>
     </div>

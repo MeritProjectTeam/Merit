@@ -24,6 +24,10 @@ namespace Merit.Web.Pages
         [BindProperty]
         public PersonalWants PWant { get; set; }
 
+        public string Message { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public bool Visi { get; set; } = false;
 
         int personalUserId = Account.CheckCookie();
 
@@ -42,16 +46,22 @@ namespace Merit.Web.Pages
             }
         }
 
-        public IActionResult OnPostEdit()
+        public void OnPostEdit()
         {
             wService.EditPersonalWant(PWant);
-            return RedirectToAction("index");
+            Visi = true;
+            Message = "Want altered successfully";
+            SelectedPersonalWantId = 0;
+            OnGet();
         }
 
-        public IActionResult OnPostDelete()
+        public void OnPostDelete()
         {
             wService.DeletePersonalWant(PWant);
-            return RedirectToAction("index");
+            Visi = true;
+            Message = "Want deleted successfully";
+            SelectedPersonalWantId = 0;
+            OnGet();
         }
     }
 }

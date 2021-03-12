@@ -32,7 +32,6 @@ namespace LoginWebTesting.Pages
 
         public void OnPost()
         {
-
             if (NewUser.Password == PasswordCheck)
             {
                 if (AccountType == 1)
@@ -43,8 +42,6 @@ namespace LoginWebTesting.Pages
                         case 100:
                             account.AddAccount(NewAccount);
                             RegisterMessage = "Registreringen lyckades!";
-                            System.Threading.Thread.Sleep(5000);
-                            Response.Redirect("Login");
                             break;
                         case 101:
                             RegisterMessage = "Användarnamnet upptaget.";
