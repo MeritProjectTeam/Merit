@@ -52,12 +52,18 @@ namespace Merit.Web.Pages
         public void OnPostEdit()
         {
             meritService.EditCompanyMerit(CMerit);
-
+            Visi = true;
+            Message = "Merit altered successfully";
+            SelectedMeritID = 0;
+            OnGet();
         }
         public void OnPostDelete()
         {
             meritService.DeleteCompanyMerit(CMerit);
-
+            Visi = true;
+            Message = "Merit deleted successfully";
+            SelectedMeritID = 0;
+            OnGet();
         }
     }
 }

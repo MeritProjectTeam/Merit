@@ -19,32 +19,28 @@ namespace Merit.CompanyService
         }
         public void SaveCompany(CompanyInfo company)
         {
-            using (var db = new MeritContext())
-            {
-                db.Add(company);
-                db.SaveChanges();
-            }
+            using MeritContext db = new MeritContext();
+
+            db.Add(company);
+            db.SaveChanges();
         }
         public void EditCompanyInfo(CompanyInfo info)
         {
-            using (var db = new MeritContext())
+            using var db = new MeritContext();
+            
+            var existingInfo = db.CompanyInfo.FirstOrDefault(c => c.CompanyUserID == info.CompanyInfoId);
+
+            if (existingInfo != null)
             {
-                var existingInfo = Get(info.CompanyInfoId);
+                existingInfo.CompanyName = info.CompanyName;
+                existingInfo.ContactName = info.ContactName;
+                existingInfo.Phone = info.Phone;
+                existingInfo.Street = info.Street;
+                existingInfo.ZipCode = info.ZipCode;
+                existingInfo.OrgNumber = info.OrgNumber;
+                existingInfo.City = info.City;
 
-                if (existingInfo != null)
-                {
-                    db.Entry(existingInfo).State = EntityState.Modified;
-
-                    existingInfo.CompanyName = info.CompanyName;
-                    existingInfo.ContactName = info.ContactName;
-                    existingInfo.Phone = info.Phone;
-                    existingInfo.Street = info.Street;
-                    existingInfo.ZipCode = info.ZipCode;
-                    existingInfo.OrgNumber = info.OrgNumber;
-                    existingInfo.City = info.City;
-
-                    db.SaveChanges();
-                }
+                db.SaveChanges();
             }
         }
     }

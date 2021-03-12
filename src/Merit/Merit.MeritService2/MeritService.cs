@@ -46,6 +46,7 @@ namespace Merit.MeritService
         public void EditPersonalMerit(PersonalMerit merit)
         {
             using var db = new MeritContext();
+            
             var existingMerit = db.PersonalMerits
                 .FirstOrDefault(p => p.PersonalMeritId == merit.PersonalMeritId);
             if (existingMerit != null)
