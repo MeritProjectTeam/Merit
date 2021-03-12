@@ -13,9 +13,9 @@ namespace Merit.CompanyService
     {
         public CompanyInfo Get(int id)
         {
-            using (var db = new MeritContext())
-                return db.CompanyInfo
-                    .FirstOrDefault(c => c.CompanyUserID == id);
+            using var db = new MeritContext();
+            return db.CompanyInfo
+                .FirstOrDefault(c => c.CompanyUserID == id);
         }
         public void SaveCompany(CompanyInfo company)
         {
