@@ -47,6 +47,8 @@
 
 </form>
 
-<h6>@Model.LoginMessage</h6>
-
+@if (Model.Visi)
+{
+   <div class="alert alert-success">@Model.LoginMessage</div>
+}
 
