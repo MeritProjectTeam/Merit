@@ -3,3 +3,24 @@
 
 // Write your JavaScript code.
 
+function ConfirmQ(istrue) {
+    if (istrue) {
+        $(x).show();
+        $(y).hide();
+    }
+    else {
+        $(x).hide();
+        $(y).show();
+    }
+}
+
+function ConfirmX(istrue) {
+    if (istrue) {
+        $(a).show();
+        $(b).hide();
+    }
+    else {
+        $(a).hide();
+        $(b).show();
+    }
+}

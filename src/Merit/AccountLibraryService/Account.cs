@@ -14,62 +14,58 @@ namespace Merit.AccountService
         public void AddAccount(PersonalUser user)
         {
             //krypteringen sker på server-sidan, bör bytas till klient-sidan
-            using (var db = new MeritContext())
-            {
-                user.Password = EncryptPassword(user.Password);
-                db.Add(user);
-                db.SaveChanges();
+            using var db = new MeritContext();
 
-                try
-                {
-                    PersonalInfo info = new PersonalInfo();
-                    info.PersonalUserID = user.PersonalUserId;
-                    db.Add(info);
-                    db.SaveChanges();
-                }
-                catch (Exception)
-                {
-                    db.Remove(user);
-                    db.SaveChanges();
-                }
+            user.Password = EncryptPassword(user.Password);
+            db.Add(user);
+            db.SaveChanges();
+
+            try
+            {
+                PersonalInfo info = new PersonalInfo();
+                info.PersonalUserID = user.PersonalUserId;
+                db.Add(info);
+                db.SaveChanges();
+            }
+            catch (Exception)
+            {
+                db.Remove(user);
+                db.SaveChanges();
             }
         }
         public void AddAccount(CompanyUser user)
         {
             //krypteringen sker på server-sidan, bör bytas till klient-sidan
+            using var db = new MeritContext();
 
-            using (var db = new MeritContext())
+            user.Password = EncryptPassword(user.Password);
+            db.Add(user);
+            db.SaveChanges();
+
+            try
             {
-                user.Password = EncryptPassword(user.Password);
-                db.Add(user);
+                CompanyInfo info = new CompanyInfo();
+                info.CompanyUserID = user.CompanyUserId;
+                db.Add(info);
                 db.SaveChanges();
-
-                try
-                {
-                    CompanyInfo info = new CompanyInfo();
-                    info.CompanyUserID = user.CompanyUserId;
-                    db.Add(info);
-                    db.SaveChanges();
-                }
-                catch (Exception)
-                {
-                    db.Remove(user);
-                    db.SaveChanges();
-                }
-
+            }
+            catch (Exception)
+            {
+                db.Remove(user);
+                db.SaveChanges();
             }
         }
         public PersonalUser GetPersonalUser(int id)
         {
-            using (var db = new MeritContext())
-                return db.PersonalUsers
-                    .FirstOrDefault(p => p.PersonalUserId == id);
+            using var db = new MeritContext();
+            return db.PersonalUsers
+                .FirstOrDefault(p => p.PersonalUserId == id);
         }
         public CompanyUser GetCompanyUser(int id)
         {
-            using (var db = new MeritContext())
-                return db.CompanyUsers
-                    .FirstOrDefault(p => p.CompanyUserId == id);
+            using var db = new MeritContext();
+            return db.CompanyUsers
+                .FirstOrDefault(p => p.CompanyUserId == id);
         }
 
         public int CheckExistingAccount(PersonalUser user)
