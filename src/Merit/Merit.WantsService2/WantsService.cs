@@ -89,5 +89,21 @@ namespace Merit.WantsService
                     .ToList();
             }
         }
+
+        public void DeleteCompanyWant(CompanyWants companyWant)
+        {
+            using (var db = new MeritContext())
+            {
+                var q = db.CompanyWants
+                    .FirstOrDefault(q => q.CompanyWantsId == companyWant.CompanyWantsId);
+
+                if(q != null)
+                {
+                    db.Remove(q);
+                    db.SaveChanges();
+                }
+                    
+            }
+        }
     }
 }
