@@ -13,6 +13,8 @@ namespace Merit.Data.Models
         public string Description { get; set; }
         public int CompanyUserId { get; set; }
         public CompanyUser CompanyUser { get; set; }
+        public ICollection<CompanyAdvertisement> CompanyAdvertisements { get; set; }
+
     }
 }
 

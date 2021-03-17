@@ -25,6 +25,39 @@ namespace Merit.Data.Data
             optionsBuilder.UseSqlServer(connectionString);
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity("CompanyAdvertisementCompanyWants", b =>
+            {
+                b.HasOne("Merit.Data.Models.CompanyAdvertisement")
+                    .WithMany()
+                    .HasForeignKey("CompanyAdvertisementsCompanyAdvertisementId")
+                    .OnDelete(DeleteBehavior.NoAction)
+                    .IsRequired();
+
+                b.HasOne("Merit.Data.Models.CompanyWants")
+                    .WithMany()
+                    .HasForeignKey("WantsCompanyWantsId")
+                    .OnDelete(DeleteBehavior.NoAction)
+                    .IsRequired();
+            });
+
+            modelBuilder.Entity("CompanyAdvertisementCompanyMerit", b =>
+            {
+                b.HasOne("Merit.Data.Models.CompanyAdvertisement")
+                    .WithMany()
+                    .HasForeignKey("CompanyAdvertisementsCompanyAdvertisementId")
+                    .OnDelete(DeleteBehavior.NoAction)
+                    .IsRequired();
+
+                b.HasOne("Merit.Data.Models.CompanyMerit")
+                    .WithMany()
+                    .HasForeignKey("MeritsCompanyMeritId")
+                    .OnDelete(DeleteBehavior.NoAction)
+                    .IsRequired();
+            });
+        }
+
         public DbSet<CompanyInfo> CompanyInfo { get; set; }
         public DbSet<CompanyMerit> CompanyMerits { get; set; }
         public DbSet<PersonalMerit> PersonalMerits { get; set; }
@@ -36,5 +69,7 @@ namespace Merit.Data.Data
         public DbSet<PersonalWants> PersonalWants { get; set; }
         public DbSet<CompanyImage> CompanyImages { get; set; }
         public DbSet<PersonalImage> PersonalImages { get; set; }
+
+        public DbSet<CompanyAdvertisement> CompanyAdvertisements { get; set; }
     }
 }
