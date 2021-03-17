@@ -6,6 +6,7 @@ using System.Text;
 using Merit.Data.Data;
 using Merit.Data.Models;
 using Merit.CompanyService;
+using Microsoft.EntityFrameworkCore;
 
 namespace Merit.AccountService
 {
@@ -61,13 +62,24 @@ namespace Merit.AccountService
             return db.PersonalUsers
                 .FirstOrDefault(p => p.PersonalUserId == id);
         }
+        public void EditPersonalUser(PersonalUser user)
+        {
+            using var db = new MeritContext();
+            db.Attach(user).State = EntityState.Modified;
+            db.SaveChanges();
+        }
         public CompanyUser GetCompanyUser(int id)
         {
             using var db = new MeritContext();
             return db.CompanyUsers
                 .FirstOrDefault(p => p.CompanyUserId == id);
         }
-
+        public void EditCompanyUser(CompanyUser company)
+        {
+            using var db = new MeritContext();
+            db.Attach(company).State = EntityState.Modified;
+            db.SaveChanges();
+        }
         public int CheckExistingAccount(PersonalUser user)
         {
             using var db = new MeritContext() ;

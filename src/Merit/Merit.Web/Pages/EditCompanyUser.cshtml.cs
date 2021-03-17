@@ -3,23 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Merit.AccountService;
-using Merit.Data.Data;
 using Merit.Data.Models;
-using Merit.PersonalInfoService;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 
 namespace Merit.Web.Pages
 {
-    public class EditUserInfoModel : PageModel
+    public class EditCompanyUserModel : PageModel
     {
         private readonly IAccount AccountService = new Account();
 
         [BindProperty(SupportsGet = true)]
-        public PersonalUser AUser { get; set; }
+        public CompanyUser ACompanyUser { get; set; }
 
-        int UserId = Account.CheckCookie();
+        int CompanyUserId = Account.CheckCookie();
 
         [BindProperty]
         public string PasswordCheck1 { get; set; }
@@ -34,22 +31,22 @@ namespace Merit.Web.Pages
 
         public void OnGet()
         {
-            UserId = Account.CheckCookie();
-            if (UserId != 0)
+            CompanyUserId = Account.CheckCookie();
+            if (CompanyUserId != 0)
             {
-                AUser = AccountService.GetPersonalUser(UserId);
+                ACompanyUser = AccountService.GetCompanyUser(CompanyUserId);
             }
         }
 
         public void OnPost()
         {
-            AUser = AccountService.GetPersonalUser(UserId);
-            AUser.Email = Email;
+            ACompanyUser = AccountService.GetCompanyUser(CompanyUserId);
+            ACompanyUser.Email = Email;
             if (PasswordCheck1 != null)
             {
-                AUser.Password = Account.EncryptPassword(PasswordCheck1);
+                ACompanyUser.Password = Account.EncryptPassword(PasswordCheck1);
             }
-            AccountService.EditPersonalUser(AUser);
+            AccountService.EditCompanyUser(ACompanyUser);
             Visi = true;
             EditMessage = "Userprofile updated";
             TypeMessage = "success";

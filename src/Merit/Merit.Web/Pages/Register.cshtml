@@ -74,8 +74,10 @@
         <button class="btn btn-primary" type="submit">Registrera</button>
 </form>
 
-<p style="color:red">
-    @Model.RegisterMessage
-</p>
+@if(Model.Visi)
+{
+   <br />
+   <div class="alert alert-@Model.TypeString ">@Model.RegisterMessage</div>
+}
 
 <p></p>

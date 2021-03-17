@@ -35,7 +35,7 @@ namespace Merit.PersonalInfoService
             using var db = new MeritContext();
             return db.PersonalInfo
                 .FirstOrDefault(p => p.PersonalUserID == id);
-        }
+        }        
         public CompanyImage GetImage(CompanyUser companyUser)
         {
             using var db = new MeritContext();

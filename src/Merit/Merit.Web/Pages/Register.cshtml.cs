@@ -26,6 +26,9 @@ namespace LoginWebTesting.Pages
         private readonly IAccount account = new Account();
         private readonly IProfileService profileService = new ProfileService();
 
+        public bool Visi { get; set; }
+        public string TypeString { get; set; }
+
         public void OnGet()
         {
         }
@@ -42,12 +45,18 @@ namespace LoginWebTesting.Pages
                         case 100:
                             account.AddAccount(NewAccount);
                             RegisterMessage = "Registreringen lyckades!";
+                            Visi = true;
+                            TypeString = "success";
                             break;
                         case 101:
                             RegisterMessage = "Användarnamnet upptaget.";
+                            Visi = true;
+                            TypeString = "warning";
                             break;
                         case 102:
                             RegisterMessage = "Epost-adressen finns redan registrerad.";
+                            Visi = true;
+                            TypeString = "warning";
                             break;
                         default:
                             break;
@@ -61,12 +70,18 @@ namespace LoginWebTesting.Pages
                         case 100:
                             account.AddAccount(NewAccount);
                             RegisterMessage = "Registreringen lyckades!";
+                            Visi = true;
+                            TypeString = "success";
                             break;
                         case 101:
                             RegisterMessage = "Användarnamnet upptaget.";
+                            Visi = true;
+                            TypeString = "warning";
                             break;
                         case 102:
                             RegisterMessage = "Epost-adressen finns redan registrerad.";
+                            Visi = true;
+                            TypeString = "warning";
                             break;
                         default:
                             break;
@@ -76,6 +91,8 @@ namespace LoginWebTesting.Pages
             else
             {
                 RegisterMessage = "Lösenorden stämmer inte överens.";
+                Visi = true;
+                TypeString = "danger";
             }
         }
 

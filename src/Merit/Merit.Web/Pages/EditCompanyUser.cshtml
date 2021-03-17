@@ -1,5 +1,5 @@
 ﻿@page
-@model Merit.Web.Pages.EditUserInfoModel
+@model Merit.Web.Pages.EditCompanyUserModel
 @{
 }
 
@@ -11,8 +11,8 @@
                     <label for="email">Epost:</label>
                 </div>
                 <div>
-                    <input type="hidden" value="@Model.AUser.PersonalUserId" asp-for="AUser.PersonalUserId" />
-                    <input type="text" value="@Model.AUser.Email" id="Email" name="Email" />
+                    <input type="hidden" value="@Model.ACompanyUser.CompanyUserId" asp-for="ACompanyUser.CompanyUserId" />
+                    <input type="text" value="@Model.ACompanyUser.Email" id="Email" name="Email" />
                 </div>
             </div>
             <div class="justify-content-between mb-2">
@@ -36,8 +36,8 @@
     </div>
     <button class="btn btn-primary" type="submit">Spara Ändringar</button>
     @if (Model.Visi)
-	{
-                <br />
-		 <div class="alert alert-@Model.TypeMessage">@Model.EditMessage</div>
-	}
+    {
+        <br />
+        <div class="alert alert-@Model.TypeMessage">@Model.EditMessage</div>
+    }
 </form>
