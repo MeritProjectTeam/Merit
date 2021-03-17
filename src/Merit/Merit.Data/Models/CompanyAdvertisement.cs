@@ -15,8 +15,8 @@ namespace Merit.Data.Models
         public string Duration { get; set; }
         public string FormOfEmployment { get; set; }
         public string Information { get; set; }
-        public ICollection<CompanyMerit> Merits { get; set; }
-        public ICollection<CompanyWants> Wants { get; set; }
+        public ICollection<VisibleMerit> VisibleMerits { get; set; }
+        public ICollection<VisibleWant> VisibleWants { get; set; }
         public string Salary { get; set; }
         public int CompanyUserId { get; set; }
         public CompanyUser CompanyUser { get; set; }

@@ -6,73 +6,29 @@ using System.Text;
 using Merit.Data.Data;
 using Merit.Data.Models;
 using Merit.CompanyService;
+using Merit.Data;
 
 namespace Merit.AccountService
 {
     public class Account : IAccount
     {
+        private AccountRequest source = new();
         public void AddAccount(PersonalUser user)
         {
-            //krypteringen sker på server-sidan, bör bytas till klient-sidan
-            using (var db = new MeritContext())
-            {
-                user.Password = EncryptPassword(user.Password);
-                db.Add(user);
-                db.SaveChanges();
-
-                try
-                {
-                    PersonalInfo info = new PersonalInfo();
-                    info.PersonalUserID = user.PersonalUserId;
-                    db.Add(info);
-                    db.SaveChanges();
-                }
-                catch (Exception)
-                {
-                    db.Remove(user);
-                    db.SaveChanges();
-                }
-            }
+            user.Password = EncryptPassword(user.Password);
+            source.AddAccount(user);
         }
+
         public void AddAccount(CompanyUser user)
         {
-            //krypteringen sker på server-sidan, bör bytas till klient-sidan
-
-            using (var db = new MeritContext())
-            {
-                user.Password = EncryptPassword(user.Password);
-                db.Add(user);
-                db.SaveChanges();
-
-                try
-                {
-                    CompanyInfo info = new CompanyInfo();
-                    info.CompanyUserID = user.CompanyUserId;
-                    db.Add(info);
-                    db.SaveChanges();
-                }
-                catch (Exception)
-                {
-                    db.Remove(user);
-                    db.SaveChanges();
-                }
-
-            }
-        }
-        public PersonalUser GetPersonalUser(int id)
-        {
-            using (var db = new MeritContext())
-                return db.PersonalUsers
-                    .FirstOrDefault(p => p.PersonalUserId == id);
-        }
-        public CompanyUser GetCompanyUser(int id)
-        {
-            using (var db = new MeritContext())
-                return db.CompanyUsers
-                    .FirstOrDefault(p => p.CompanyUserId == id);
+            user.Password = EncryptPassword(user.Password);
+            source.AddAccount(user);
         }
 
-        public int CheckExistingAccount(PersonalUser user)
+        public PersonalUser GetPersonalUser(int id) => source.GetPersonalUser(id);
+        public CompanyUser GetCompanyUser(int id) => source.GetCompanyUser(id);
+
+        public AccountCheck CheckExistingAccount(PersonalUser user)
         {
             using var db = new MeritContext() ;
 
@@ -88,15 +44,15 @@ namespace Merit.AccountService
 
             if (userNameExists != null || companyUserNameExists != null)
             {   
-                return 101;
+                return AccountCheck.NameExists;
             }
             else if (emailExists != null || companyEmailExists != null)
             {
-                return 102;
+                return AccountCheck.MailExists;
             }
             else
             {
-                return 100;
+                return AccountCheck.NoUserExists;
             }
         }
 
@@ -183,5 +139,10 @@ namespace Merit.AccountService
             return 0;
         }
 
+        // TODO: Tempfix
+        int IAccount.CheckExistingAccount(PersonalUser user)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

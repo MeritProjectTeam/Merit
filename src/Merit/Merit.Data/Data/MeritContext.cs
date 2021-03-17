@@ -27,35 +27,31 @@ namespace Merit.Data.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity("CompanyAdvertisementCompanyWants", b =>
-            {
-                b.HasOne("Merit.Data.Models.CompanyAdvertisement")
-                    .WithMany()
-                    .HasForeignKey("CompanyAdvertisementsCompanyAdvertisementId")
-                    .OnDelete(DeleteBehavior.NoAction)
-                    .IsRequired();
+            modelBuilder.Entity<VisibleMerit>()
+                .HasKey(v => new { v.CompanyAdvertisementId, v.CompanyMeritId });
+            modelBuilder.Entity<VisibleMerit>()
+                .HasOne(v => v.CompanyAdvertisement)
+                .WithMany(c => c.VisibleMerits)
+                .HasForeignKey(v => v.CompanyAdvertisementId)
+                .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<VisibleMerit>()
+                .HasOne(v => v.CompanyMerit)
+                .WithMany()
+                .HasForeignKey(v => v.CompanyMeritId)
+                .OnDelete(DeleteBehavior.NoAction);
 
-                b.HasOne("Merit.Data.Models.CompanyWants")
-                    .WithMany()
-                    .HasForeignKey("WantsCompanyWantsId")
-                    .OnDelete(DeleteBehavior.NoAction)
-                    .IsRequired();
-            });
-
-            modelBuilder.Entity("CompanyAdvertisementCompanyMerit", b =>
-            {
-                b.HasOne("Merit.Data.Models.CompanyAdvertisement")
-                    .WithMany()
-                    .HasForeignKey("CompanyAdvertisementsCompanyAdvertisementId")
-                    .OnDelete(DeleteBehavior.NoAction)
-                    .IsRequired();
-
-                b.HasOne("Merit.Data.Models.CompanyMerit")
-                    .WithMany()
-                    .HasForeignKey("MeritsCompanyMeritId")
-                    .OnDelete(DeleteBehavior.NoAction)
-                    .IsRequired();
-            });
+            modelBuilder.Entity<VisibleWant>()
+                .HasKey(v => new { v.CompanyAdvertisementId, v.CompanyWantsId});
+            modelBuilder.Entity<VisibleWant>()
+                .HasOne(v => v.CompanyAdvertisement)
+                .WithMany(c => c.VisibleWants)
+                .HasForeignKey(v => v.CompanyAdvertisementId)
+                .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<VisibleWant>()
+                .HasOne(v => v.CompanyWants)
+                .WithMany()
+                .HasForeignKey(v => v.CompanyWantsId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
 
         public DbSet<CompanyInfo> CompanyInfo { get; set; }
