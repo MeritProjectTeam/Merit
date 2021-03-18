@@ -67,5 +67,10 @@ namespace Merit.Data.Data
         public DbSet<PersonalImage> PersonalImages { get; set; }
 
         public DbSet<CompanyAdvertisement> CompanyAdvertisements { get; set; }
+
+        public DbSet<VisibleWant> VisibleWants { get; set; }
+
+        public DbSet<VisibleMerit> VisibleMerits { get; set; }
+
     }
 }

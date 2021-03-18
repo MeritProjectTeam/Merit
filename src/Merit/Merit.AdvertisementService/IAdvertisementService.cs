@@ -13,6 +13,10 @@ namespace Merit.AdvertisementService
 
         public void UpdateAdvertisement(CompanyAdvertisement companyAdvertisement);
 
+        public void SaveVisibleMerit(VisibleMerit merit);
+
+        public void SaveVisibleWant(VisibleWant want);
+
         //public int GetAdvertisementId(int userId);
     }
 }

@@ -44,33 +44,24 @@ namespace Merit.Web.Pages
 
             int advertisementId = advertisementService.SaveAdvertisement(CompanyAdd);
             
-
-            //nedan del fungerar ej, detta kommer ej in i databasen
-            List<VisibleMerit> listOfVisibleMerits = new();
-
             foreach (var id in MeritsId)
             {
                
                 VisibleMerit x = new VisibleMerit();
                 x.CompanyMeritId = id;
                 x.CompanyAdvertisementId = advertisementId;
-                listOfVisibleMerits.Add(x);
+                advertisementService.SaveVisibleMerit(x);
             }
-            CompanyAdd.VisibleMerits = listOfVisibleMerits;
-
-            List<VisibleWant> listOfVisibleWants = new();
-
+           
             foreach (var id in WantsId)
             {
 
                 VisibleWant x = new VisibleWant();
                 x.CompanyWantsId = id;
                 x.CompanyAdvertisementId = advertisementId;
-                listOfVisibleWants.Add(x);
+                advertisementService.SaveVisibleWant(x);
             }
-            CompanyAdd.VisibleWants = listOfVisibleWants;
-
-            advertisementService.UpdateAdvertisement(CompanyAdd);
+            
         }
     }
 }
