@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Merit.MeritService;
 using Merit.Data.Models;
 using Merit.WantsService;
+using Merit.AdvertisementService;
 
 namespace Merit.Web.Pages
 {
@@ -17,6 +18,7 @@ namespace Merit.Web.Pages
 
         public IMeritService meritService = new MeritService.MeritService();
         public IWantsService wantsService = new WantsService.WantsService();
+        public IAdvertisementService advertisementService = new AdvertisementService.AdvertisementService();
         public List<CompanyMerit> MeritList { get; set; }
         [BindProperty]
         public List<int> WantsId { get; set; }
@@ -24,11 +26,13 @@ namespace Merit.Web.Pages
         public List<int> MeritsId { get; set; }
         public List<CompanyMerit> CompanyMerits { get; set; }
         public List<CompanyWants> CompanyWants { get; set; }
-        int companyUserId = AccountService.Account.CheckCookie();
-
+        [BindProperty]
+        public int companyUserId { get; set; } = AccountService.Account.CheckCookie();
+        [BindProperty]
         public CompanyAdvertisement CompanyAdd { get; set; }
         public void OnGet()
         {
+           
             CompanyMerits = meritService.ReadCompanyMerits(companyUserId);
             CompanyWants = wantsService.GetAllCompanyWants(companyUserId);
         }
@@ -37,6 +41,36 @@ namespace Merit.Web.Pages
         {
             CompanyMerits = meritService.ReadCompanyMerits(companyUserId);
             CompanyWants = wantsService.GetAllCompanyWants(companyUserId);
+
+            int advertisementId = advertisementService.SaveAdvertisement(CompanyAdd);
+            
+
+            //nedan del fungerar ej, detta kommer ej in i databasen
+            List<VisibleMerit> listOfVisibleMerits = new();
+
+            foreach (var id in MeritsId)
+            {
+               
+                VisibleMerit x = new VisibleMerit();
+                x.CompanyMeritId = id;
+                x.CompanyAdvertisementId = advertisementId;
+                listOfVisibleMerits.Add(x);
+            }
+            CompanyAdd.VisibleMerits = listOfVisibleMerits;
+
+            List<VisibleWant> listOfVisibleWants = new();
+
+            foreach (var id in WantsId)
+            {
+
+                VisibleWant x = new VisibleWant();
+                x.CompanyWantsId = id;
+                x.CompanyAdvertisementId = advertisementId;
+                listOfVisibleWants.Add(x);
+            }
+            CompanyAdd.VisibleWants = listOfVisibleWants;
+
+            advertisementService.UpdateAdvertisement(CompanyAdd);
         }
     }
 }

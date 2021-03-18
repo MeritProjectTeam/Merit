@@ -24,6 +24,7 @@
     <div class="row">
         <div class="col-lg-5">
             <div class="justify-content-between mb-2">
+                <input type="hidden" asp-for="@Model.CompanyAdd.CompanyUserId" value="@Model.companyUserId" />
                 <label>Roll:</label>
                 <input class="form-control" type="text" asp-for="@Model.CompanyAdd.Profession" placeholder="Yrkesroll" />
             </div>
