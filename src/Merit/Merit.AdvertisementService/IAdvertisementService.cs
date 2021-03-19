@@ -17,12 +17,13 @@ namespace Merit.AdvertisementService
 
         public void SaveVisibleWant(VisibleWant want);
 
-        public CompanyAdvertisement GetCompanyAdvertisement(int advertisementId);
+        public CompanyAdvertisement GetOneCompanyAdvertisement(int advertisementId);
+        public List<CompanyAdvertisement> GetAllCompanyAdvertisements(int userId);
 
         public List<CompanyMerit> GetAdvertisementMerits(int advertisementId);
 
         public List<CompanyWants> GetAdvertisementWants(int advertisementId);
-
-
+        void EditCompanyAdvertisement(CompanyAdvertisement companyAdvertisementToEdit);
+        void DeleteCompanyAdvertisement(int selectedAdvertisementId);
     }
 }

@@ -37,7 +37,7 @@ namespace Merit.Web.Pages
         
         public void OnGet()
         {
-            CompanyAdvertisement = advertisementService.GetCompanyAdvertisement(AdvertisementId);
+            CompanyAdvertisement = advertisementService.GetOneCompanyAdvertisement(AdvertisementId);
             CompanyInfo = companyService.Get(CompanyAdvertisement.CompanyUserId);
 
             AdvertisementMerits = advertisementService.GetAdvertisementMerits(AdvertisementId);

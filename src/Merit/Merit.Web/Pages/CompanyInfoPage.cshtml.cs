@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Merit.AccountService;
+using Merit.AdvertisementService;
 using Merit.CompanyService;
 using Merit.Data.Models;
 using Merit.MeritService;
@@ -21,6 +22,7 @@ namespace Merit.Web.Pages
         private IMeritService meritService = new MeritService.MeritService();
         private IWantsService wantsService = new WantsService.WantsService();
         private IProfileService profileService = new ProfileService();
+        private IAdvertisementService advertisementService = new AdvertisementService.AdvertisementService(); 
 
         [BindProperty]
         public CompanyUser AUser { get; set; }
@@ -33,6 +35,9 @@ namespace Merit.Web.Pages
         public List<CompanyWants> CompanyWants { get; set; }
         [BindProperty]
         public string ImageUrl { get; set; }
+
+        public List<CompanyAdvertisement> CompanyAdvertisements { get; set; }
+
         public void OnGet()
         {
             int userId = Account.CheckCookie();
@@ -49,7 +54,7 @@ namespace Merit.Web.Pages
                 ImageUrl = string.Format($"data:image/jpg;base64, {imageBase64Data}");
             }
             CompanyWants = wantsService.GetAllCompanyWants(userId);
-           
+            CompanyAdvertisements = advertisementService.GetAllCompanyAdvertisements(userId);
             CompanyMerits = meritService.ReadCompanyMerits(userId);
         }
        

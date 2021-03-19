@@ -19,7 +19,7 @@ namespace Merit.AdvertisementService
 
         }
 
-        public CompanyAdvertisement GetCompanyAdvertisement(int advertisementId)
+        public CompanyAdvertisement GetOneCompanyAdvertisement(int advertisementId)
         {
             var db = new MeritContext();
             return db.CompanyAdvertisements.Find(advertisementId);
@@ -59,6 +59,27 @@ namespace Merit.AdvertisementService
             var db = new MeritContext();
 
             return db.VisibleWants.Where(s => s.CompanyAdvertisementId == advertisementId).Select(s => s.CompanyWants).ToList();
+        }
+
+        public List<CompanyAdvertisement> GetAllCompanyAdvertisements(int userId)
+        {
+            var db = new MeritContext();
+            return db.CompanyAdvertisements.Where(x => x.CompanyUserId == userId).ToList();
+        }
+
+        public void EditCompanyAdvertisement(CompanyAdvertisement companyAdvertisementToEdit)
+        {
+            var db = new MeritContext();
+            db.CompanyAdvertisements.Update(companyAdvertisementToEdit);
+            db.SaveChanges();
+        }
+
+        public void DeleteCompanyAdvertisement(int selectedAdvertisementId)
+        {
+            var db = new MeritContext();
+            var AdvertisementToRemove = db.CompanyAdvertisements.Find(selectedAdvertisementId);
+            db.CompanyAdvertisements.Remove(AdvertisementToRemove);
+            db.SaveChanges();
         }
     }
 }

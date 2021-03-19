@@ -19,7 +19,7 @@
 </nav>
 <body>
     <!-- Page Content -->
-    <div class="container">
+    <div class="container justify-content-center">
 
         <!-- Heading Row -->
         <div class="row align-items-center my-5">
@@ -39,7 +39,7 @@
                         <button type="submit" class="btn btn-primary">Ladda upp bild</button>
                     </form>
                 </div>
-                
+
                 <p></p>
                 <hr />
             </div>
@@ -48,7 +48,7 @@
         <!-- /.row -->
         <!-- Call to Action Well -->
         <!-- Content Row -->
-        <div class="row">
+        <div class="row justify-content-center">
             <div class="col-md-4 mb-5">
                 <div class="card h-100">
                     <div class="card-body">
@@ -71,6 +71,34 @@
                     </div>
                 </div>
             </div>
+            <!-- /.col-md-4 -->
+            <div class="col-md-4 mb-5">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="card-header">
+                            <h4 class="card-title">Annonser</h4>
+                        </div>
+                        <p></p>
+                        <p class="card-text">
+                            @foreach (var add in Model.CompanyAdvertisements)
+                            {
+                                <div>
+                                    <a href="/ShowJobAdvertisement?advertisementid=@add.CompanyAdvertisementId">@add.CompanyAdvertisementId - @add.Profession</a>
+                                </div>
+                            }
+                        </p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="/AddJobAdvertisement" class="btn btn-primary btn-sm">Lägg till ny annons</a>
+                        <a href="/EditCompanyAdvertisement" class="btn btn-primary btn-sm">Redigera annonser</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.row -->
+        <!-- Call to Action Well -->
+        <!-- Content Row -->
+        <div class="row justify-content-center">
             <!-- /.col-md-4 -->
             <div class="col-md-4 mb-5">
                 <div class="card h-100">
@@ -123,7 +151,7 @@
                         </p>
                     </div>
                     <div class="card-footer">
-                        
+
                         <a href="/AddWantCompany" class="btn btn-primary btn-sm">Lägg till Want</a>
                         @*<a href="#" class="btn btn-primary btn-sm">Redigera Wants</a>*@
 
@@ -132,9 +160,7 @@
             </div>
             <!-- /.col-md-4 -->
 
-        </div>
-        <!-- /.row -->
-        <!-- /.container -->
+        </div><!-- /.container -->
         <!-- Footer -->
         <!-- Bootstrap core JavaScript -->
         <script src="vendor/jquery/jquery.min.js"></script>
