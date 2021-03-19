@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Merit.Data.Migrations
 {
     [DbContext(typeof(MeritContext))]
-    [Migration("20210318153240_v2")]
-    partial class v2
+    [Migration("20210318192410_v1")]
+    partial class v1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -20,7 +20,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Merit.MeritService", "Merit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Merit.WantsService", "Merit.WantsService2\Merit.WantsService.csproj", "{7F810500-A10B-4730-B609-C405021612A1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Merit.AdvertisementService", "Merit.AdvertisementService\Merit.AdvertisementService.csproj", "{653F99A2-7842-414E-A448-88BFE5F29C7F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Merit.AdvertisementService", "Merit.AdvertisementService\Merit.AdvertisementService.csproj", "{653F99A2-7842-414E-A448-88BFE5F29C7F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

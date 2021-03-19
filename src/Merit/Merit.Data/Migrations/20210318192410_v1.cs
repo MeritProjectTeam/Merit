@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Merit.Data.Migrations
 {
-    public partial class test : Migration
+    public partial class v1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -243,7 +243,7 @@ namespace Merit.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "VisibleMerit",
+                name: "VisibleMerits",
                 columns: table => new
                 {
                     CompanyAdvertisementId = table.Column<int>(type: "int", nullable: false),
@@ -251,21 +251,21 @@ namespace Merit.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_VisibleMerit", x => new { x.CompanyAdvertisementId, x.CompanyMeritId });
+                    table.PrimaryKey("PK_VisibleMerits", x => new { x.CompanyAdvertisementId, x.CompanyMeritId });
                     table.ForeignKey(
-                        name: "FK_VisibleMerit_CompanyAdvertisements_CompanyAdvertisementId",
+                        name: "FK_VisibleMerits_CompanyAdvertisements_CompanyAdvertisementId",
                         column: x => x.CompanyAdvertisementId,
                         principalTable: "CompanyAdvertisements",
                         principalColumn: "CompanyAdvertisementId");
                     table.ForeignKey(
-                        name: "FK_VisibleMerit_CompanyMerits_CompanyMeritId",
+                        name: "FK_VisibleMerits_CompanyMerits_CompanyMeritId",
                         column: x => x.CompanyMeritId,
                         principalTable: "CompanyMerits",
                         principalColumn: "CompanyMeritId");
                 });
 
             migrationBuilder.CreateTable(
-                name: "VisibleWant",
+                name: "VisibleWants",
                 columns: table => new
                 {
                     CompanyAdvertisementId = table.Column<int>(type: "int", nullable: false),
@@ -273,14 +273,14 @@ namespace Merit.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_VisibleWant", x => new { x.CompanyAdvertisementId, x.CompanyWantsId });
+                    table.PrimaryKey("PK_VisibleWants", x => new { x.CompanyAdvertisementId, x.CompanyWantsId });
                     table.ForeignKey(
-                        name: "FK_VisibleWant_CompanyAdvertisements_CompanyAdvertisementId",
+                        name: "FK_VisibleWants_CompanyAdvertisements_CompanyAdvertisementId",
                         column: x => x.CompanyAdvertisementId,
                         principalTable: "CompanyAdvertisements",
                         principalColumn: "CompanyAdvertisementId");
                     table.ForeignKey(
-                        name: "FK_VisibleWant_CompanyWants_CompanyWantsId",
+                        name: "FK_VisibleWants_CompanyWants_CompanyWantsId",
                         column: x => x.CompanyWantsId,
                         principalTable: "CompanyWants",
                         principalColumn: "CompanyWantsId");
@@ -336,13 +336,13 @@ namespace Merit.Data.Migrations
                 column: "PersonalUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_VisibleMerit_CompanyMeritId",
-                table: "VisibleMerit",
+                name: "IX_VisibleMerits_CompanyMeritId",
+                table: "VisibleMerits",
                 column: "CompanyMeritId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_VisibleWant_CompanyWantsId",
-                table: "VisibleWant",
+                name: "IX_VisibleWants_CompanyWantsId",
+                table: "VisibleWants",
                 column: "CompanyWantsId");
         }
 
@@ -367,10 +367,10 @@ namespace Merit.Data.Migrations
                 name: "PersonalWants");
 
             migrationBuilder.DropTable(
-                name: "VisibleMerit");
+                name: "VisibleMerits");
 
             migrationBuilder.DropTable(
-                name: "VisibleWant");
+                name: "VisibleWants");
 
             migrationBuilder.DropTable(
                 name: "PersonalUsers");

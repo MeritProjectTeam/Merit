@@ -37,7 +37,7 @@ namespace Merit.Web.Pages
             CompanyWants = wantsService.GetAllCompanyWants(companyUserId);
         }
 
-        public void OnPost()
+        public IActionResult OnPost()
         {
             CompanyMerits = meritService.ReadCompanyMerits(companyUserId);
             CompanyWants = wantsService.GetAllCompanyWants(companyUserId);
@@ -61,7 +61,13 @@ namespace Merit.Web.Pages
                 x.CompanyAdvertisementId = advertisementId;
                 advertisementService.SaveVisibleWant(x);
             }
-            
+
+            //felmeddelande om ej skapats
+
+            //return RedirectToPage($"/ShowJobAdvertisement?AdvertisementId={advertisementId}");
+            return RedirectToPage("ShowJobAdvertisement", new { advertisementid = advertisementId });
+
+
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using Merit.Data.Data;
 using Merit.Data.Models;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Merit.AdvertisementService
 {
@@ -15,6 +17,12 @@ namespace Merit.AdvertisementService
 
             return companyAdvertisement.CompanyAdvertisementId;
 
+        }
+
+        public CompanyAdvertisement GetCompanyAdvertisement(int advertisementId)
+        {
+            var db = new MeritContext();
+            return db.CompanyAdvertisements.Find(advertisementId);
         }
 
         public void SaveVisibleMerit(VisibleMerit merit)
@@ -37,6 +45,20 @@ namespace Merit.AdvertisementService
 
             db.CompanyAdvertisements.Update(companyAdvertisement);
             db.SaveChanges();
+        }
+
+        public List<CompanyMerit> GetAdvertisementMerits(int advertisementId)
+        {
+            var db = new MeritContext();
+
+            return db.VisibleMerits.Where(s => s.CompanyAdvertisementId == advertisementId).Select(s => s.CompanyMerit).ToList();
+        }
+
+        public List<CompanyWants> GetAdvertisementWants(int advertisementId)
+        {
+            var db = new MeritContext();
+
+            return db.VisibleWants.Where(s => s.CompanyAdvertisementId == advertisementId).Select(s => s.CompanyWants).ToList();
         }
     }
 }

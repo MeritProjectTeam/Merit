@@ -17,6 +17,12 @@ namespace Merit.AdvertisementService
 
         public void SaveVisibleWant(VisibleWant want);
 
-        //public int GetAdvertisementId(int userId);
+        public CompanyAdvertisement GetCompanyAdvertisement(int advertisementId);
+
+        public List<CompanyMerit> GetAdvertisementMerits(int advertisementId);
+
+        public List<CompanyWants> GetAdvertisementWants(int advertisementId);
+
+
     }
 }
