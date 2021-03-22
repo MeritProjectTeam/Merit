@@ -24,6 +24,12 @@ namespace Merit.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+
+            services.Configure<CookiePolicyOptions>(option =>
+            {
+                option.CheckConsentNeeded = context => true;
+                option.MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.None;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,6 +45,8 @@ namespace Merit.Web
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseCookiePolicy();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
