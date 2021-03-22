@@ -28,7 +28,7 @@ namespace Merit.Web
             services.Configure<CookiePolicyOptions>(option =>
             {
                 option.CheckConsentNeeded = context => true;
-                option.MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.None;
+                option.MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.Strict;
             });
         }
 
