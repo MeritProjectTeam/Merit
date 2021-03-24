@@ -20,6 +20,8 @@ namespace Merit.Data.Data
             var configuration = builder.Build();
             connectionString = configuration.GetConnectionString("ConnectionString");
         }
+
+        
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(connectionString);
