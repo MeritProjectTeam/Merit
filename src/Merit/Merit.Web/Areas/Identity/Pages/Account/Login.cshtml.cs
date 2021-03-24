@@ -11,6 +11,9 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Http;
+using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace Merit.Web.Areas.Identity.Pages.Account
 {

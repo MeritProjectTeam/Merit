@@ -27,27 +27,25 @@
     <div class="row">
         <div class="col-lg-3">
 
-            <div class="justify-content-between mb-2">
-                <label>Användarnamn: </label>
-                <input class="form-control" type="text" asp-for="UserLogin.UserName" placeholder="User name" required />
+            <div class="form-group justify-content-between mb-2">
+                <label asp-for="Input.Email"></label>
+                <input class="form-control" asp-for="Input.Email" />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
-            <div class="justify-content-between mb-2">
-                <label>Lösenord: </label>
-                <input class="form-control" type="password" asp-for="UserLogin.Password" placeholder="Password" required minlength="8" />
+            <div class="form-group justify-content-between mb-2">
+                <label asp-for="Input.Password"></label>
+                <input class="form-control" asp-for="Input.Password" />
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
             </div>
-            <p></p>
-
-
         </div>
-       
     </div>
-    <div class="justify-content-between mb-2">
+    <div class="form-group justify-content-between mb-2">
         <button class="btn btn-primary" type="submit">Logga in</button>
     </div>
 
 </form>
 
-@if (Model.Visi)
+@*@if (Model.Visi)
 {
    <div class="alert alert-danger ">@Model.LoginMessage</div>
-}
+}*@
