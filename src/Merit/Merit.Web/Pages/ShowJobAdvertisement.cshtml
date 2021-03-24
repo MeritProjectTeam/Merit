@@ -24,79 +24,87 @@
                 <div class="card h-100">
                     <div class="card-body">
                         <div class="card-header">
-                            <h4 class="card-title">@Model.CompanyInfo.CompanyName: @Model.CompanyAdvertisement.Profession</h4>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
+                            <h5 class="card-title text-center">@Model.CompanyInfo.CompanyName: </h5>
+                            <h3 class="card-title text-center">@Model.CompanyAdvertisement.Profession </h3>
+</div>
+                        <div class="row m-2">
+                            <br />
+                            <div class="col-md-5">
                                 <p>Placering:</p>
                             </div>
                             <div class="col-md-6">
                                 <p>@Model.CompanyAdvertisement.Place</p>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-4">
+                        <div class="row m-2">
+                            <div class="col-md-5">
                                 <p>Omfattning:</p>
                             </div>
                             <div class="col-md-6">
                                 <p>@Model.CompanyAdvertisement.Extent</p>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-4">
+                        <div class="row m-2">
+                            <div class="col-md-5">
                                 <p>Tid/längd:</p>
                             </div>
                             <div class="col-md-6">
                                 <p>@Model.CompanyAdvertisement.Duration</p>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-4">
+                        <div class="row m-2">
+                            <div class="col-md-5">
                                 <p>Anställningsform:</p>
                             </div>
                             <div class="col-md-6">
                                 <p>@Model.CompanyAdvertisement.FormOfEmployment</p>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-4">
+                        <div class="row m-2">
+                            <div class="col-md-5">
                                 <p>Information om tjänsten:</p>
                             </div>
                             <div class="col-md-6">
                                 <p>@Model.CompanyAdvertisement.Information</p>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-4">
+                        <div class="row m-2">
+                            <div class="col-md-5">
                                 <p>Löneinformation:</p>
                             </div>
                             <div class="col-md-6">
                                 <p>@Model.CompanyAdvertisement.Salary</p>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-4">
+                        <div class="row m-2">
+                            <div class="col-md-5">
                                 <p>Företagets/tjänstens meriter:</p>
                             </div>
                             <div class="col-md-6">
-                                @foreach (var merit in Model.AdvertisementMerits)
-                                {
-                                    <span>* @merit.Category - @merit.SubCategory - @merit.Description</span><br />
-                                }
+                                <ul>
+                                    @foreach (var merit in Model.AdvertisementMerits)
+                                    {
+                                        <li>@merit.Category - @merit.SubCategory - @merit.Description</li>
+                                       
+                                    }
+                                </ul>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-4">
+                        <div class="row m-2">
+                            <div class="col-md-5">
                                 <p>Företagets/tjänstens wants:</p>
                             </div>
                             <div class="col-md-6">
-                                @foreach (var want in Model.AdvertisementWants)
-                                {
-                                    <span>* @want.Want</span><br />
-                                }
+                                <ul>
+                                    @foreach (var want in Model.AdvertisementWants)
+                                    {
+                                        <li>@want.Want</li>
+                                        
+                                    }
+                                </ul>
                             </div>
                         </div>
-                        <div class="card-footer">
+                        <div class="card-footer-2">
 
                         </div>
                     </div>
