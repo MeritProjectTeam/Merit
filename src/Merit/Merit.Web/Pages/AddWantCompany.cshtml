@@ -35,12 +35,16 @@
     <div class="justify-content-between mb-2">
         <button class="btn btn-primary" type="submit">Lägg till Want</button>
         <a class="btn btn-primary" asp-page="/companyinfopage">Företagsinfo</a>
-        @if (Model.WantSaved)
-        {
-            <meta http-equiv="refresh" content="1">
-            <div style="color: limegreen">
-                <b>Want skapad!</b>
-            </div>
-        }
+        <div>
+            @if (Model.Visi)
+            {
+                <br />
+                <br />
+                <div class="alert alert-@Model.alertlook">
+                    @Model.Message
+                </div>
+            }
+            
+        </div>
     </div>
 </form>

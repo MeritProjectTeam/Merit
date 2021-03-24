@@ -19,6 +19,8 @@ namespace Merit.Web.Pages
         [BindProperty]
         public PersonalInfo APerson { get; set; }
 
+        public bool Visi { get; set; }
+
         int userId = AccountService.Account.CheckCookie();
         public void OnGet()
         {
@@ -30,6 +32,7 @@ namespace Merit.Web.Pages
         }
         public void OnPost()
         {
+            Visi = true;
             Information = "Profilinfo sparad.";
             APerson.PersonalUserID = AccountService.Account.CheckCookie();
             profileService.EditPersonalInfo(APerson);

@@ -58,7 +58,7 @@ namespace Merit.Web.Pages
         {
             Visi = true;
             meritService.EditPersonalMerit(PMerit);
-            Message = "Merit altered successfully";
+            Message = "Merit ändrad";
             SelectedMeritID = 0;
             OnGet();
             //return RedirectToPage("EditPersonalMerits");
@@ -68,7 +68,7 @@ namespace Merit.Web.Pages
         {
             meritService.DeletePersonalMerit(PMerit);
             Visi = true;
-            Message = "Merit deleted successfully";
+            Message = "Merit borttagen";
             SelectedMeritID = 0;
             OnGet();
         }

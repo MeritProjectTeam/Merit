@@ -41,12 +41,15 @@
     <div class="justify-content-between mb-2">
         <button class="btn btn-primary" type="submit">Lägg till merit</button>
         <a class="btn btn-primary" asp-page="/companyinfopage">Företagsinfo</a>
-        @if (Model.SavedBusinessMerit)
-        {
-            <meta http-equiv="refresh" content="1">
-            <div style="color: limegreen">
-                <b>Merit skapad!</b>
-            </div>
-        }
+        <div>
+            @if (Model.Visi)
+            {
+                <br />
+                <br />
+                <div class="alert alert-@Model.alertlook">
+                    @Model.Information
+                </div>
+            }
+        </div>
     </div>
 </form>

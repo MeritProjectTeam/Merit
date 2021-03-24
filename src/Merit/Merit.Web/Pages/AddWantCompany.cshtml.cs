@@ -12,21 +12,35 @@ namespace Merit.Web.Pages
     public class AddWantCompanyModel : PageModel
     {
         private readonly IWantsService wantsService = new WantsService.WantsService();
-        public bool WantSaved { get; set; } = false;
+        public bool Visi { get; set; } = false;
+        public bool Neggo { get; set; }
         [BindProperty]
         public CompanyWants CompanyWant { get; set; }
+        public string Message { get; set; }
+        public string alertlook { get; set; }
         public void OnGet()
         {
         }
         public void OnPost()
         {
-            WantSaved = true;
-            int userId = AccountService.Account.CheckCookie();
-            if (userId != 0)
+            Visi = true;
+            if (CompanyWant.Want != null)
             {
-                CompanyWant.CompanyUserId = userId;
-                wantsService.CreateCompanyWant(CompanyWant);
+                alertlook = "success";
+                Message = "Önskemål skapat!";
+                int userId = AccountService.Account.CheckCookie();
+                if (userId != 0)
+                {
+                    CompanyWant.CompanyUserId = userId;
+                    wantsService.CreateCompanyWant(CompanyWant);
 
+                }
+                
+            }
+            else
+            {
+                Message = "Fyll i rutan";
+                alertlook = "danger";
             }
 
         }
