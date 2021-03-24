@@ -23,7 +23,12 @@ namespace Merit.AdvertisementService
         public List<CompanyMerit> GetAdvertisementMerits(int advertisementId);
 
         public List<CompanyWants> GetAdvertisementWants(int advertisementId);
-        void EditCompanyAdvertisement(CompanyAdvertisement companyAdvertisementToEdit);
-        void DeleteCompanyAdvertisement(int selectedAdvertisementId);
+        public void EditCompanyAdvertisement(CompanyAdvertisement companyAdvertisementToEdit);
+        public void DeleteCompanyAdvertisement(int selectedAdvertisementId);
+
+        public void DeleteVisibleMerits(int selectedAdvertisementId);
+        public void DeleteVisibleWants(int selectedAdvertisementId);
+        public ICollection<VisibleMerit> GetVisibleMerits(int selectedAdvertisementId);
+        public ICollection<VisibleWant> GetVisibleWants(int selectedAdvertisementId);
     }
 }

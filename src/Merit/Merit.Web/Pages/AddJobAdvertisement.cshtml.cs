@@ -19,7 +19,7 @@ namespace Merit.Web.Pages
         public IMeritService meritService = new MeritService.MeritService();
         public IWantsService wantsService = new WantsService.WantsService();
         public IAdvertisementService advertisementService = new AdvertisementService.AdvertisementService();
-        public List<CompanyMerit> MeritList { get; set; }
+        //public List<CompanyMerit> MeritList { get; set; }
         [BindProperty]
         public List<int> WantsId { get; set; }
         [BindProperty]
