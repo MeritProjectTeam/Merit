@@ -15,35 +15,6 @@ namespace Merit.Web.Pages
 {
     public class LogInModel : PageModel
     {
-        //private readonly IAccount Account = new Account();
-
-        //[BindProperty]
-        //public User UserLogin { get; set; }
-        //public string LoginMessage { get; set; }
-        //public bool Visi { get; set; }
-
-        //public void OnGet()
-        //{
-        //}
-
-        //public IActionResult OnPost()
-        //{
-        //    int[] userIdAndUserType = Account.CheckLogin(UserLogin);
-
-        //    if (userIdAndUserType[0] != 0)
-        //    {
-
-        //        LoginMessage = "Inloggningen lyckades!";
-        //        AccountService.Account.CreateCookie(userIdAndUserType[0]);
-        //        if (userIdAndUserType[1] == 1)
-        //        { return Redirect("/PersonalInfoPage"); }
-        //        else if (userIdAndUserType[1] == 2)
-        //        { return Redirect("/CompanyInfoPage"); }
-        //    }
-        //    Visi = true;
-        //    LoginMessage = "Felaktigt användarnamn eller lösenord";
-        //    return Page();
-        //}
         private readonly UserManager<IdentityUser> userManager;
         private readonly SignInManager<IdentityUser> signInManager;
 
@@ -60,6 +31,25 @@ namespace Merit.Web.Pages
         {
             // Clear external login cookies.
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+        }
+
+        public async Task<IActionResult> OnPostAsync()
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await signInManager.PasswordSignInAsync(Input.Email, Input.Password, isPersistent: true, lockoutOnFailure: false);
+                if (result.Succeeded)
+                {
+                    return Redirect("/PersonalInfoPage");
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Ogiltig inloggning.");
+                    return Page();
+                }
+
+            }
+            return Page();
         }
 
         public class InputModel

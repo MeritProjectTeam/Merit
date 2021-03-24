@@ -19,7 +19,7 @@ namespace Merit.Data.Models
 
         public PersonalImage PersonalImage { get; set; }
 
-
+        public string Identity { get; set; }
 
 
     }

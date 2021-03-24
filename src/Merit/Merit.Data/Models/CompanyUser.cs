@@ -14,5 +14,7 @@ namespace Merit.Data.Models
         public ICollection<CompanyWants> CompanyWants { get; set; }
         public CompanyImage CompanyImage { get; set; }
 
+        public string Identity { get; set; }
+
     }
 }
