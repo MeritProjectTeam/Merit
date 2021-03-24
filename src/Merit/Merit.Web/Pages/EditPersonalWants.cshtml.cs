@@ -25,6 +25,7 @@ namespace Merit.Web.Pages
         public PersonalWants PWant { get; set; }
 
         public string Message { get; set; }
+        public string alertlook { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public bool Visi { get; set; } = false;
@@ -50,7 +51,8 @@ namespace Merit.Web.Pages
         {
             wService.EditPersonalWant(PWant);
             Visi = true;
-            Message = "Want altered successfully";
+            alertlook = "success";
+            Message = "Önskemål ändrat";
             SelectedPersonalWantId = 0;
             OnGet();
         }
@@ -59,7 +61,8 @@ namespace Merit.Web.Pages
         {
             wService.DeletePersonalWant(PWant);
             Visi = true;
-            Message = "Want deleted successfully";
+            alertlook = "danger";
+            Message = "Önskemål borttaget";
             SelectedPersonalWantId = 0;
             OnGet();
         }

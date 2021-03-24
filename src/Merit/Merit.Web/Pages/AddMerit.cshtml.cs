@@ -11,25 +11,37 @@ namespace Merit.Web.Pages
 {
     public class AddMeritModel : PageModel
     {
-        public bool MeritSaved { get; set; } = false;
         IMeritService meritService = new MeritService.MeritService();
-        public string Status { get; set; } = "Success!"; 
 
         [BindProperty]
         public PersonalMerit AMerit { get; set; }
+        public bool Visi { get; set; }
+        public string Message { get; set; }
+        public string alertlook { get; set; }
+
         public void OnGet()
         {
             
         }
         public void OnPost()
         {
-            MeritSaved = true;
-            int userId = AccountService.Account.CheckCookie();
-            if (userId != 0)
+            Visi = true;
+            if (AMerit.Category != null && AMerit.SubCategory != null && AMerit.Description != null)
             {
-                AMerit.PersonalUserId = userId;
-                meritService.SaveMerit(AMerit);
+                Message = "Merit skapat!";
+                alertlook = "success";
+                int userId = AccountService.Account.CheckCookie();
+                if (userId != 0)
+                {
+                    AMerit.PersonalUserId = userId;
+                    meritService.SaveMerit(AMerit);
+                }
             }
+            else
+            {
+                alertlook = "danger";
+                Message = "Fyll i rutorna!";
+            }            
         }
     }
 }

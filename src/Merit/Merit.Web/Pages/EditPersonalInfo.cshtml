@@ -57,4 +57,13 @@
             <button class="btn btn-primary" type="submit">Spara</button>
         </div>
 </form>
-<div><p style="color:limegreen">@Model.Information</p></div>
+<div>
+    @if (Model.Visi)
+    {
+        <br />
+        <br />
+        <div class="alert alert-success">
+            @Model.Information
+        </div>
+    }
+</div>

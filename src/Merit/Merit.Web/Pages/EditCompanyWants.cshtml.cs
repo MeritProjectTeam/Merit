@@ -51,7 +51,7 @@ namespace Merit.Web.Pages
         {
             wService.EditCompanyWant(CWant);
             Visi = true;
-            Message = "Merit altered successfully";
+            Message = "Önskemål ändrat";
             SelectedCompanyWantId = 0;
             OnGet();
         }
@@ -60,7 +60,7 @@ namespace Merit.Web.Pages
         {
             wService.DeleteCompanyWant(CWant);
             Visi = true;
-            Message = "Merit deleted successfully";
+            Message = "Önskemål borttaget";
             SelectedCompanyWantId = 0;
             OnGet();
         }

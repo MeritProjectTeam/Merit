@@ -33,6 +33,9 @@ namespace Merit.Web.Pages
         public List<CompanyWants> CompanyWants { get; set; }
         [BindProperty]
         public string ImageUrl { get; set; }
+        [BindProperty(SupportsGet =true)]
+        public bool uploaded { get; set; }
+
         public void OnGet()
         {
             int userId = Account.CheckCookie();
@@ -65,6 +68,7 @@ namespace Merit.Web.Pages
         {
             CompanyImage img = new CompanyImage();
             var files = Request.Form.Files;
+
             var file = files[0];
             img.ImageTitle = file.FileName;
             img.CompanyUserId = AUser.CompanyUserId;

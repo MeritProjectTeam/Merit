@@ -14,14 +14,14 @@ namespace Merit.Web.Pages
         private readonly ICompanyService companyService = new CompanyService.CompanyService();
 
         [BindProperty]
-        public string Information { get; set; }
+        public string Message { get; set; }
         [BindProperty]
         public CompanyInfo ACompany { get; set; }
+        public bool Visi { get; set; }
 
         int companyUserId = AccountService.Account.CheckCookie();
         public void OnGet()
         {
-            Information = "";
             if (companyUserId != 0)
             {
                 ACompany = companyService.Get(companyUserId);
@@ -29,7 +29,8 @@ namespace Merit.Web.Pages
         }
         public void OnPost()
         {
-            Information = "Företagsinfo sparad.";
+            Visi = true;
+            Message = "Företagsinfo sparad.";
             ACompany.CompanyUserID = AccountService.Account.CheckCookie();
             companyService.EditCompanyInfo(ACompany);
         }
