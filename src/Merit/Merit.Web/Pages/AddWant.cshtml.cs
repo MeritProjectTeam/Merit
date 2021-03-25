@@ -13,23 +13,35 @@ namespace Merit.Web.Pages
     {
         
         private readonly IWantsService wantsService = new WantsService.WantsService();
-        public bool WantSaved { get; set; } = false;
+        public bool Visi { get; set; }
         [BindProperty]
         public PersonalWants PersonalWant { get; set; }
+        public string Message { get; set; }
+        public string alertlook { get; set; }
+
         public void OnGet()
         {
         }
         public void OnPost()
         {
-            WantSaved = true;
-            int userId = AccountService.Account.CheckCookie();
-            if (userId != 0)
+            Visi = true;
+            if (PersonalWant.Want != null)
             {
-                PersonalWant.PersonalUserId = userId;
-                wantsService.CreatePersonalWant(PersonalWant);
+                Message = "Önskemål skapat!";
+                alertlook = "success";
+                int userId = AccountService.Account.CheckCookie();
+                if (userId != 0)
+                {
+                    PersonalWant.PersonalUserId = userId;
+                    wantsService.CreatePersonalWant(PersonalWant);
 
+                }
             }
-
+            else
+            {
+                Message = "Fyll i rutan!";
+                alertlook = "danger";
+            }
         }
     }
 }

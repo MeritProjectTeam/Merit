@@ -12,13 +12,9 @@ namespace Merit.PersonalInfoService
         public PersonalInfo Get(int id);
         public void SavePersonalInfo(PersonalInfo info);
         public void EditPersonalInfo(PersonalInfo info);
-
         public void SaveImage(PersonalImage image);
-
-        public CompanyImage GetImage(CompanyUser companyUser);
-
         public void SaveImage(CompanyImage image);
-
+        public CompanyImage GetImage(CompanyUser companyUser);
         public PersonalImage GetImage(PersonalUser personalUser);
     }
 }

@@ -31,6 +31,11 @@ namespace Merit.Web.Pages
         [BindProperty]
         public PersonalMerit PMerit { get; set; }
 
+        public string Message { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public bool Visi { get; set; } = false;
+
         int userId = AccountService.Account.CheckCookie();
 
         public void OnGet()
@@ -49,17 +54,23 @@ namespace Merit.Web.Pages
                 }
             }
         }
-        public IActionResult OnPostEdit()
+        public void OnPostEdit()
         {
-           
+            Visi = true;
             meritService.EditPersonalMerit(PMerit);
-            return RedirectToPage("EditPersonalMerits");
+            Message = "Merit ändrad";
+            SelectedMeritID = 0;
+            OnGet();
+            //return RedirectToPage("EditPersonalMerits");
         }
 
-        public IActionResult OnPostDelete()
+        public void OnPostDelete()
         {
             meritService.DeletePersonalMerit(PMerit);
-            return RedirectToPage("EditPersonalMerits");
+            Visi = true;
+            Message = "Merit borttagen";
+            SelectedMeritID = 0;
+            OnGet();
         }
     }
 }

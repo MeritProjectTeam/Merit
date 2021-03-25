@@ -17,8 +17,10 @@ namespace Merit.Web.Pages
 
         private readonly IAccount Account = new Account();
 
-        [BindProperty]
+        
         public string LoginMessage { get; set; }
+
+        public bool Visi { get; set; }
 
         public void OnGet()
         {
@@ -38,8 +40,9 @@ namespace Merit.Web.Pages
                 else if (userIdAndUserType[1] == 2)
                 { return Redirect("/CompanyInfoPage"); }
             }
+            Visi = true;
             LoginMessage = "Felaktigt användarnamn eller lösenord";
-            return RedirectToPage();
+            return Page();
         }
     }
 }

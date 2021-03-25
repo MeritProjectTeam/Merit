@@ -6,41 +6,41 @@ using Merit.Data.Models;
 using Merit.WantsService;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Merit.AccountService;
 
 namespace Merit.Web.Pages
 {
-    public class EditCompanyWantsModel : PageModel
+    public class EditPersonalWantsModel : PageModel
     {
         private IWantsService wService = new WantsService.WantsService();
 
         [BindProperty(SupportsGet = true)]
-        public List<CompanyWants> CompanyWantsList { get; set; }
+        public List<PersonalWants> PersonalWantsList { get; set; }
 
         [BindProperty(SupportsGet = true)]
-        public int SelectedCompanyWantId { get; set; }
-
+        public int SelectedPersonalWantId { get; set; }
         [BindProperty]
         public string WantText { get; set; }
-
         [BindProperty]
-        public CompanyWants CWant { get; set; }
+        public PersonalWants PWant { get; set; }
 
         public string Message { get; set; }
+        public string alertlook { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public bool Visi { get; set; } = false;
 
-        int companyUserId = AccountService.Account.CheckCookie();
+        int personalUserId = Account.CheckCookie();
 
         public void OnGet()
         {
-            CompanyWantsList = wService.GetAllCompanyWants(companyUserId);
+            PersonalWantsList = wService.GetAllPersonalWants(personalUserId);
 
-            foreach (var want in CompanyWantsList)
+            foreach (var want in PersonalWantsList)
             {
-                if(want.CompanyWantsId == SelectedCompanyWantId)
+                if (want.PersonalWantsID == SelectedPersonalWantId)
                 {
-                    SelectedCompanyWantId = want.CompanyWantsId;
+                    SelectedPersonalWantId = want.PersonalWantsID;
                     WantText = want.Want;
                 }
 
@@ -49,19 +49,21 @@ namespace Merit.Web.Pages
 
         public void OnPostEdit()
         {
-            wService.EditCompanyWant(CWant);
+            wService.EditPersonalWant(PWant);
             Visi = true;
+            alertlook = "success";
             Message = "Önskemål ändrat";
-            SelectedCompanyWantId = 0;
+            SelectedPersonalWantId = 0;
             OnGet();
         }
 
         public void OnPostDelete()
         {
-            wService.DeleteCompanyWant(CWant);
+            wService.DeletePersonalWant(PWant);
             Visi = true;
+            alertlook = "danger";
             Message = "Önskemål borttaget";
-            SelectedCompanyWantId = 0;
+            SelectedPersonalWantId = 0;
             OnGet();
         }
     }
