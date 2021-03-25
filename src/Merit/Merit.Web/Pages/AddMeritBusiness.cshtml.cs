@@ -11,7 +11,7 @@ namespace Merit.Web.Pages
 {
     public class AddMeritBusinessModel : PageModel
     {
-        public bool SavedBusinessMerit { get; set; } = false;
+        public bool Visi { get; set; } = false;
         
         IMeritService CompanyMeritService = new MeritService.MeritService();
 
@@ -20,7 +20,7 @@ namespace Merit.Web.Pages
         public CompanyMerit ACompanyMerit { get; set; }
         [BindProperty]
         public string Information { get; set; }
-
+        public string alertlook { get; set; }
 
         public void OnGet()
         {
@@ -29,14 +29,24 @@ namespace Merit.Web.Pages
 
         public void OnPost()
         {
-            SavedBusinessMerit = true;
-            int companyUserId = AccountService.Account.CheckCookie();
-            if (companyUserId != 0)
-            {
-                ACompanyMerit.CompanyUserId = companyUserId;          //TA BORT KOMMENTARTECKNEN EFTER MERGE MED NYA DATABASEN!!!
-                CompanyMeritService.SaveMeritBusiness(ACompanyMerit);
-                Information = "Merit sparad.";
+            Visi = true;
+            if (ACompanyMerit.Category != null && ACompanyMerit.SubCategory != null && ACompanyMerit.Description != null)
+            {                
+                int companyUserId = AccountService.Account.CheckCookie();
+                if (companyUserId != 0)
+                {
+                    ACompanyMerit.CompanyUserId = companyUserId;          //TA BORT KOMMENTARTECKNEN EFTER MERGE MED NYA DATABASEN!!!
+                    CompanyMeritService.SaveMeritBusiness(ACompanyMerit);
+                    alertlook = "success";
+                    Information = "Merit sparad!";
+                }
             }
+            else
+            {
+                Information = "Fyll i uppgifterna!";
+                alertlook = "danger";
+            }
+            
 
         }
     }

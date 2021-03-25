@@ -48,7 +48,7 @@ namespace Merit.Web.Pages
             }
             AccountService.EditCompanyUser(ACompanyUser);
             Visi = true;
-            EditMessage = "Userprofile updated";
+            EditMessage = "Användarprofil uppdaterad!";
             TypeMessage = "success";
         }
     }

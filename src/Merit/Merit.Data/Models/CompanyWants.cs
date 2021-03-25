@@ -12,5 +12,6 @@ namespace Merit.Data.Models
         public string Want { get; set; }
         public int CompanyUserId { get; set; }
         public CompanyUser CompanyUser { get; set; }
+
     }
 }

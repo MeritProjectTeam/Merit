@@ -53,7 +53,7 @@ namespace Merit.Web.Pages
         {
             meritService.EditCompanyMerit(CMerit);
             Visi = true;
-            Message = "Merit altered successfully";
+            Message = "Merit ändrad!";
             SelectedMeritID = 0;
             OnGet();
         }
@@ -61,7 +61,7 @@ namespace Merit.Web.Pages
         {
             meritService.DeleteCompanyMerit(CMerit);
             Visi = true;
-            Message = "Merit deleted successfully";
+            Message = "Merit borttagen!";
             SelectedMeritID = 0;
             OnGet();
         }
