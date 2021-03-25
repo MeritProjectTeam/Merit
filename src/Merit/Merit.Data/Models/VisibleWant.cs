@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace Merit.Data.Models
 {
-    public class CompanyWants
+    public class VisibleWant
     {
+        public int CompanyAdvertisementId { get; set; }
+        public CompanyAdvertisement CompanyAdvertisement { get; set; }
         public int CompanyWantsId { get; set; }
-        public string Want { get; set; }
-        public int CompanyUserId { get; set; }
-        public CompanyUser CompanyUser { get; set; }
-
+        public CompanyWants CompanyWants { get; set; }
     }
 }

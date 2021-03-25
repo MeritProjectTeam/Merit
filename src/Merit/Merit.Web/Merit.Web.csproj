@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
     <None Include="wwwroot\DataFile\MeritMockar.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -31,6 +32,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AccountLibraryService\Merit.AccountService.csproj" />
+    <ProjectReference Include="..\Merit.AdvertisementService\Merit.AdvertisementService.csproj" />
     <ProjectReference Include="..\Merit.CompanyService\Merit.CompanyService.csproj" />
     <ProjectReference Include="..\Merit.Data\Merit.Data.csproj" />
     <ProjectReference Include="..\Merit.MeritService2\Merit.MeritService.csproj" />
