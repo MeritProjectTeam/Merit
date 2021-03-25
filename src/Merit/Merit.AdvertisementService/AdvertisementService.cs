@@ -19,7 +19,7 @@ namespace Merit.AdvertisementService
         public CompanyAdvertisement GetOneCompanyAdvertisement(int advertisementId)
         {
             var db = new MeritContext();
-            return db.CompanyAdvertisements.Find(advertisementId);
+            return db.CompanyAdvertisements.FirstOrDefault(x => x.CompanyAdvertisementId == advertisementId);
         }
 
         public void SaveVisibleMerit(VisibleMerit merit)

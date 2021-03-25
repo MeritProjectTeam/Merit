@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,5 +21,10 @@ namespace Merit.Data.Models
         public string Salary { get; set; }
         public int CompanyUserId { get; set; }
         public CompanyUser CompanyUser { get; set; }
+        [NotMapped]
+        public ICollection<CompanyMerit> CompanyMerits { get; set; }
+        [NotMapped]
+        public ICollection<CompanyWants> CompanyWants { get; set; }
+
     }
 }
