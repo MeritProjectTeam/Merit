@@ -1,18 +1,52 @@
-﻿using System;
+﻿using Merit.Data;
+using Merit.Data.Data;
+using Merit.Data.Models;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using Merit.Data.Data;
-using Merit.Data.Models;
-using Merit.CompanyService;
-using Merit.Data;
 
 namespace Merit.AccountService
 {
     public class Account : IAccount
     {
         private AccountRequest source = new();
+
+        public static int CheckCookie()
+        {
+            using StreamReader sr = new StreamReader("wwwroot/DataFile/cookie.txt");
+            bool ok = int.TryParse(sr.ReadLine(), out int id);
+            if (ok)
+            {
+                return id;
+            }
+            return 0;
+        }
+
+        public static void CreateCookie(int? userId)
+        {
+            using StreamWriter sw = new StreamWriter("wwwroot/DataFile/cookie.txt", false);
+            sw.WriteLine(userId);
+        }
+
+        public static string EncryptPassword(string password)
+        {
+            MD5 mD5 = MD5.Create();
+            byte[] inputBytes = Encoding.ASCII.GetBytes(password);
+            byte[] hash = mD5.ComputeHash(inputBytes);
+
+            string result = "";
+
+            foreach (var h in hash)
+            {
+                result += h.ToString("X2");
+            }
+
+            return result;
+        }
+
         public void AddAccount(PersonalUser user)
         {
             user.Password = EncryptPassword(user.Password);
@@ -25,12 +59,9 @@ namespace Merit.AccountService
             source.AddAccount(user);
         }
 
-        public PersonalUser GetPersonalUser(int id) => source.GetPersonalUser(id);
-        public CompanyUser GetCompanyUser(int id) => source.GetCompanyUser(id);
-
-        public AccountCheck CheckExistingAccount(PersonalUser user)
+        public int CheckExistingAccount(PersonalUser user)
         {
-            using var db = new MeritContext() ;
+            using var db = new MeritContext();
 
             var userNameExists = db.PersonalUsers
                 .FirstOrDefault(x => x.UserName.ToLower() == user.UserName.ToLower());
@@ -43,16 +74,16 @@ namespace Merit.AccountService
                 .FirstOrDefault(x => x.Email.ToLower() == user.Email.ToLower());
 
             if (userNameExists != null || companyUserNameExists != null)
-            {   
-                return AccountCheck.NameExists;
+            {
+                return 101;
             }
             else if (emailExists != null || companyEmailExists != null)
             {
-                return AccountCheck.MailExists;
+                return 102;
             }
             else
             {
-                return AccountCheck.NoUserExists;
+                return 100;
             }
         }
 
@@ -83,21 +114,7 @@ namespace Merit.AccountService
                 return 100;
             }
         }
-        public static string EncryptPassword(string password)
-        {
-            MD5 mD5 = MD5.Create();
-            byte[] inputBytes = Encoding.ASCII.GetBytes(password);
-            byte[] hash = mD5.ComputeHash(inputBytes);
 
-            string result = "";
-
-            foreach (var h in hash)
-            {
-                result += h.ToString("X2");
-            }
-
-            return result;
-        }
 
         public int[] CheckLogin(User user)
         {
@@ -107,7 +124,7 @@ namespace Merit.AccountService
             var companyUserValid = db.CompanyUsers
                 .FirstOrDefault(x => x.UserName.ToLower() == user.UserName.ToLower() && x.Password == EncryptPassword(user.Password));
 
-            int[] userIdAndUserType = new int[] {0,0};
+            int[] userIdAndUserType = new int[] { 0, 0 };
             if (personalUserValid != null)
             {
                 userIdAndUserType[0] = personalUserValid.PersonalUserId;
@@ -116,33 +133,29 @@ namespace Merit.AccountService
             }
             else if (companyUserValid != null)
             {
-                
                 userIdAndUserType[0] = companyUserValid.CompanyUserId;
                 userIdAndUserType[1] = 2;
                 return userIdAndUserType;
             }
-            return  userIdAndUserType;
-        }
-        public static void CreateCookie(int? userId)
-        {
-            using StreamWriter sw = new StreamWriter("wwwroot/DataFile/cookie.txt", false);
-            sw.WriteLine(userId);
-        }
-        public static int CheckCookie()
-        {
-            using StreamReader sr = new StreamReader("wwwroot/DataFile/cookie.txt");
-            bool ok = int.TryParse(sr.ReadLine(), out int id);
-            if(ok)
-            {
-                return id;
-            }
-            return 0;
+            return userIdAndUserType;
         }
 
-        // TODO: Tempfix
-        int IAccount.CheckExistingAccount(PersonalUser user)
+        public void EditCompanyUser(CompanyUser company)
         {
-            throw new NotImplementedException();
+            using var db = new MeritContext();
+            db.Attach(company).State = EntityState.Modified;
+            db.SaveChanges();
         }
+
+        public void EditPersonalUser(PersonalUser user)
+        {
+            using var db = new MeritContext();
+            db.Attach(user).State = EntityState.Modified;
+            db.SaveChanges();
+        }
+
+        public CompanyUser GetCompanyUser(int id) => source.GetCompanyUser(id);
+
+        public PersonalUser GetPersonalUser(int id) => source.GetPersonalUser(id);
     }
 }
