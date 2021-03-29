@@ -36,7 +36,7 @@
 
             <div class="justify-content-between mb-2">
                 <label for="dateofbirth">Födelseår</label>
-                <input class="form-control" asp-for="APerson.DateOfBirth" type="date" value="@Model.APerson.DateOfBirth" />
+                <input class="form-control" asp-for="APerson.DateOfBirth" type="date" value="@Model.APerson.DateOfBirth.ToShortDateString()" />
             </div>
             <div class="justify-content-between mb-2">
                 <label for="street">Gatuadress</label>

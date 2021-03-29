@@ -67,17 +67,20 @@ namespace Merit.Web.Pages
         {
             PersonalImage img = new PersonalImage();
             var files = Request.Form.Files;
-            var file = files[0];
-            img.ImageTitle = file.FileName;
-            img.PersonalUserId = AUser.PersonalUserId;
-            
-            using (MemoryStream ms = new MemoryStream())
+            if (files.Count != 0)
             {
-                file.CopyTo(ms);
-                img.ImageData = ms.ToArray();
-            }
-            profileService.SaveImage(img);
+                var file = files[0];
+                img.ImageTitle = file.FileName;
+                img.PersonalUserId = AUser.PersonalUserId;
 
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    file.CopyTo(ms);
+                    img.ImageData = ms.ToArray();
+                }
+                profileService.SaveImage(img);
+            }
+            else { return Page(); }
             return RedirectToPage();
         }
         
