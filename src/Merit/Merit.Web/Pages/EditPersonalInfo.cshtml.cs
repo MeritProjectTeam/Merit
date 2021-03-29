@@ -19,6 +19,9 @@ namespace Merit.Web.Pages
         [BindProperty]
         public PersonalInfo APerson { get; set; }
 
+        //[BindProperty]
+        //public DateTime DateOfBirth { get; set; }
+
         public bool Visi { get; set; }
 
         int userId = AccountService.Account.CheckCookie();
@@ -35,6 +38,7 @@ namespace Merit.Web.Pages
             Visi = true;
             Information = "Profilinfo sparad.";
             APerson.PersonalUserID = AccountService.Account.CheckCookie();
+            //if(DateOfBirth != default)
             profileService.EditPersonalInfo(APerson);
         }
     }
