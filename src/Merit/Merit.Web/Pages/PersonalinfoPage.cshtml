@@ -57,7 +57,7 @@
                         <p></p>
 
                         <div>Namn: @Model.PersonalInfo.FirstName @Model.PersonalInfo.LastName</div>
-                        <div>Födelsedatum: @Model.PersonalInfo.DateOfBirth.Date.ToString().Substring(0, 10)</div>
+                        <div>Födelsedatum: @if (Model.PersonalInfo.DateOfBirth.Hour != 2) { @Model.PersonalInfo.DateOfBirth.Date.ToString().Substring(0, 10)}</div>
 
 
 
@@ -151,5 +151,5 @@
         <!-- Bootstrap core JavaScript -->
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
+        </div>
 </body>
