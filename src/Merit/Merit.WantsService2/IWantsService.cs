@@ -19,6 +19,7 @@ namespace Merit.WantsService
         public void EditPersonalWant(PersonalWants updatedWant);
         public void DeleteCompanyWant(CompanyWants deleteWant);
         public void DeletePersonalWant(PersonalWants deleteWant);
-
+        public List<PersonalWants> AllPersonalWantsToList();
+        public List<CompanyWants> AllCompanyWantsToList();
     }
 }

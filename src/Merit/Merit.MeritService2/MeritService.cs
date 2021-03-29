@@ -112,5 +112,19 @@ namespace Merit.MeritService
                 }
             }
         }
+
+        public List<PersonalMerit> GetAllPersonalMerits()
+        {
+            MeritContext db = new MeritContext();
+            var list = db.PersonalMerits.ToList();
+            return list;
+        }
+
+        public List<CompanyMerit> GetAllCompanyMerits()
+        {
+            MeritContext db = new MeritContext();
+            var list = db.CompanyMerits.ToList();
+            return list;
+        }
     }
 }

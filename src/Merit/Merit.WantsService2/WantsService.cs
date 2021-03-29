@@ -103,5 +103,19 @@ namespace Merit.WantsService
                     
             }
         }
+
+        public List<PersonalWants> AllPersonalWantsToList()
+        {
+            MeritContext db = new MeritContext();
+            List<PersonalWants> list = new List<PersonalWants>();
+            return list = db.PersonalWants.ToList();
+        }
+
+        public List<CompanyWants> AllCompanyWantsToList()
+        {
+            MeritContext db = new MeritContext();
+            List<CompanyWants> list = new List<CompanyWants>();
+            return list = db.CompanyWants.ToList();
+        }
     }
 }

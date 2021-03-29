@@ -43,5 +43,12 @@ namespace Merit.CompanyService
                 db.SaveChanges();
             }
         }
+
+        public List<CompanyInfo> GetAllCompany()
+        {
+            List<CompanyInfo> aaa = new List<CompanyInfo>();
+            using var db = new MeritContext();
+            return aaa = db.CompanyInfo.ToList();
+        }
     }
 }

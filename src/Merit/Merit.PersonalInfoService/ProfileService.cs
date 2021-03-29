@@ -78,5 +78,10 @@ namespace Merit.PersonalInfoService
             db.PersonalInfo.Add(info);
             db.SaveChanges();
         }
+        public List<PersonalInfo> GetAllPersons()
+        {
+            using var db = new MeritContext();
+            return db.PersonalInfo.ToList();
+        }
     }
 }

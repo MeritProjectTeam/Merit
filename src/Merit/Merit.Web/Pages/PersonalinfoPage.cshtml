@@ -4,7 +4,8 @@
 @{
 }
 
-<body>
+@if (Model.CompanySelectInt != 0)
+{
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
         <a class="navbar-brand js-scroll-trigger" href="#page-top">
             <span class="d-block d-lg-none">MERIT</span>
@@ -18,138 +19,302 @@
             </ul>
         </div>
     </nav>
-    <!-- Page Content -->
-    <div class="container">
+    <div class="text-center">
+        <div><img src="@Model.SelectedCompUrl" width="300" /></div>
+        <br />
+        <div><h4>@Model.SelectedComp.CompanyName</h4></div>
+        <div>@Model.SelectedComp.Phone</div>
+        <div>@Model.SelectedComp.Street @Model.SelectedComp.ZipCode @Model.SelectedComp.City</div>
+        <div>@Model.SelectedComp.OrgNumber</div>
+        <br />
+        <h4>Meriter</h4>
+        <br />
+        @foreach (var x in Model.CompanyMeritList)
+        {
+            <div>@x.Category @x.SubCategory</div>
+            <div>@x.Description</div>
+            <br />
+        }
+        <h4>Behov av:</h4>
+        <br />
+            @foreach (var x in Model.CompanyWantList)
+            {
+                <div>@x.Want</div>
+            }
+        <br />
+        <a class="btn btn-primary" asp-page="/PersonalinfoPage">Profilsida</a>
+    </div>
+}
+else if (Model.PersonSelectedInt != 0)
+{
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
+        <a class="navbar-brand js-scroll-trigger" href="#page-top">
+            <span class="d-block d-lg-none">MERIT</span>
+            <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="/images/merit2.png" alt="" /></span>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-page="/PersonalinfoPage">Profilsida</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-page="/LogOut">Logga ut</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="text-center">
+        <div><img src="@Model.SelectedPersonUrl" width="300" /></div>
+        <br />
+        <div><h4>@Model.SelectedPerson.FirstName @Model.SelectedPerson.LastName</h4></div>
+        <div>@Model.SelectedPerson.PhoneNumber</div>
+        <div>@Model.SelectedPerson.Street @Model.SelectedPerson.ZipCode @Model.SelectedPerson.City</div>
+        <br />
+        <h4>Meriter</h4>
+        <br />
+        @foreach (var x in Model.PersonalMeritList)
+        {
+            <div>@x.Category @x.SubCategory</div>
+            <div>@x.Description</div>
+            <br />
+        }
+        <h4>Behov av:</h4>
+        <br />
+            @foreach (var x in Model.PersonalWantList)
+            {
+                <div>@x.Want</div>
+            }
+        <br />
+        <a class="btn btn-primary" asp-page="/PersonalinfoPage">Profilsida</a>
+    </div>
+}
+else
+{
 
-        <!-- Heading Row -->
-        <div class="row align-items-center my-5">
-            <div class="col-lg-4">
-                <img src="@Model.ImageUrl" width="300" height="300" alt="">
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
+            <a class="navbar-brand js-scroll-trigger" href="#page-top">
+                <span class="d-block d-lg-none">MERIT</span>
+                <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="/images/merit2.png" alt="" /></span>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-page="/PersonalinfoPage">Profilsida</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-page="/LogOut">Logga ut</a></li>
+                </ul>
             </div>
-            <!-- /.col-lg-8 -->
-            <div class="col-lg-5">
-                <hr />
-                <h3>Välkommen, @Model.PersonalInfo.FirstName @Model.PersonalInfo.LastName!</h3>
-                <p>Här kan du uppdatera din profilinformation, lägga till meriter samt lägga till Wants.</p>
+        </nav>
+        <!-- Page Content -->
+        <div class="container">
+
+            <!-- Heading Row -->
+            <div class="row align-items-center my-5">
+                <div class="col-lg-4">
+                    <img src="@Model.ImageUrl" width="300" height="300" alt="">
+                </div>
+                <!-- /.col-lg-8 -->
+                <div class="col-lg-5">
+                    <hr />
+                    <h3>Välkommen, @Model.PersonalInfo.FirstName @Model.PersonalInfo.LastName!</h3>
+                    <p>Här kan du uppdatera din profilinformation, lägga till meriter samt lägga till Wants.</p>
+                    <div>
+                        <form method="post"
+                              enctype="multipart/form-data">
+                            <input type="file" id="file1"
+                                   name="file1" />
+                            <button type="submit" class="btn btn-primary" asp-page-handler="UploadImage">Ladda upp bild</button>
+                        </form>
+                    </div>
+                    <p></p>
+                    <hr />
+                </div>
+                <!-- /.col-md-4 -->
+            </div>
+            <!-- /.row -->
+            <!-- Call to Action Well -->
+            <!-- Content Row -->
+            <div class="row">
+                <div class="col-md-4 mb-5">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <div class="card-header">
+                                <h4 class="card-title">Profil</h4>
+                            </div>
+                            <p></p>
+
+                            <div>Namn: @Model.PersonalInfo.FirstName @Model.PersonalInfo.LastName</div>
+                            <div>Födelsedatum: @Model.PersonalInfo.DateOfBirth.Date.ToString().Substring(0, 10)</div>
+
+
+
+                            <hr />
+
+                            <div>Email: @Model.AUser.Email</div>
+
+                            <div>Tele: @Model.PersonalInfo.PhoneNumber</div>
+
+
+                            <hr />
+                            <div>Gata: @Model.PersonalInfo.Street</div>
+
+                            <div>Postnr: @Model.PersonalInfo.ZipCode</div>
+
+                            <div>Ort: @Model.PersonalInfo.City</div>
+                        </div>
+                        <div class="card-footer">
+                            <a href="/EditPersonalInfo" class="btn btn-primary btn-sm">Uppdatera profil</a>
+                            <a href="/EditUserInfo" class="btn btn-primary btn-sm">Ändra Lösenord/Email</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.col-md-4 -->
+                <div class="col-md-4 mb-5">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <div class="card-header">
+                                <h4 class="card-title">Meriter</h4>
+                            </div>
+                            <p></p>
+                            <p class="card-text">
+                                @foreach (var x in Model.PersonalMerits)
+                                {
+
+                                    <div>
+                                        Kategori: @x.Category;
+                                    </div>
+                                    <div>
+                                        Underkategori: @x.SubCategory
+                                    </div>
+                                    <div>
+                                        Beskrivning: @x.Description
+                                    </div>
+                                    <div>
+                                        Varaktighet: @x.Duration
+                                    </div>
+                                    <hr />
+                                }
+                            </p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="/AddMerit" class="btn btn-primary btn-sm">Lägg till ny merit</a>
+                            <a href="/EditPersonalMerits" class="btn btn-primary btn-sm">Redigera meriter</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.col-md-4 -->
+                <div class="col-md-4 mb-5">
+                    <div class="card h-100">
+                        <div class="card-body">
+
+                            <div class="card-header">
+                                <h4 class="card-title">Wants</h4>
+                            </div>
+                            <p></p>
+                            <p class="card-text">
+                                <ul>
+                                    @foreach (var x in Model.PersonalWants)
+                                    {
+                                        <li>
+                                            @x.Want
+                                        </li>
+
+                                    }
+                                </ul>
+
+                            </p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="/AddWant" class="btn btn-primary btn-sm">Lägg till Want</a>
+                            <a href="/EditPersonalWants" class="btn btn-primary btn-sm">Redigera Wants</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.col-md-4 -->
+            </div>
+            <!-- /.row -->
+            <!-- /.container -->
+            <!-- Footer -->
+            <!-- Bootstrap core JavaScript -->
+            <script src="vendor/jquery/jquery.min.js"></script>
+            <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+            </div>
+    </body>
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <h6>Sök person via efternamn</h6>
                 <div>
-                    <form method="post"
-                          enctype="multipart/form-data">
-                        <input type="file" id="file1"
-                               name="file1"/>
-                        <button type="submit" class="btn btn-primary">Ladda upp bild</button>
+                    <form method="post">
+                        <input type="text" asp-for="@Model.SearchPersonString" placeholder="Hitta person via efternamn" />
+                        <button type="submit" asp-page-handler="SearchPerson">Sök person</button>
                     </form>
                 </div>
-                <p></p>
-                <hr />
             </div>
-            <!-- /.col-md-4 -->
+            <div class="col-6">
+                <h6>Sök företag via namn</h6>
+                <div>
+                    <form method="post">
+                        <input type="text" asp-for="@Model.SearchCompanyString" placeholder="Hitta företag" />
+                        <button type="submit" asp-page-handler="SearchCompany">Sök företag</button>
+                    </form>
+                </div>
+            </div>
         </div>
-        <!-- /.row -->
-        <!-- Call to Action Well -->
-        <!-- Content Row -->
+        <br />
         <div class="row">
-            <div class="col-md-4 mb-5">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <div class="card-header">
-                            <h4 class="card-title">Profil</h4>
-                        </div>
-                        <p></p>
-
-                        <div>Namn: @Model.PersonalInfo.FirstName @Model.PersonalInfo.LastName</div>
-                        <div>Födelsedatum: @Model.PersonalInfo.DateOfBirth.Date.ToString().Substring(0, 10)</div>
-
-
-
-                        <hr />
-
-                        <div>Email: @Model.AUser.Email</div>
-
-                        <div>Tele: @Model.PersonalInfo.PhoneNumber</div>
-
-
-                        <hr />
-                        <div>Gata: @Model.PersonalInfo.Street</div>
-
-                        <div>Postnr: @Model.PersonalInfo.ZipCode</div>
-
-                        <div>Ort: @Model.PersonalInfo.City</div>
-                    </div>
-                    <div class="card-footer">
-                        <a href="/EditPersonalInfo" class="btn btn-primary btn-sm">Uppdatera profil</a>
-                        <a href="/EditUserInfo" class="btn btn-primary btn-sm">Ändra Lösenord/Email</a>
-                    </div>
-                </div>
+            <div class="col-6">
+                <h6>Sök person via merit</h6>
+                <div>
+                    <form method="post">
+                        <input type="text" asp-for="@Model.SearchPersonMeritString" placeholder="Hitta person via merit" />
+                        <button type="submit" asp-page-handler="PersonByMerit">Sök Person</button>
+                    </form>
+                </div>                
             </div>
-            <!-- /.col-md-4 -->
-            <div class="col-md-4 mb-5">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <div class="card-header">
-                            <h4 class="card-title">Meriter</h4>
-                        </div>
-                        <p></p>
-                        <p class="card-text">
-                            @foreach (var x in Model.PersonalMerits)
-                            {
-
-                                <div>
-                                    Kategori: @x.Category;
-                                </div>
-                                <div>
-                                    Underkategori: @x.SubCategory
-                                </div>
-                                <div>
-                                    Beskrivning: @x.Description
-                                </div>
-                                <div>
-                                    Varaktighet: @x.Duration
-                                </div>
-                                <hr />
-                            }
-                        </p>
-                    </div>
-                    <div class="card-footer">
-                        <a href="/AddMerit" class="btn btn-primary btn-sm">Lägg till ny merit</a>
-                        <a href="/EditPersonalMerits" class="btn btn-primary btn-sm">Redigera meriter</a>
-                    </div>
-                </div>
+            <div class="col-6">
+                <h6>Sök företag via merit</h6>
+                <div>
+                    <form method="post">
+                        <input type="text" asp-for="@Model.SearchCompanyMeritString" placeholder="Hitta person via merit" />
+                        <button type="submit" asp-page-handler="CompanyByMerit">Sök företag</button>
+                    </form>
+                </div>                
             </div>
-            <!-- /.col-md-4 -->
-            <div class="col-md-4 mb-5">
-                <div class="card h-100">
-                    <div class="card-body">
-
-                        <div class="card-header">
-                            <h4 class="card-title">Wants</h4>
-                        </div>
-                        <p></p>
-                        <p class="card-text">
-                            <ul>
-                                @foreach (var x in Model.PersonalWants)
-                                {
-                                    <li>
-                                        @x.Want
-                                    </li>
-
-                                }
-                            </ul>
-
-                        </p>
-                    </div>
-                    <div class="card-footer">
-                        <a href="/AddWant" class="btn btn-primary btn-sm">Lägg till Want</a>
-                        <a href="/EditPersonalWants" class="btn btn-primary btn-sm">Redigera Wants</a>
-                    </div>
-                </div>
-            </div>
-            <!-- /.col-md-4 -->
         </div>
-        <!-- /.row -->
-        <!-- /.container -->
-        <!-- Footer -->
-        <!-- Bootstrap core JavaScript -->
-        <script src="vendor/jquery/jquery.min.js"></script>
-        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-</body>
+        <br />
+        <div class="row">
+            <div class="col-6">
+                <h6>Sök person via önskemål</h6>
+                <div>
+                    <form method="post">
+                        <input type="text" asp-for="@Model.SearchPersonWantString" placeholder="Hitta person via efternamn" />
+                        <button type="submit" asp-page-handler="PersonByWant">Sök person</button>
+                    </form>
+                </div>
+                <br />
+                @if (Model.SearchPersonList != null)
+                {
+                    @foreach (var x in Model.SearchPersonList)
+                    {
+                        <div>@x.FirstName @x.LastName <a href="?PersonSelectedInt=@x.PersonalInfoId">profil</a></div>
+                    }
+                }
+            </div>
+            <div class="col-6">
+                <h6>Sök företag via önskemål</h6>
+                <div>
+                    <form method="post">
+                        <input type="text" asp-for="@Model.SearchCompanyWantString" placeholder="Hitta företag" />
+                        <button type="submit" asp-page-handler="CompanyByWant">Sök företag</button>
+                    </form>
+                </div>
+                <br />
+                @if (Model.SearchCompanyList != null)
+                {
+                    @foreach (var x in Model.SearchCompanyList)
+                    {
+                        <div>@x.CompanyName <a href="?CompanySelectInt=@x.CompanyInfoId">profil</a></div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+}

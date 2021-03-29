@@ -16,5 +16,6 @@ namespace Merit.PersonalInfoService
         public void SaveImage(CompanyImage image);
         public CompanyImage GetImage(CompanyUser companyUser);
         public PersonalImage GetImage(PersonalUser personalUser);
+        public List<PersonalInfo> GetAllPersons();
     }
 }
