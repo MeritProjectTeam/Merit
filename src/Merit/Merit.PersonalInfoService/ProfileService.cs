@@ -78,5 +78,18 @@ namespace Merit.PersonalInfoService
             db.PersonalInfo.Add(info);
             db.SaveChanges();
         }
+
+        public void DeletePersonalInfo(int userId)
+        {
+            using var db = new MeritContext();
+            var imageInfo = db.PersonalImages.FirstOrDefault(x => x.PersonalUserId == userId);
+            if(imageInfo != null)
+            { 
+                db.PersonalImages.Remove(imageInfo); 
+            }
+            var personalInfo = db.PersonalInfo.FirstOrDefault(x => x.PersonalUserID == userId);
+            db.PersonalInfo.Remove(personalInfo);
+            db.SaveChanges();
+        }
     }
 }
