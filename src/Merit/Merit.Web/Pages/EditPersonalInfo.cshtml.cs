@@ -7,12 +7,14 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Merit.PersonalInfoService;
 using Merit.Data.Models;
 using Microsoft.EntityFrameworkCore;
+using Merit.AccountService;
 
 namespace Merit.Web.Pages
 {
     public class EditPersonalInfoModel : PageModel
     {
         private readonly IProfileService profileService = new ProfileService();
+        private readonly IAccount accountService = new Account();
 
         [BindProperty]
         public string Information { get; set; }
@@ -36,6 +38,11 @@ namespace Merit.Web.Pages
             Information = "Profilinfo sparad.";
             APerson.PersonalUserID = AccountService.Account.CheckCookie();
             profileService.EditPersonalInfo(APerson);
+        }
+        public IActionResult OnPostDelete()
+        {
+            accountService.DeletePersonalUser(userId);
+            return RedirectToPage("/ConfirmedRemovedAccount");
         }
     }
 }

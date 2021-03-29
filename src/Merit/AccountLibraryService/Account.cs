@@ -1,8 +1,12 @@
 ﻿using Merit.Data;
 using Merit.Data.Data;
 using Merit.Data.Models;
+using Merit.MeritService;
+using Merit.PersonalInfoService;
+using Merit.WantsService;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -13,6 +17,10 @@ namespace Merit.AccountService
     public class Account : IAccount
     {
         private AccountRequest source = new();
+
+        private readonly IMeritService meritService = new MeritService.MeritService();
+        private readonly IWantsService wantsService = new WantsService.WantsService();
+        private readonly IProfileService profileService = new ProfileService(); 
 
         public static int CheckCookie()
         {
@@ -138,6 +146,27 @@ namespace Merit.AccountService
                 return userIdAndUserType;
             }
             return userIdAndUserType;
+        }
+
+        public void DeletePersonalUser(int userId)
+        {
+            using var db = new MeritContext();
+            List<PersonalMerit> meritList = meritService.ReadPersonalMerits(userId);
+            foreach (var merit in meritList)
+            {
+                meritService.DeletePersonalMerit(merit);
+            }
+            List<PersonalWants> wantsList = wantsService.GetAllPersonalWants(userId);
+            foreach (var want in wantsList)
+            {
+                wantsService.DeletePersonalWant(want);
+            }
+            profileService.DeletePersonalInfo(userId);
+
+            var personalUser = db.PersonalUsers.FirstOrDefault(x => x.PersonalUserId == userId);
+            db.PersonalUsers.Remove(personalUser);
+            db.SaveChanges();
+
         }
 
         public void EditCompanyUser(CompanyUser company)
