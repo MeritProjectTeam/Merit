@@ -6,12 +6,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Merit.MeritService;
 using Merit.Data.Models;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace Merit.Web.Pages
 {
     public class AddMeritModel : PageModel
     {
         IMeritService meritService = new MeritService.MeritService();
+
+        private readonly UserManager<IdentityUser> userManager;
+        
 
         [BindProperty]
         public PersonalMerit AMerit { get; set; }
@@ -25,23 +30,30 @@ namespace Merit.Web.Pages
         }
         public void OnPost()
         {
-            Visi = true;
-            if (AMerit.Category != null && AMerit.SubCategory != null && AMerit.Description != null)
+            if (User != null)
             {
-                Message = "Merit skapat!";
-                alertlook = "success";
-                int userId = AccountService.Account.CheckCookie();
-                if (userId != 0)
+                var userGuid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+                Visi = true;
+                if (AMerit.Category != null && AMerit.SubCategory != null && AMerit.Description != null && userGuid != null)
                 {
-                    AMerit.PersonalUserId = userId;
+                    Message = "Merit skapat!";
+                    alertlook = "success";
+                    //int userId = AccountService.Account.CheckCookie();
+                    //if (userId != 0)
+                    //{
+                    //    AMerit.PersonalUserId = userId;
+                    //    meritService.SaveMerit(AMerit);
+                    //}
+                    AMerit.PersonalUserId = meritService.GetUserId(userGuid);
                     meritService.SaveMerit(AMerit);
                 }
+                else
+                {
+                    alertlook = "danger";
+                    Message = "Fyll i rutorna!";
+                }
             }
-            else
-            {
-                alertlook = "danger";
-                Message = "Fyll i rutorna!";
-            }            
         }
     }
 }
