@@ -17,7 +17,6 @@ namespace Merit.AccountService
             //krypteringen sker på server-sidan, bör bytas till klient-sidan
             using var db = new MeritContext();
 
-            user.Password = EncryptPassword(user.Password);
             db.Add(user);
             db.SaveChanges();
 
@@ -39,7 +38,6 @@ namespace Merit.AccountService
             //krypteringen sker på server-sidan, bör bytas till klient-sidan
             using var db = new MeritContext();
 
-            user.Password = EncryptPassword(user.Password);
             db.Add(user);
             db.SaveChanges();
 
@@ -56,6 +54,7 @@ namespace Merit.AccountService
                 db.SaveChanges();
             }
         }
+
         public PersonalUser GetPersonalUser(int id)
         {
             using var db = new MeritContext();

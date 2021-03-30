@@ -1,15 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Merit.AccountService;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Merit.AccountService;
-using Merit.Data.Models;
 using System.ComponentModel.DataAnnotations;
-using System.Xml.Linq;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Authentication;
+using System.Threading.Tasks;
 
 namespace Merit.Web.Pages
 {
@@ -40,14 +35,22 @@ namespace Merit.Web.Pages
                 var result = await signInManager.PasswordSignInAsync(Input.Email, Input.Password, isPersistent: true, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    return Redirect("/PersonalInfoPage");
+                    IdentityUser user = await userManager.GetUserAsync(User);
+                    var type = user.GetAccountType();
+                    if (type == AccountType.Personal)
+                    {
+                        return RedirectToPage("/PersonalInfoPage");
+                    }
+                    else if (type == AccountType.Company)
+                    {
+                        return RedirectToPage("/CompanyInfoPage");
+                    }
                 }
                 else
                 {
                     ModelState.AddModelError(string.Empty, "Ogiltig inloggning.");
                     return Page();
                 }
-
             }
             return Page();
         }
