@@ -57,7 +57,7 @@ namespace Merit.WantsService
         {
             using var db = new MeritContext();
             return db.CompanyWants
-                .Where(c => c.CompanyUserId == userId)
+                .Where(c => c.CompanyUser.CompanyUserId == userId)
                 .ToList();
         }
         public PersonalWants GetPersonalWant(int id)
@@ -70,7 +70,7 @@ namespace Merit.WantsService
         {
             using var db = new MeritContext();
             return db.PersonalWants
-                .Where(p => p.PersonalUserId == userId)
+                .Where(p => p.PersonalUser.PersonalUserId == userId)
                 .ToList();
         }
         public void DeleteCompanyWant(CompanyWants companyWant)

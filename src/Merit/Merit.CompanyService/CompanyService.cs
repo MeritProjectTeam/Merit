@@ -15,7 +15,7 @@ namespace Merit.CompanyService
         {
             using var db = new MeritContext();
             return db.CompanyInfo
-                .FirstOrDefault(c => c.CompanyUserID == id);
+                .FirstOrDefault(c => c.CompanyUserId == id);
         }
         public void SaveCompany(CompanyInfo company)
         {
@@ -28,7 +28,7 @@ namespace Merit.CompanyService
         {
             using var db = new MeritContext();
             
-            var existingInfo = db.CompanyInfo.FirstOrDefault(c => c.CompanyUserID == info.CompanyInfoId);
+            var existingInfo = db.CompanyInfo.FirstOrDefault(c => c.CompanyUserId == info.CompanyUserId);
 
             if (existingInfo != null)
             {

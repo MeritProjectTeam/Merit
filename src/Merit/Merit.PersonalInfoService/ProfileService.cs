@@ -17,7 +17,7 @@ namespace Merit.PersonalInfoService
             using var db = new MeritContext();
            
             var existingInfo = db.PersonalInfo
-                .FirstOrDefault(p => p.PersonalUserID == info.PersonalInfoId);
+                .FirstOrDefault(p => p.PersonalUserId == info.PersonalUserId);
             if (existingInfo != null)
             {
                 existingInfo.FirstName = info.FirstName;
@@ -34,7 +34,7 @@ namespace Merit.PersonalInfoService
         {
             using var db = new MeritContext();
             return db.PersonalInfo
-                .FirstOrDefault(p => p.PersonalUserID == id);
+                .FirstOrDefault(p => p.PersonalUserId == id);
         }        
         public CompanyImage GetImage(CompanyUser companyUser)
         {

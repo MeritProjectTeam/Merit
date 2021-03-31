@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Merit.AccountService;
 using Merit.Data.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -13,10 +14,18 @@ namespace Merit.Web.Pages
     {
         private readonly IAccount AccountService = new Account();
 
+        private readonly UserManager<IdentityUser> userManager;
+        private readonly SignInManager<IdentityUser> signInManager;
+
+        public EditCompanyUserModel(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        {
+            this.signInManager = signInManager;
+            this.userManager = userManager;
+        }
+
+
         [BindProperty(SupportsGet = true)]
         public CompanyUser ACompanyUser { get; set; }
-
-        int CompanyUserId = Account.CheckCookie();
 
         [BindProperty]
         public string PasswordCheck1 { get; set; }
@@ -29,18 +38,33 @@ namespace Merit.Web.Pages
         public string EditMessage { get; set; }
         public string TypeMessage { get; set; }
 
-        public void OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
-            CompanyUserId = Account.CheckCookie();
-            if (CompanyUserId != 0)
+            if (!signInManager.IsSignedIn(User))
             {
-                ACompanyUser = AccountService.GetCompanyUser(CompanyUserId);
+                return Redirect("/Login");
             }
+
+            IdentityUser identity = await userManager.GetUserAsync(User);
+            IUser cUser = identity.GetUser();
+
+            ACompanyUser = AccountService.GetCompanyUser(cUser.Identity);
+            return Page();
         }
 
-        public void OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
-            ACompanyUser = AccountService.GetCompanyUser(CompanyUserId);
+            if (!signInManager.IsSignedIn(User))
+            {
+                return Redirect("/Login");
+            }
+
+            IdentityUser identity = await userManager.GetUserAsync(User);
+            IUser cUser = identity.GetUser();
+
+
+
+            ACompanyUser = AccountService.GetCompanyUser(cUser.Identity);
             ACompanyUser.Email = Email;
             if (PasswordCheck1 != null)
             {
@@ -50,6 +74,7 @@ namespace Merit.Web.Pages
             Visi = true;
             EditMessage = "Användarprofil uppdaterad!";
             TypeMessage = "success";
+            return Page();
         }
     }
 }

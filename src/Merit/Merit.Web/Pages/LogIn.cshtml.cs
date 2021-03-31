@@ -35,7 +35,7 @@ namespace Merit.Web.Pages
                 var result = await signInManager.PasswordSignInAsync(Input.Email, Input.Password, isPersistent: true, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    IdentityUser user = await userManager.GetUserAsync(User);
+                    IdentityUser user = await userManager.FindByEmailAsync(Input.Email);
                     var type = user.GetAccountType();
                     if (type == AccountType.Personal)
                     {

@@ -11,8 +11,6 @@ namespace Merit.Web.Pages
     {
         public IActionResult OnGet()
         {
-            AccountService.Account.CreateCookie(null);
-
             return Redirect("/Index");
         }
     }

@@ -8,12 +8,21 @@ using Merit.MeritService;
 using Merit.Data.Models;
 using Merit.PersonalInfoService;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace Merit.Web.Pages
 {
     public class EditPersonalMeritsModel : PageModel
     {
         private readonly IMeritService meritService = new MeritService.MeritService();
+        private readonly UserManager<IdentityUser> userManager;
+        private readonly SignInManager<IdentityUser> signInManager;
+
+        public EditPersonalMeritsModel(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        {
+            this.signInManager = signInManager;
+            this.userManager = userManager;
+        }
 
         [BindProperty(SupportsGet  = true)]
         public List<PersonalMerit> MeritList { get; set; }
@@ -36,12 +45,22 @@ namespace Merit.Web.Pages
         [BindProperty(SupportsGet = true)]
         public bool Visi { get; set; } = false;
 
-        int userId = AccountService.Account.CheckCookie();
 
-        public void OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
-            MeritList = meritService.ReadPersonalMerits(userId);
-          
+            if (!signInManager.IsSignedIn(User))
+            {
+                return Redirect("/Login");
+            }
+
+            IdentityUser identity = await userManager.GetUserAsync(User);
+            string guid = identity.Id;
+            IUser pUser = identity.GetUser();
+
+            if (pUser is PersonalUser personalUser)
+            {
+                MeritList = meritService.ReadPersonalMerits(personalUser.PersonalUserId);
+            }
             foreach (var merit in MeritList)
             {
                 if (merit.PersonalMeritId == SelectedMeritID) 
@@ -53,24 +72,24 @@ namespace Merit.Web.Pages
                     DurationText = merit.Duration;
                 }
             }
+            return Page();
         }
-        public void OnPostEdit()
+        public async Task OnPostEdit()
         {
             Visi = true;
             meritService.EditPersonalMerit(PMerit);
             Message = "Merit ändrad";
             SelectedMeritID = 0;
-            OnGet();
-            //return RedirectToPage("EditPersonalMerits");
+            await OnGetAsync();
         }
 
-        public void OnPostDelete()
+        public async Task OnPostDelete()
         {
             meritService.DeletePersonalMerit(PMerit);
             Visi = true;
             Message = "Merit borttagen";
             SelectedMeritID = 0;
-            OnGet();
+            await OnGetAsync();
         }
     }
 }

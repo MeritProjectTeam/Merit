@@ -28,7 +28,7 @@ namespace Merit.MeritService
             using (var db = new MeritContext())
             {
                 var l = db.PersonalMerits
-                    .Where(l => l.PersonalUserId == userId)
+                    .Where(l => l.PersonalUser.PersonalUserId == userId)
                     .ToList();
                 return l;
             }
@@ -38,7 +38,7 @@ namespace Merit.MeritService
             using (var db = new MeritContext())
             {
                 var l = db.CompanyMerits
-                    .Where(l => l.CompanyUserId == companyUserId)
+                    .Where(l => l.CompanyUser.CompanyUserId == companyUserId)
                     .ToList();
                 return l;
             }

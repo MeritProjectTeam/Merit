@@ -9,6 +9,7 @@ using Merit.Data.Models;
 using Merit.MeritService;
 using Merit.PersonalInfoService;
 using Merit.WantsService;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -21,6 +22,15 @@ namespace Merit.Web.Pages
         private IMeritService meritService = new MeritService.MeritService();
         private IWantsService wantsService = new WantsService.WantsService();
         private IProfileService profileService = new ProfileService();
+
+        private readonly UserManager<IdentityUser> userManager;
+        private readonly SignInManager<IdentityUser> signInManager;
+
+        public CompanyInfoPageModel(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        {
+            this.signInManager = signInManager;
+            this.userManager = userManager;
+        }
 
         [BindProperty]
         public CompanyUser AUser { get; set; }
@@ -36,11 +46,24 @@ namespace Merit.Web.Pages
         [BindProperty(SupportsGet =true)]
         public bool uploaded { get; set; }
 
-        public void OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
-            int userId = Account.CheckCookie();
-            AUser = accountService.GetCompanyUser(userId);
-            CompanyInfo = companyService.Get(userId);
+            if (!signInManager.IsSignedIn(User))
+            {
+                return Redirect("/Login");
+            }
+
+            IdentityUser identity = await userManager.GetUserAsync(User);
+            IUser cUser = identity.GetUser();
+
+            AUser = accountService.GetCompanyUser(cUser.Identity);
+            if (cUser is CompanyUser companyUser)
+            {
+                CompanyInfo = companyService.Get(companyUser.CompanyUserId);
+                CompanyWants = wantsService.GetAllCompanyWants(companyUser.CompanyUserId);
+                CompanyMerits = meritService.ReadCompanyMerits(companyUser.CompanyUserId);
+
+            }
             CompanyImage img = profileService.GetImage(AUser);
             if (img == null)
             {
@@ -51,21 +74,36 @@ namespace Merit.Web.Pages
                 string imageBase64Data = Convert.ToBase64String(img.ImageData);
                 ImageUrl = string.Format($"data:image/jpg;base64, {imageBase64Data}");
             }
-            CompanyWants = wantsService.GetAllCompanyWants(userId);
-           
-            CompanyMerits = meritService.ReadCompanyMerits(userId);
+            return Page();
         }
        
        
-        public void OnPost()
+        public async Task OnPostAsync()
         {
-            int userId = Account.CheckCookie();
-            AUser = accountService.GetCompanyUser(userId);
-            UploadImage();
+            if (!signInManager.IsSignedIn(User))
+            {
+                Redirect("/Login");
+            }
+
+            IdentityUser identity = await userManager.GetUserAsync(User);
+            IUser cUser = identity.GetUser();
+
+            AUser = accountService.GetCompanyUser(cUser.Identity);
+            await UploadImageAsync();
+            
         }
 
-        public IActionResult UploadImage()
+        public async Task<IActionResult> UploadImageAsync()
         {
+            if (!signInManager.IsSignedIn(User))
+            {
+                return Redirect("/Login");
+            }
+
+            IdentityUser identity = await userManager.GetUserAsync(User);
+            IUser cUser = identity.GetUser();
+
+
             CompanyImage img = new CompanyImage();
             var files = Request.Form.Files;
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Merit.Data.Models;
 using Merit.WantsService;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -13,6 +14,17 @@ namespace Merit.Web.Pages
     {
         
         private readonly IWantsService wantsService = new WantsService.WantsService();
+        private readonly UserManager<IdentityUser> userManager;
+        private readonly SignInManager<IdentityUser> signInManager;
+
+        public AddWantModel(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        {
+            this.signInManager = signInManager;
+            this.userManager = userManager;
+        }
+
+
+
         public bool Visi { get; set; }
         [BindProperty]
         public PersonalWants PersonalWant { get; set; }
@@ -22,26 +34,31 @@ namespace Merit.Web.Pages
         public void OnGet()
         {
         }
-        public void OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
+            if (!signInManager.IsSignedIn(User))
+            {
+                return Redirect("/Login");
+            }
+            IdentityUser identity = await userManager.GetUserAsync(User);
+            IUser pUser = identity.GetUser();
             Visi = true;
             if (PersonalWant.Want != null)
             {
                 Message = "Önskemål skapat!";
                 alertlook = "success";
-                int userId = AccountService.Account.CheckCookie();
-                if (userId != 0)
+                if (pUser is PersonalUser personalUser)
                 {
-                    PersonalWant.PersonalUserId = userId;
-                    wantsService.CreatePersonalWant(PersonalWant);
-
+                    PersonalWant.PersonalUserId = personalUser.PersonalUserId;
                 }
+                wantsService.CreatePersonalWant(PersonalWant);
             }
             else
             {
                 Message = "Fyll i rutan!";
                 alertlook = "danger";
             }
+            return Page();
         }
     }
 }

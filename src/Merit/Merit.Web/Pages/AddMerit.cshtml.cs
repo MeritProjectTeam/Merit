@@ -16,7 +16,13 @@ namespace Merit.Web.Pages
         IMeritService meritService = new MeritService.MeritService();
 
         private readonly UserManager<IdentityUser> userManager;
-        
+        private readonly SignInManager<IdentityUser> signInManager;
+
+        public AddMeritModel(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        {
+            this.signInManager = signInManager;
+            this.userManager = userManager;
+        }
 
         [BindProperty]
         public PersonalMerit AMerit { get; set; }
@@ -28,32 +34,33 @@ namespace Merit.Web.Pages
         {
             
         }
-        public void OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
-            if (User != null)
+            if (!signInManager.IsSignedIn(User))
             {
-                var userGuid = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-                Visi = true;
-                if (AMerit.Category != null && AMerit.SubCategory != null && AMerit.Description != null && userGuid != null)
-                {
-                    Message = "Merit skapat!";
-                    alertlook = "success";
-                    //int userId = AccountService.Account.CheckCookie();
-                    //if (userId != 0)
-                    //{
-                    //    AMerit.PersonalUserId = userId;
-                    //    meritService.SaveMerit(AMerit);
-                    //}
-                    AMerit.PersonalUserId = meritService.GetUserId(userGuid);
-                    meritService.SaveMerit(AMerit);
-                }
-                else
-                {
-                    alertlook = "danger";
-                    Message = "Fyll i rutorna!";
-                }
+                return Redirect("/Login");
             }
+
+            IdentityUser identity = await userManager.GetUserAsync(User);
+            IUser pUser = identity.GetUser();
+
+            Visi = true;
+            if (AMerit.Category != null && AMerit.SubCategory != null && AMerit.Description != null)
+            {
+                Message = "Merit skapat!";
+                alertlook = "success";
+                if (pUser is PersonalUser personalUser)
+                {
+                    AMerit.PersonalUserId = personalUser.PersonalUserId;
+                }
+                meritService.SaveMerit(AMerit);
+            }
+            else
+            {
+                alertlook = "danger";
+                Message = "Fyll i rutorna!";
+            }
+            return Page();
         }
     }
 }

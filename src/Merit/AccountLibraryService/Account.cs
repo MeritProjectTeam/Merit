@@ -23,7 +23,7 @@ namespace Merit.AccountService
             try
             {
                 PersonalInfo info = new PersonalInfo();
-                info.PersonalUserID = user.PersonalUserId;
+                info.PersonalUserId = user.PersonalUserId;
                 db.Add(info);
                 db.SaveChanges();
             }
@@ -44,7 +44,7 @@ namespace Merit.AccountService
             try
             {
                 CompanyInfo info = new CompanyInfo();
-                info.CompanyUserID = user.CompanyUserId;
+                info.CompanyUserId = user.CompanyUserId;
                 db.Add(info);
                 db.SaveChanges();
             }
@@ -55,11 +55,11 @@ namespace Merit.AccountService
             }
         }
 
-        public PersonalUser GetPersonalUser(int id)
+        public PersonalUser GetPersonalUser(string id)
         {
             using var db = new MeritContext();
             return db.PersonalUsers
-                .FirstOrDefault(p => p.PersonalUserId == id);
+                .FirstOrDefault(p => p.Identity == id);
         }
         public void EditPersonalUser(PersonalUser user)
         {
@@ -67,11 +67,11 @@ namespace Merit.AccountService
             db.Attach(user).State = EntityState.Modified;
             db.SaveChanges();
         }
-        public CompanyUser GetCompanyUser(int id)
+        public CompanyUser GetCompanyUser(string id)
         {
             using var db = new MeritContext();
             return db.CompanyUsers
-                .FirstOrDefault(p => p.CompanyUserId == id);
+                .FirstOrDefault(p => p.Identity == id);
         }
         public void EditCompanyUser(CompanyUser company)
         {
@@ -174,21 +174,5 @@ namespace Merit.AccountService
             }
             return  userIdAndUserType;
         }
-        public static void CreateCookie(int? userId)
-        {
-            using StreamWriter sw = new StreamWriter("wwwroot/DataFile/cookie.txt", false);
-            sw.WriteLine(userId);
-        }
-        public static int CheckCookie()
-        {
-            using StreamReader sr = new StreamReader("wwwroot/DataFile/cookie.txt");
-            bool ok = int.TryParse(sr.ReadLine(), out int id);
-            if(ok)
-            {
-                return id;
-            }
-            return 0;
-        }
-
     }
 }

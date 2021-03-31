@@ -6,6 +6,7 @@ using Merit.AccountService;
 using Merit.Data.Data;
 using Merit.Data.Models;
 using Merit.PersonalInfoService;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -15,11 +16,17 @@ namespace Merit.Web.Pages
     public class EditUserInfoModel : PageModel
     {
         private readonly IAccount AccountService = new Account();
+        private readonly UserManager<IdentityUser> userManager;
+        private readonly SignInManager<IdentityUser> signInManager;
+
+        public EditUserInfoModel(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        {
+            this.signInManager = signInManager;
+            this.userManager = userManager;
+        }
 
         [BindProperty(SupportsGet = true)]
         public PersonalUser AUser { get; set; }
-
-        int UserId = Account.CheckCookie();
 
         [BindProperty]
         public string PasswordCheck1 { get; set; }
@@ -32,18 +39,31 @@ namespace Merit.Web.Pages
         public string EditMessage { get; set; }
         public string TypeMessage { get; set; }
 
-        public void OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
-            UserId = Account.CheckCookie();
-            if (UserId != 0)
+            if (!signInManager.IsSignedIn(User))
             {
-                AUser = AccountService.GetPersonalUser(UserId);
+                return Redirect("/Login");
             }
+
+            IdentityUser identity = await userManager.GetUserAsync(User);
+            IUser pUser = identity.GetUser();
+            
+            AUser = AccountService.GetPersonalUser(pUser.Identity);
+            return Page();
         }
 
-        public void OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
-            AUser = AccountService.GetPersonalUser(UserId);
+            if (!signInManager.IsSignedIn(User))
+            {
+                return Redirect("/Login");
+            }
+
+            IdentityUser identity = await userManager.GetUserAsync(User);
+            IUser pUser = identity.GetUser();
+
+            AUser = AccountService.GetPersonalUser(pUser.Identity);
             AUser.Email = Email;
             if (PasswordCheck1 != null)
             {
@@ -53,6 +73,7 @@ namespace Merit.Web.Pages
             Visi = true;
             EditMessage = "Användarprofil uppdaterad!";
             TypeMessage = "success";
+            return Page();
         }
     }
 }

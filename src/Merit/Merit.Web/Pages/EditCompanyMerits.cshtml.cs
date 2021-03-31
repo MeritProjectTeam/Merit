@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Merit.Data.Models;
 using Merit.MeritService;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -12,8 +13,16 @@ namespace Merit.Web.Pages
     public class EditCompanyMeritsModel : PageModel
     {
         private IMeritService meritService = new MeritService.MeritService();
-        
-        
+
+        private readonly UserManager<IdentityUser> userManager;
+        private readonly SignInManager<IdentityUser> signInManager;
+
+        public EditCompanyMeritsModel(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        {
+            this.signInManager = signInManager;
+            this.userManager = userManager;
+        }
+
         [BindProperty(SupportsGet = true)]
         public List<CompanyMerit> CompanyMeritList { get; set; }
         [BindProperty]
@@ -33,11 +42,20 @@ namespace Merit.Web.Pages
         [BindProperty(SupportsGet = true)]
         public bool Visi { get; set; } = false;
 
-        int userId = AccountService.Account.CheckCookie();
-        public void OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
-            CompanyMeritList = meritService.ReadCompanyMerits(userId);
+            if (!signInManager.IsSignedIn(User))
+            {
+                return Redirect("/Login");
+            }
 
+            IdentityUser identity = await userManager.GetUserAsync(User);
+            IUser cUser = identity.GetUser();
+
+            if (cUser is CompanyUser companyUser)
+            {
+                CompanyMeritList = meritService.ReadCompanyMerits(companyUser.CompanyUserId);
+            }
             foreach (var merit in CompanyMeritList)
             {
                 if (merit.CompanyMeritId == SelectedMeritID)
@@ -48,6 +66,7 @@ namespace Merit.Web.Pages
                     DescriptionText = merit.Description;
                 }
             }
+            return Page();
         }
         public void OnPostEdit()
         {
@@ -55,7 +74,7 @@ namespace Merit.Web.Pages
             Visi = true;
             Message = "Merit ändrad!";
             SelectedMeritID = 0;
-            OnGet();
+            Redirect("/EditCompanyMerits");
         }
         public void OnPostDelete()
         {
@@ -63,7 +82,7 @@ namespace Merit.Web.Pages
             Visi = true;
             Message = "Merit borttagen!";
             SelectedMeritID = 0;
-            OnGet();
+            Redirect("/EditCompanyMerits");
         }
     }
 }
