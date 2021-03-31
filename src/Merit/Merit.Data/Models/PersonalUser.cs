@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Merit.Data.Models
 {
-    public class PersonalUser
+    public class PersonalUser : IUser
     {
         public int PersonalUserId { get; set; }
         public string UserName { get; set; }

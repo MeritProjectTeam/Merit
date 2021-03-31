@@ -36,7 +36,7 @@ namespace Merit.Web.Pages
 
             if (ModelState.IsValid)
             {
-                var user = new MeritWebUser { Email = Input.Email, UserName = Input.Email };
+                var user = new IdentityUser { Email = Input.Email, UserName = Input.Email };
                 var result = await userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Merit.Data.Migrations
 {
-    public partial class v1 : Migration
+    public partial class identity : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,15 +11,16 @@ namespace Merit.Data.Migrations
                 name: "CompanyUsers",
                 columns: table => new
                 {
-                    CompanyUserID = table.Column<int>(type: "int", nullable: false)
+                    CompanyUserId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Identity = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CompanyUsers", x => x.CompanyUserID);
+                    table.PrimaryKey("PK_CompanyUsers", x => x.CompanyUserId);
                 });
 
             migrationBuilder.CreateTable(
@@ -30,11 +31,34 @@ namespace Merit.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    GUID = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Identity = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PersonalUsers", x => x.PersonalUserId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CompanyImages",
+                columns: table => new
+                {
+                    CompanyImageId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ImageTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImageData = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    ImageType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CompanyUserId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CompanyImages", x => x.CompanyImageId);
+                    table.ForeignKey(
+                        name: "FK_CompanyImages_CompanyUsers_CompanyUserId",
+                        column: x => x.CompanyUserId,
+                        principalTable: "CompanyUsers",
+                        principalColumn: "CompanyUserId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -59,7 +83,70 @@ namespace Merit.Data.Migrations
                         name: "FK_CompanyInfo_CompanyUsers_CompanyUserID",
                         column: x => x.CompanyUserID,
                         principalTable: "CompanyUsers",
-                        principalColumn: "CompanyUserID",
+                        principalColumn: "CompanyUserId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CompanyMerits",
+                columns: table => new
+                {
+                    CompanyMeritId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Category = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SubCategory = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CompanyUserId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CompanyMerits", x => x.CompanyMeritId);
+                    table.ForeignKey(
+                        name: "FK_CompanyMerits_CompanyUsers_CompanyUserId",
+                        column: x => x.CompanyUserId,
+                        principalTable: "CompanyUsers",
+                        principalColumn: "CompanyUserId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CompanyWants",
+                columns: table => new
+                {
+                    CompanyWantsId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Want = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CompanyUserId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CompanyWants", x => x.CompanyWantsId);
+                    table.ForeignKey(
+                        name: "FK_CompanyWants_CompanyUsers_CompanyUserId",
+                        column: x => x.CompanyUserId,
+                        principalTable: "CompanyUsers",
+                        principalColumn: "CompanyUserId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PersonalImages",
+                columns: table => new
+                {
+                    PersonalImageId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ImageTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImageData = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    ImageType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PersonalUserId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PersonalImages", x => x.PersonalImageId);
+                    table.ForeignKey(
+                        name: "FK_PersonalImages_PersonalUsers_PersonalUserId",
+                        column: x => x.PersonalUserId,
+                        principalTable: "PersonalUsers",
+                        principalColumn: "PersonalUserId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -113,33 +200,30 @@ namespace Merit.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CompanyMerits",
+                name: "PersonalWants",
                 columns: table => new
                 {
-                    CompanyMeritId = table.Column<int>(type: "int", nullable: false)
+                    PersonalWantsID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Category = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SubCategory = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CompanyUserId = table.Column<int>(type: "int", nullable: false),
-                    CompanyInfoId = table.Column<int>(type: "int", nullable: true)
+                    Want = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PersonalUserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CompanyMerits", x => x.CompanyMeritId);
+                    table.PrimaryKey("PK_PersonalWants", x => x.PersonalWantsID);
                     table.ForeignKey(
-                        name: "FK_CompanyMerits_CompanyInfo_CompanyInfoId",
-                        column: x => x.CompanyInfoId,
-                        principalTable: "CompanyInfo",
-                        principalColumn: "CompanyInfoId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_CompanyMerits_CompanyUsers_CompanyUserId",
-                        column: x => x.CompanyUserId,
-                        principalTable: "CompanyUsers",
-                        principalColumn: "CompanyUserID",
+                        name: "FK_PersonalWants_PersonalUsers_PersonalUserId",
+                        column: x => x.PersonalUserId,
+                        principalTable: "PersonalUsers",
+                        principalColumn: "PersonalUserId",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CompanyImages_CompanyUserId",
+                table: "CompanyImages",
+                column: "CompanyUserId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_CompanyInfo_CompanyUserID",
@@ -148,14 +232,20 @@ namespace Merit.Data.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_CompanyMerits_CompanyInfoId",
-                table: "CompanyMerits",
-                column: "CompanyInfoId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_CompanyMerits_CompanyUserId",
                 table: "CompanyMerits",
                 column: "CompanyUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CompanyWants_CompanyUserId",
+                table: "CompanyWants",
+                column: "CompanyUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PersonalImages_PersonalUserId",
+                table: "PersonalImages",
+                column: "PersonalUserId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_PersonalInfo_PersonalUserID",
@@ -167,12 +257,29 @@ namespace Merit.Data.Migrations
                 name: "IX_PersonalMerits_PersonalUserId",
                 table: "PersonalMerits",
                 column: "PersonalUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PersonalWants_PersonalUserId",
+                table: "PersonalWants",
+                column: "PersonalUserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "CompanyImages");
+
+            migrationBuilder.DropTable(
+                name: "CompanyInfo");
+
+            migrationBuilder.DropTable(
                 name: "CompanyMerits");
+
+            migrationBuilder.DropTable(
+                name: "CompanyWants");
+
+            migrationBuilder.DropTable(
+                name: "PersonalImages");
 
             migrationBuilder.DropTable(
                 name: "PersonalInfo");
@@ -181,13 +288,13 @@ namespace Merit.Data.Migrations
                 name: "PersonalMerits");
 
             migrationBuilder.DropTable(
-                name: "CompanyInfo");
-
-            migrationBuilder.DropTable(
-                name: "PersonalUsers");
+                name: "PersonalWants");
 
             migrationBuilder.DropTable(
                 name: "CompanyUsers");
+
+            migrationBuilder.DropTable(
+                name: "PersonalUsers");
         }
     }
 }

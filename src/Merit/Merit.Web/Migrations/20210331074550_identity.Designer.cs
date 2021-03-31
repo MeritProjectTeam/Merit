@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Merit.Web.Migrations
 {
     [DbContext(typeof(IdentityContext))]
-    [Migration("20210324093822_updated-identity")]
-    partial class updatedidentity
+    [Migration("20210331074550_identity")]
+    partial class identity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

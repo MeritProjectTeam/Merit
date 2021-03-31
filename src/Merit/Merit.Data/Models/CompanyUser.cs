@@ -2,7 +2,7 @@
 
 namespace Merit.Data.Models
 {
-    public class CompanyUser
+    public class CompanyUser :IUser
     {
 
         public int CompanyUserId { get; set; }
