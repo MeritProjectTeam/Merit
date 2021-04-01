@@ -24,9 +24,12 @@
             <div>
                 <form method="post"
                       enctype="multipart/form-data">
-                    <input type="file" id="file1"
-                           name="file1" />
-                    <button type="submit" class="btn btn-primary">Ladda upp bild</button>
+                    <span id="b">
+                        <input onchange="ConfirmX(true)" type="file" id="file1" name="file1" />
+                    </span>
+                    <span style="display:none" id="a">
+                        <button type="submit" class="btn btn-success">Ladda upp bild</button>
+                    </span>
                 </form>
             </div>
             <p></p>
