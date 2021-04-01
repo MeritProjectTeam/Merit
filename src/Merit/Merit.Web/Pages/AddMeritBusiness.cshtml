@@ -8,6 +8,16 @@
 
 <form method="post">
     <div class="row">
+        <div class="col-12">
+            @if (Model.Visi)
+            {
+                <div class="alert alert-@Model.alertlook">
+                    @Model.Information
+                </div>
+            }
+        </div>
+    </div>
+    <div class="row">
         <div class="col-lg-5">
             <div class="justify-content-between mb-2">
                 <label>Kategori:</label>
@@ -27,15 +37,6 @@
     <div class="justify-content-between mb-2">
         <button class="btn btn-primary" type="submit">Lägg till merit</button>
         <a class="btn btn-primary" asp-page="/companyinfopage">Företagsinfo</a>
-        <div>
-            @if (Model.Visi)
-            {
-                <br />
-                <br />
-                <div class="alert alert-@Model.alertlook">
-                    @Model.Information
-                </div>
-            }
-        </div>
+
     </div>
 </form>

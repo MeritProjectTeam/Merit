@@ -7,6 +7,17 @@
 <hr />
 <form method="post">
     <div class="row">
+        <div class="col-12">
+            @if (Model.Visi)
+            {
+                <div class="alert alert-success">
+                    @Model.Information
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="row">
         <div class="col-lg-3">
             <input type="hidden" asp-for="APerson.PersonalInfoId" />
             <div class="justify-content-between mb-2">
@@ -41,17 +52,9 @@
         </div>
         </div>
     <p></p>
-        <div class="justify-content-between mb-2">
-            <button class="btn btn-primary" type="submit">Spara</button>
-        </div>
+    <div class="justify-content-between mb-2">
+        <button class="btn btn-primary" type="submit">Spara</button>
+        <br />
+        <a class="btn btn-primary " asp-page="/companyinfopage">Företagsinfo</a>
+    </div>
 </form>
-<div>
-    @if (Model.Visi)
-    {
-        <br />
-        <br />
-        <div class="alert alert-success">
-            @Model.Information
-        </div>
-    }
-</div>

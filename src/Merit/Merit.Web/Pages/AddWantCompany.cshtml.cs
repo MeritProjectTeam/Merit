@@ -23,13 +23,24 @@ namespace Merit.Web.Pages
             this.userManager = userManager;
         }
         public bool Visi { get; set; } = false;
-        public bool Neggo { get; set; }
         [BindProperty]
         public CompanyWants CompanyWant { get; set; }
         public string Message { get; set; }
         public string alertlook { get; set; }
-        public void OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
+            if (!signInManager.IsSignedIn(User))
+            {
+                return Redirect("/Login");
+            }
+
+            IdentityUser identity = await userManager.GetUserAsync(User);
+            IUser cUser = identity.GetUser();
+            if (cUser is PersonalUser)
+            {
+                return Redirect("/PersonalInfoPage");
+            }
+            return Page();
         }
         public async Task<IActionResult> OnPostAsync()
         {

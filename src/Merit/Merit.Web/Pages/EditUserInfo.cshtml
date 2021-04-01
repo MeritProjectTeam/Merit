@@ -33,9 +33,10 @@
         </div>
     </div>
     <button class="btn btn-primary" type="submit">Spara Ändringar</button>
+    <a class="btn btn-primary " asp-page="/companyinfopage">Företagsinfo</a>
     @if (Model.Visi)
-	{
-                <br />
-		 <div class="alert alert-@Model.TypeMessage">@Model.EditMessage</div>
-	}
+    {
+        <br />
+        <div class="alert alert-@Model.TypeMessage">@Model.EditMessage</div>
+    }
 </form>

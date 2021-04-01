@@ -6,6 +6,16 @@
 <form method="post">
     <div class="container">
         <div class="row">
+            <div class="col-12">
+                @if (Model.Visi)
+                {
+                    <div class="alert alert-success">
+                        @Model.Message
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="row">
 
 
 
@@ -75,16 +85,7 @@
                         </span>
                     </span>
                 }
-                <div>
-                    @if (Model.Visi)
-                    {
-                        <br />
-                        <br />
-                        <div class="alert alert-success">
-                            @Model.Message
-                        </div>
-                    }
-                </div>
+
                 <br />
                 <br />
                 <a class="btn btn-primary " asp-page="/companyinfopage">Företagsinfo</a>

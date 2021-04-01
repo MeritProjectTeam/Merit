@@ -7,7 +7,16 @@
     <div class="container">
         <div class="row">
 
-
+            <div class="col-sm-12">
+                @if (Model.Visi)
+                {
+                    <div class="alert alert-@Model.alertlook">
+                        @Model.Message
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="row">
 
             <div class="col-md-4 mb-5">
                 <div class="card h-100">
@@ -42,6 +51,7 @@
 
                 @if (Model.SelectedPersonalWantId > 0)
                 {
+                    <br />
                     <span class="justify-content-between mb-2">
                         <span style="display:none" id="x">
                             <button type="submit" class="btn btn-primary" asp-page-handler="Edit">Ändra</button>
@@ -62,16 +72,10 @@
                         </span>
                     </span>
                 }
-                <div>
-                    @if (Model.Visi)
-                    {
-                        <br />
-                        <br />
-                        <div class="alert alert-@Model.alertlook">
-                            @Model.Message
-                        </div>
-                    }
-                </div>
+                <br />
+                <br />
+                <a class="btn btn-primary " asp-page="/companyinfopage">Företagsinfo</a>
+
             </div>
         </div>
     </div>

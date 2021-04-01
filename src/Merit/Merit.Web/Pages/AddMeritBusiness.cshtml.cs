@@ -31,9 +31,21 @@ namespace Merit.Web.Pages
         public string Information { get; set; }
         public string alertlook { get; set; }
 
-        public void OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
+            if (!signInManager.IsSignedIn(User))
+            {
+                return Redirect("/Login");
+            }
+
+            IdentityUser identity = await userManager.GetUserAsync(User);
+            IUser cUser = identity.GetUser();
+            if (cUser is PersonalUser)
+            {
+                return Redirect("/PersonalInfoPage");
+            }
             Information = "";
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
