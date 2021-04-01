@@ -8,152 +8,137 @@
     var user = await UserManager.GetUserAsync(User);
 }
 
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
-        <a class="navbar-brand js-scroll-trigger" href="#page-top">
-            <span class="d-block d-lg-none">MERIT</span>
-            <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="/images/merit2.png" alt="" /></span>
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-page="/PersonalinfoPage">Profilsida</a></li>
-                <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-page="/LogOut">Logga ut</a></li>
-            </ul>
+<!-- Page Content -->
+<div class="container">
+
+    <!-- Heading Row -->
+    <div class="row align-items-center my-5">
+        <div class="col-lg-4">
+            <img src="@Model.ImageUrl" width="300" height="300" alt="">
         </div>
-    </nav>
-    <!-- Page Content -->
-    <div class="container">
-
-        <!-- Heading Row -->
-        <div class="row align-items-center my-5">
-            <div class="col-lg-4">
-                <img src="@Model.ImageUrl" width="300" height="300" alt="">
+        <!-- /.col-lg-8 -->
+        <div class="col-lg-5">
+            <hr />
+            <h3>Välkommen, @Model.PersonalInfo.FirstName @Model.PersonalInfo.LastName!</h3>
+            <p>Här kan du uppdatera din profilinformation, lägga till meriter samt lägga till Wants.</p>
+            <div>
+                <form method="post"
+                      enctype="multipart/form-data">
+                    <input type="file" id="file1"
+                           name="file1" />
+                    <button type="submit" class="btn btn-primary">Ladda upp bild</button>
+                </form>
             </div>
-            <!-- /.col-lg-8 -->
-            <div class="col-lg-5">
-                <hr />
-                <h3>Välkommen, @Model.PersonalInfo.FirstName @Model.PersonalInfo.LastName!</h3>
-                <p>Här kan du uppdatera din profilinformation, lägga till meriter samt lägga till Wants.</p>
-                <div>
-                    <form method="post"
-                          enctype="multipart/form-data">
-                        <input type="file" id="file1"
-                               name="file1" />
-                        <button type="submit" class="btn btn-primary">Ladda upp bild</button>
-                    </form>
-                </div>
-                <p></p>
-                <hr />
-            </div>
-            <!-- /.col-md-4 -->
+            <p></p>
+            <hr />
         </div>
-        <!-- /.row -->
-        <!-- Call to Action Well -->
-        <!-- Content Row -->
-        <div class="row">
-            <div class="col-md-4 mb-5">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <div class="card-header">
-                            <h4 class="card-title">Profil</h4>
-                        </div>
-                        <p></p>
-
-                        <div>Namn: @Model.PersonalInfo.FirstName @Model.PersonalInfo.LastName</div>
-                        <div>Födelsedatum: @Model.PersonalInfo.DateOfBirth.Date.ToString().Substring(0, 10)</div>
-
-
-
-                        <hr />
-
-                        <div>Email: @user.Email</div>
-
-                        <div>Tele: @Model.PersonalInfo.PhoneNumber</div>
-
-
-                        <hr />
-                        <div>Gata: @Model.PersonalInfo.Street</div>
-
-                        <div>Postnr: @Model.PersonalInfo.ZipCode</div>
-
-                        <div>Ort: @Model.PersonalInfo.City</div>
-                    </div>
-                    <div class="card-footer">
-                        <a href="/EditPersonalInfo" class="btn btn-primary btn-sm">Uppdatera profil</a>
-                        <a href="/EditUserInfo" class="btn btn-primary btn-sm">Ändra Lösenord</a>
-                    </div>
-                </div>
-            </div>
-            <!-- /.col-md-4 -->
-            <div class="col-md-4 mb-5">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <div class="card-header">
-                            <h4 class="card-title">Meriter</h4>
-                        </div>
-                        <p></p>
-                        <p class="card-text">
-                            @foreach (var x in Model.PersonalMerits)
-                            {
-
-                                <div>
-                                    Kategori: @x.Category;
-                                </div>
-                                <div>
-                                    Underkategori: @x.SubCategory
-                                </div>
-                                <div>
-                                    Beskrivning: @x.Description
-                                </div>
-                                <div>
-                                    Varaktighet: @x.Duration
-                                </div>
-                                <hr />
-                            }
-                        </p>
-                    </div>
-                    <div class="card-footer">
-                        <a href="/AddMerit" class="btn btn-primary btn-sm">Lägg till ny merit</a>
-                        <a href="/EditPersonalMerits" class="btn btn-primary btn-sm">Redigera meriter</a>
-                    </div>
-                </div>
-            </div>
-            <!-- /.col-md-4 -->
-            <div class="col-md-4 mb-5">
-                <div class="card h-100">
-                    <div class="card-body">
-
-                        <div class="card-header">
-                            <h4 class="card-title">Wants</h4>
-                        </div>
-                        <p></p>
-                        <p class="card-text">
-                            <ul>
-                                @foreach (var x in Model.PersonalWants)
-                                {
-                                    <li>
-                                        @x.Want
-                                    </li>
-
-                                }
-                            </ul>
-
-                        </p>
-                    </div>
-                    <div class="card-footer">
-                        <a href="/AddWant" class="btn btn-primary btn-sm">Lägg till Want</a>
-                        <a href="/EditPersonalWants" class="btn btn-primary btn-sm">Redigera Wants</a>
-                    </div>
-                </div>
-            </div>
-            <!-- /.col-md-4 -->
-        </div>
-        <!-- /.row -->
-        <!-- /.container -->
-        <!-- Footer -->
-        <!-- Bootstrap core JavaScript -->
-        <script src="vendor/jquery/jquery.min.js"></script>
-        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- /.col-md-4 -->
     </div>
-</body>
+    <!-- /.row -->
+    <!-- Call to Action Well -->
+    <!-- Content Row -->
+    <div class="row">
+        <div class="col-md-4 mb-5">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="card-header">
+                        <h4 class="card-title">Profil</h4>
+                    </div>
+                    <p></p>
+
+                    <div>Namn: @Model.PersonalInfo.FirstName @Model.PersonalInfo.LastName</div>
+                    <div>Födelsedatum: @Model.PersonalInfo.DateOfBirth.Date.ToString().Substring(0, 10)</div>
+
+
+
+                    <hr />
+
+                    <div>Email: @user.Email</div>
+
+                    <div>Tele: @Model.PersonalInfo.PhoneNumber</div>
+
+
+                    <hr />
+                    <div>Gata: @Model.PersonalInfo.Street</div>
+
+                    <div>Postnr: @Model.PersonalInfo.ZipCode</div>
+
+                    <div>Ort: @Model.PersonalInfo.City</div>
+                </div>
+                <div class="card-footer">
+                    <a href="/EditPersonalInfo" class="btn btn-primary btn-sm">Uppdatera profil</a>
+                    <a href="/EditUserInfo" class="btn btn-primary btn-sm">Ändra Lösenord</a>
+                </div>
+            </div>
+        </div>
+        <!-- /.col-md-4 -->
+        <div class="col-md-4 mb-5">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="card-header">
+                        <h4 class="card-title">Meriter</h4>
+                    </div>
+                    <p></p>
+                    <p class="card-text">
+                        @foreach (var x in Model.PersonalMerits)
+                        {
+
+                            <div>
+                                Kategori: @x.Category;
+                            </div>
+                            <div>
+                                Underkategori: @x.SubCategory
+                            </div>
+                            <div>
+                                Beskrivning: @x.Description
+                            </div>
+                            <div>
+                                Varaktighet: @x.Duration
+                            </div>
+                            <hr />
+                        }
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <a href="/AddMerit" class="btn btn-primary btn-sm">Lägg till ny merit</a>
+                    <a href="/EditPersonalMerits" class="btn btn-primary btn-sm">Redigera meriter</a>
+                </div>
+            </div>
+        </div>
+        <!-- /.col-md-4 -->
+        <div class="col-md-4 mb-5">
+            <div class="card h-100">
+                <div class="card-body">
+
+                    <div class="card-header">
+                        <h4 class="card-title">Wants</h4>
+                    </div>
+                    <p></p>
+                    <p class="card-text">
+                        <ul>
+                            @foreach (var x in Model.PersonalWants)
+                            {
+                                <li>
+                                    @x.Want
+                                </li>
+
+                            }
+                        </ul>
+
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <a href="/AddWant" class="btn btn-primary btn-sm">Lägg till Want</a>
+                    <a href="/EditPersonalWants" class="btn btn-primary btn-sm">Redigera Wants</a>
+                </div>
+            </div>
+        </div>
+        <!-- /.col-md-4 -->
+    </div>
+    <!-- /.row -->
+    <!-- /.container -->
+    <!-- Footer -->
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</div>

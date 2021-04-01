@@ -64,6 +64,10 @@ namespace Merit.Web.Pages
                 CompanyMerits = meritService.ReadCompanyMerits(companyUser.CompanyUserId);
 
             }
+            else if (cUser is PersonalUser)
+            {
+                return Redirect("/PersonalInfoPage");
+            }
             CompanyImage img = await profileService.GetImage(AUser);
             if (img == null)
             {

@@ -42,6 +42,10 @@ namespace Merit.Web.Pages
             }
             IdentityUser identity = await userManager.GetUserAsync(User);
             IUser pUser = identity.GetUser();
+            if (pUser is CompanyUser)
+            {
+                return Redirect("/CompanyInfoPage");
+            }
             Visi = true;
             if (PersonalWant.Want != null)
             {

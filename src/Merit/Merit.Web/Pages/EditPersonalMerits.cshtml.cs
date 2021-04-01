@@ -54,12 +54,15 @@ namespace Merit.Web.Pages
             }
 
             IdentityUser identity = await userManager.GetUserAsync(User);
-            string guid = identity.Id;
             IUser pUser = identity.GetUser();
 
             if (pUser is PersonalUser personalUser)
             {
                 MeritList = meritService.ReadPersonalMerits(personalUser.PersonalUserId);
+            }
+            else if (pUser is CompanyUser)
+            {
+                return Redirect("/CompanyInfoPage");
             }
             foreach (var merit in MeritList)
             {

@@ -56,6 +56,10 @@ namespace Merit.Web.Pages
             {
                 CompanyMeritList = meritService.ReadCompanyMerits(companyUser.CompanyUserId);
             }
+            else if (cUser is PersonalUser)
+            {
+                return Redirect("/PersonalInfoPage");
+            }
             foreach (var merit in CompanyMeritList)
             {
                 if (merit.CompanyMeritId == SelectedMeritID)

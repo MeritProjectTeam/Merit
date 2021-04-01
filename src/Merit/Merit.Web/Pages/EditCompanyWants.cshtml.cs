@@ -54,6 +54,10 @@ namespace Merit.Web.Pages
             {
                 CompanyWantsList = wService.GetAllCompanyWants(companyUser.CompanyUserId);
             }
+            else if (cUser is PersonalUser)
+            {
+                return Redirect("/PersonalInfoPage");
+            }
             foreach (var want in CompanyWantsList)
             {
                 if(want.CompanyWantsId == SelectedCompanyWantId)

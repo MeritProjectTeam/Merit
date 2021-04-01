@@ -60,6 +60,10 @@ namespace Merit.Web.Pages
             {
                 ACompany.CompanyUserId = companyUser.CompanyUserId;
             }
+            else if (cUser is PersonalUser)
+            {
+                return Redirect("/PersonalInfoPage");
+            }
             companyService.EditCompanyInfo(ACompany);
             
             return Page();

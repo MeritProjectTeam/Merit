@@ -1,6 +1,11 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using Merit.Data.Models
 @inject UserManager<IdentityUser> UserManager
 @inject SignInManager<IdentityUser> SignInManager
+@{ 
+    IdentityUser identity = await UserManager.GetUserAsync(User);
+    IUser pUser = identity.GetUser();
+}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -32,20 +37,28 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-page="/Index">Hem</a></li>
                 @if (SignInManager.IsSignedIn(User))
                 {
+                    if (pUser is CompanyUser)
+                    {
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-page="/CompanyInfoPage">Hem</a></li>
+                    }
+                    else if (pUser is PersonalUser)
+                    {
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-page="/PersonalInfoPage">Hem</a></li>
+                    }
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-page="/LogOut">Logga ut</a></li>
                 }
                 else
                 {
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-page="/Index">Hem</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-page="/LogIn">Logga in</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-page="/Register">Registrera</a></li>
                 }
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-page="/Team">Team</a></li>
 
                 @RenderSection("NavItems", required: false)
 
-                <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-page="/Team">Team</a></li>
             </ul>
         </div>
     </nav>

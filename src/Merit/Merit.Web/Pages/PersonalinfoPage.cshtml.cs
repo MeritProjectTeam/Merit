@@ -51,7 +51,10 @@ namespace Merit.Web.Pages
 
             IdentityUser identity = await userManager.GetUserAsync(User);
             IUser pUser = identity.GetUser();
-
+            if (pUser is CompanyUser)
+            {
+                return Redirect("/CompanyInfoPage");
+            }
             AUser = accountService.GetPersonalUser(pUser.Identity);
             PersonalImage img = await profileService.GetImage(AUser);
             if (img == null)

@@ -44,6 +44,10 @@ namespace Merit.Web.Pages
             {
                 APerson = profileService.Get(personalUser.PersonalUserId);
             }
+            else if (pUser is CompanyUser)
+            {
+                return Redirect("/CompanyInfoPage");
+            }
             return Page();
         }
         public async Task<IActionResult> OnPostAsync()

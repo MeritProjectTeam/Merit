@@ -2,127 +2,117 @@
 @model Merit.Web.Pages.EditCompanyMeritsModel
 @{
 }
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
-    <a class="navbar-brand js-scroll-trigger" href="#page-top">
-        <span class="d-block d-lg-none">MERIT</span>
-        <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="/images/merit2.png" alt="" /></span>
-    </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav">
-            <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-page="/CompanyInfoPage">Företagssida</a></li>
 
-            <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-page="/LogOut">Logga ut</a></li>
-
-        </ul>
-    </div>
-</nav>
 <form method="post">
     <div class="container">
         <div class="row">
-            
 
 
-                <div class="col-md-4 mb-5">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <div class="card-header">
-                                <h4 class="card-title">Meriter</h4>
-                            </div>
-                            <p></p>
-                            <p class="card-text">
-                                @foreach (var merit in Model.CompanyMeritList)
-                                {
 
-                                    <div>
-                                        Kategori: @merit.Category
-                                    </div>
-                                    <div>
-                                        Underkategori: @merit.SubCategory
-                                    </div>
-                                    <div>
-                                        Beskrivning: @merit.Description
-                                    </div>
-                                    
-                                    <div><a href="?SelectedMeritID=@merit.CompanyMeritId">Välj att redigera</a></div>
-                                    <hr />
-                                }
-                            </p>
+            <div class="col-md-4 mb-5">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="card-header">
+                            <h4 class="card-title">Meriter</h4>
                         </div>
-                        <div class="card-footer">
+                        <p></p>
+                        <p class="card-text">
+                            @foreach (var merit in Model.CompanyMeritList)
+                            {
 
-                        </div>
+                                <div>
+                                    Kategori: @merit.Category
+                                </div>
+                                <div>
+                                    Underkategori: @merit.SubCategory
+                                </div>
+                                <div>
+                                    Beskrivning: @merit.Description
+                                </div>
+
+                                <div><a href="?SelectedMeritID=@merit.CompanyMeritId">Välj att redigera</a></div>
+                                <hr />
+                            }
+                        </p>
+                    </div>
+                    <div class="card-footer">
+
                     </div>
                 </div>
-
-           
-                <div class="col-lg-3" row="10">
-                    <p><h4 c>Redigera</h4></p>
-                    <input type="hidden" value="@Model.SelectedMeritID" asp-for="CMerit.CompanyMeritId" />
-                    <div><input type="text" value="@Model.CategoryText" asp-for="CMerit.Category" /></div>
-                    <div><input type="text" value="@Model.SubCategoryText" asp-for="CMerit.SubCategory" /></div>
-                    <div><input type="text" value="@Model.DescriptionText" asp-for="CMerit.Description" /></div>
-
-
-                    
-
-                    @if (Model.SelectedMeritID > 0)
-                    {
-                        <span class="justify-content-between mb-2">
-                            <span style="display:none" id="x">
-                                <button type="submit" class="btn btn-primary" asp-page-handler="Edit">Ändra</button>
-                                <a href="#" onclick="ConfirmQ(false)" class="btn btn-primary">Ångra</a>
-                            </span>
-                            <span id="y">
-                                <a href="#" onclick="ConfirmQ(true)" class="btn btn-danger">Ändra merit</a>
-                            </span>
-                        </span>
-
-                        <span class="justify-content-between mb-2">
-                            <span style="display:none" id="a">
-                                <button type="submit" class="btn btn-primary" asp-page-handler="Delete">Ta bort</button>
-                                <a href="#" onclick="ConfirmX(false)" class="btn btn-primary">Ångra</a>
-                            </span>
-                            <span id="b">
-                                <a href="#" onclick="ConfirmX(true)" class="btn btn-danger">Ta bort merit</a>
-                            </span>
-                        </span>
-                    }
-                    <div>
-                        @if (Model.Visi)
-                        {
-                            <br />
-                            <br />
-                            <div class="alert alert-success">
-                                @Model.Message
-                            </div>
-                        }
-                    </div>
-                </div>
-                @*<div class="col-lg-5" row="10">
-                <ol>
-                    <h3>Merits</h3>
-                    @foreach (var merit in Model.CompanyMeritList)
-                    {
-                        <hr />
-                        <li>@merit.Category</li>
-                        <li>@merit.SubCategory</li>
-                        <li>@merit.Description</li>
-                        <li><a href="?SelectedMeritID=@merit.CompanyMeritId">Select</a></li>
-                    }
-                    <hr />
-                </ol>
             </div>
+
+
             <div class="col-lg-3" row="10">
+                <p><h4 c>Redigera</h4></p>
                 <input type="hidden" value="@Model.SelectedMeritID" asp-for="CMerit.CompanyMeritId" />
                 <div><input type="text" value="@Model.CategoryText" asp-for="CMerit.Category" /></div>
                 <div><input type="text" value="@Model.SubCategoryText" asp-for="CMerit.SubCategory" /></div>
                 <div><input type="text" value="@Model.DescriptionText" asp-for="CMerit.Description" /></div>
-                <span>
-                    <button type="submit" asp-page-handler="Edit">Edit</button>
-                    <button type="submit" asp-page-handler="Delete">Delete</button>
-                </span>
-            </div>*@
+
+
+
+
+                @if (Model.SelectedMeritID > 0)
+                {
+                    <br />
+                    <span class="justify-content-between mb-2">
+                        <span style="display:none" id="x">
+                            <button type="submit" class="btn btn-primary" asp-page-handler="Edit">Ändra</button>
+                            <a href="#" onclick="ConfirmQ(false)" class="btn btn-primary">Ångra</a>
+                        </span>
+                        <span id="y">
+                            <a href="#" onclick="ConfirmQ(true)" class="btn btn-primary">Ändra merit</a>
+                        </span>
+                    </span>
+
+                    <span class="justify-content-between mb-2">
+                        <span style="display:none" id="a">
+                            <button type="submit" class="btn btn-primary" asp-page-handler="Delete">Ta bort</button>
+                            <a href="#" onclick="ConfirmX(false)" class="btn btn-primary">Ångra</a>
+                        </span>
+                        <span id="b">
+                            <a href="#" onclick="ConfirmX(true)" class="btn btn-danger">Ta bort merit</a>
+                        </span>
+                    </span>
+                }
+                <div>
+                    @if (Model.Visi)
+                    {
+                        <br />
+                        <br />
+                        <div class="alert alert-success">
+                            @Model.Message
+                        </div>
+                    }
+                </div>
+                <br />
+                <br />
+                <a class="btn btn-primary " asp-page="/companyinfopage">Företagsinfo</a>
             </div>
+            @*<div class="col-lg-5" row="10">
+                    <ol>
+                        <h3>Merits</h3>
+                        @foreach (var merit in Model.CompanyMeritList)
+                        {
+                            <hr />
+                            <li>@merit.Category</li>
+                            <li>@merit.SubCategory</li>
+                            <li>@merit.Description</li>
+                            <li><a href="?SelectedMeritID=@merit.CompanyMeritId">Select</a></li>
+                        }
+                        <hr />
+                    </ol>
+                </div>
+                <div class="col-lg-3" row="10">
+                    <input type="hidden" value="@Model.SelectedMeritID" asp-for="CMerit.CompanyMeritId" />
+                    <div><input type="text" value="@Model.CategoryText" asp-for="CMerit.Category" /></div>
+                    <div><input type="text" value="@Model.SubCategoryText" asp-for="CMerit.SubCategory" /></div>
+                    <div><input type="text" value="@Model.DescriptionText" asp-for="CMerit.Description" /></div>
+                    <span>
+                        <button type="submit" asp-page-handler="Edit">Edit</button>
+                        <button type="submit" asp-page-handler="Delete">Delete</button>
+                    </span>
+                </div>*@
         </div>
+    </div>
 </form>
