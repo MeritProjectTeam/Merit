@@ -33,8 +33,7 @@ namespace Merit.Web.Pages
         [BindProperty]
         public string PasswordCheck2 { get; set; }
         [BindProperty]
-        public string Email { get; set; }
-
+        public string CurrentPassword { get; set; }
         public bool Visi { get; set; }
         public string EditMessage { get; set; }
         public string TypeMessage { get; set; }
@@ -61,18 +60,31 @@ namespace Merit.Web.Pages
             }
 
             IdentityUser identity = await userManager.GetUserAsync(User);
-            IUser pUser = identity.GetUser();
 
-            AUser = AccountService.GetPersonalUser(pUser.Identity);
-            AUser.Email = Email;
-            if (PasswordCheck1 != null)
+            if (PasswordCheck1 != PasswordCheck2)
             {
-                AUser.Password = Account.EncryptPassword(PasswordCheck1);
+                Visi = true;
+                TypeMessage = "danger";
+                EditMessage = "Lösenorden matchar inte";
+                return await OnGetAsync();
             }
-            AccountService.EditPersonalUser(AUser);
-            Visi = true;
-            EditMessage = "Användarprofil uppdaterad!";
-            TypeMessage = "success";
+            else
+            {
+                await userManager.ChangePasswordAsync(identity, CurrentPassword, PasswordCheck1);
+                if (await userManager.CheckPasswordAsync(identity, PasswordCheck1))
+                {
+                    Visi = true;
+                    EditMessage = "Användarprofil uppdaterad!";
+                    TypeMessage = "success";
+
+                }
+                else
+                {
+                    Visi = true;
+                    TypeMessage = "danger";
+                    EditMessage = "Lösenordet ändrades inte";
+                }
+            }
             return Page();
         }
     }

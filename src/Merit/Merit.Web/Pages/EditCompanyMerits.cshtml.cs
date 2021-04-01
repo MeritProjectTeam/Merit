@@ -68,21 +68,21 @@ namespace Merit.Web.Pages
             }
             return Page();
         }
-        public void OnPostEdit()
+        public async Task OnPostEdit()
         {
             meritService.EditCompanyMerit(CMerit);
             Visi = true;
             Message = "Merit ändrad!";
             SelectedMeritID = 0;
-            Redirect("/EditCompanyMerits");
+            await OnGetAsync();
         }
-        public void OnPostDelete()
+        public async Task OnPostDelete()
         {
             meritService.DeleteCompanyMerit(CMerit);
             Visi = true;
             Message = "Merit borttagen!";
             SelectedMeritID = 0;
-            Redirect("/EditCompanyMerits");
+            await OnGetAsync();
         }
     }
 }

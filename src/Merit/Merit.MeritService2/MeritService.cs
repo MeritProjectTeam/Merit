@@ -112,14 +112,5 @@ namespace Merit.MeritService
                 }
             }
         }
-
-        public int GetUserId(string guid)
-        {
-            using (var db = new MeritContext())
-            {
-                var q = db.PersonalUsers.FirstOrDefault(q => q.GUID == guid);
-                return q.PersonalUserId;
-            }         
-        }
     }
 }

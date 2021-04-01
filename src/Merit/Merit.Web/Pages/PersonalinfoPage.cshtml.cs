@@ -50,11 +50,10 @@ namespace Merit.Web.Pages
             }
 
             IdentityUser identity = await userManager.GetUserAsync(User);
-            string guid = identity.Id;
             IUser pUser = identity.GetUser();
 
             AUser = accountService.GetPersonalUser(pUser.Identity);
-            PersonalImage img = profileService.GetImage(AUser);
+            PersonalImage img = await profileService.GetImage(AUser);
             if (img == null)
             {
                 ImageUrl = "http://placehold.it/300x300";
@@ -83,11 +82,11 @@ namespace Merit.Web.Pages
             IdentityUser identity = await userManager.GetUserAsync(User);
             IUser pUser = identity.GetUser();
             AUser = accountService.GetPersonalUser(pUser.Identity);
-            UploadImage();
-            return Page();
+            await UploadImage();
+            return await OnGetAsync();
         }
 
-        public IActionResult UploadImage()
+        public async Task UploadImage()
         {
             PersonalImage img = new PersonalImage();
             var files = Request.Form.Files;
@@ -100,9 +99,7 @@ namespace Merit.Web.Pages
                 file.CopyTo(ms);
                 img.ImageData = ms.ToArray();
             }
-            profileService.SaveImage(img);
-
-            return RedirectToPage();
+            await profileService.SaveImage(img);
         }
         
        

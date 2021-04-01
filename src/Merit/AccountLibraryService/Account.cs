@@ -22,7 +22,7 @@ namespace Merit.AccountService
 
             try
             {
-                PersonalInfo info = new PersonalInfo();
+                PersonalInfo info = new();
                 info.PersonalUserId = user.PersonalUserId;
                 db.Add(info);
                 db.SaveChanges();
@@ -43,7 +43,7 @@ namespace Merit.AccountService
 
             try
             {
-                CompanyInfo info = new CompanyInfo();
+                CompanyInfo info = new();
                 info.CompanyUserId = user.CompanyUserId;
                 db.Add(info);
                 db.SaveChanges();
@@ -79,100 +79,20 @@ namespace Merit.AccountService
             db.Attach(company).State = EntityState.Modified;
             db.SaveChanges();
         }
-        public int CheckExistingAccount(PersonalUser user)
-        {
-            using var db = new MeritContext() ;
+        //public static string EncryptPassword(string password)
+        //{
+        //    MD5 mD5 = MD5.Create();
+        //    byte[] inputBytes = Encoding.ASCII.GetBytes(password);
+        //    byte[] hash = mD5.ComputeHash(inputBytes);
 
-            var userNameExists = db.PersonalUsers
-                .FirstOrDefault(x => x.UserName.ToLower() == user.UserName.ToLower());
-            var emailExists = db.PersonalUsers
-                .FirstOrDefault(x => x.Email.ToLower() == user.Email.ToLower());
+        //    string result = "";
 
-            var companyUserNameExists = db.CompanyUsers
-                .FirstOrDefault(x => x.UserName.ToLower() == user.UserName.ToLower());
-            var companyEmailExists = db.CompanyUsers
-                .FirstOrDefault(x => x.Email.ToLower() == user.Email.ToLower());
+        //    foreach (var h in hash)
+        //    {
+        //        result += h.ToString("X2");
+        //    }
 
-            if (userNameExists != null || companyUserNameExists != null)
-            {   
-                return 101;
-            }
-            else if (emailExists != null || companyEmailExists != null)
-            {
-                return 102;
-            }
-            else
-            {
-                return 100;
-            }
-        }
-
-        public int CheckExistingAccount(CompanyUser user)
-        {
-            using var db = new MeritContext();
-
-            var userNameExists = db.PersonalUsers
-                .FirstOrDefault(x => x.UserName.ToLower() == user.UserName.ToLower());
-            var emailExists = db.PersonalUsers
-                .FirstOrDefault(x => x.Email.ToLower() == user.Email.ToLower());
-
-            var companyUserNameExists = db.CompanyUsers
-                .FirstOrDefault(x => x.UserName.ToLower() == user.UserName.ToLower());
-            var companyEmailExists = db.CompanyUsers
-                .FirstOrDefault(x => x.Email.ToLower() == user.Email.ToLower());
-
-            if (userNameExists != null || companyUserNameExists != null)
-            {
-                return 101;
-            }
-            else if (emailExists != null || companyEmailExists != null)
-            {
-                return 102;
-            }
-            else
-            {
-                return 100;
-            }
-        }
-        public static string EncryptPassword(string password)
-        {
-            MD5 mD5 = MD5.Create();
-            byte[] inputBytes = Encoding.ASCII.GetBytes(password);
-            byte[] hash = mD5.ComputeHash(inputBytes);
-
-            string result = "";
-
-            foreach (var h in hash)
-            {
-                result += h.ToString("X2");
-            }
-
-            return result;
-        }
-
-        public int[] CheckLogin(User user)
-        {
-            using var db = new MeritContext();
-            var personalUserValid = db.PersonalUsers
-                .FirstOrDefault(x => x.UserName.ToLower() == user.UserName.ToLower() && x.Password == EncryptPassword(user.Password));
-            var companyUserValid = db.CompanyUsers
-                .FirstOrDefault(x => x.UserName.ToLower() == user.UserName.ToLower() && x.Password == EncryptPassword(user.Password));
-
-            int[] userIdAndUserType = new int[] {0,0};
-            if (personalUserValid != null)
-            {
-                userIdAndUserType[0] = personalUserValid.PersonalUserId;
-                userIdAndUserType[1] = 1;
-                return userIdAndUserType;
-            }
-            else if (companyUserValid != null)
-            {
-                
-                userIdAndUserType[0] = companyUserValid.CompanyUserId;
-                userIdAndUserType[1] = 2;
-                return userIdAndUserType;
-            }
-            return  userIdAndUserType;
-        }
+        //    return result;
+        //}
     }
 }

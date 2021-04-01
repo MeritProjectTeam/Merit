@@ -1,7 +1,11 @@
 ﻿@page
 @model Merit.Web.Pages.PersonalinfoPageModel
 @using Merit.PersonalInfoService
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 @{
+    var user = await UserManager.GetUserAsync(User);
 }
 
 <body>
@@ -35,7 +39,7 @@
                     <form method="post"
                           enctype="multipart/form-data">
                         <input type="file" id="file1"
-                               name="file1"/>
+                               name="file1" />
                         <button type="submit" class="btn btn-primary">Ladda upp bild</button>
                     </form>
                 </div>
@@ -63,7 +67,7 @@
 
                         <hr />
 
-                        <div>Email: @Model.AUser.Email</div>
+                        <div>Email: @user.Email</div>
 
                         <div>Tele: @Model.PersonalInfo.PhoneNumber</div>
 
@@ -77,7 +81,7 @@
                     </div>
                     <div class="card-footer">
                         <a href="/EditPersonalInfo" class="btn btn-primary btn-sm">Uppdatera profil</a>
-                        <a href="/EditUserInfo" class="btn btn-primary btn-sm">Ändra Lösenord/Email</a>
+                        <a href="/EditUserInfo" class="btn btn-primary btn-sm">Ändra Lösenord</a>
                     </div>
                 </div>
             </div>
@@ -151,5 +155,5 @@
         <!-- Bootstrap core JavaScript -->
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
+    </div>
 </body>

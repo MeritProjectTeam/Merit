@@ -1,6 +1,10 @@
 ﻿@page
 @model Merit.Web.Pages.CompanyInfoPageModel
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager  
 @{
+    var user = await UserManager.GetUserAsync(User);
 }
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
     <a class="navbar-brand js-scroll-trigger" href="#page-top">
@@ -39,7 +43,7 @@
                         <button type="submit" class="btn btn-primary">Ladda upp bild</button>
                     </form>
                 </div>
-                
+
                 <p></p>
                 <hr />
             </div>
@@ -59,7 +63,7 @@
                         <div>Företagsnamn: @Model.CompanyInfo.CompanyName</div>
                         <div>Organisationsnummer: @Model.CompanyInfo.OrgNumber</div>
                         <hr />
-                        <div>Email: @Model.AUser.Email</div>
+                        <div>Email: @user.Email</div>
                         <div>Tele: @Model.CompanyInfo.Phone</div>
                         <hr />
                         <div>Gata: @Model.CompanyInfo.Street</div>
@@ -68,7 +72,7 @@
                     </div>
                     <div class="card-footer">
                         <a href="/EditCompanyInfo" class="btn btn-primary btn-sm">Uppdatera profil</a>
-                        <a href="/EditCompanyUser" class="btn btn-primary btn-sm">Ändra Lösenord/Email</a>
+                        <a href="/EditCompanyUser" class="btn btn-primary btn-sm">Ändra Lösenord</a>
                     </div>
                 </div>
             </div>
@@ -124,7 +128,7 @@
                         </p>
                     </div>
                     <div class="card-footer">
-                        
+
                         <a href="/AddWantCompany" class="btn btn-primary btn-sm">Lägg till Want</a>
                         <a href="/EditCompanyWants" class="btn btn-primary btn-sm">Redigera Wants</a>
 
@@ -140,5 +144,5 @@
         <!-- Bootstrap core JavaScript -->
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
+    </div>
 </body>

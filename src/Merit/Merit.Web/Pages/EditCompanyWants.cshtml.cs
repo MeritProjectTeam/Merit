@@ -66,22 +66,22 @@ namespace Merit.Web.Pages
             return Page();
         }
 
-        public void OnPostEdit()
+        public async Task OnPostEdit()
         {
             wService.EditCompanyWant(CWant);
             Visi = true;
             Message = "Önskemål ändrat";
             SelectedCompanyWantId = 0;
-            Redirect("/EditCompanyWants");
+            await OnGetAsync();
         }
 
-        public void OnPostDelete()
+        public async Task OnPostDelete()
         {
             wService.DeleteCompanyWant(CWant);
             Visi = true;
             Message = "Önskemål borttaget";
             SelectedCompanyWantId = 0;
-            Redirect("/EditCompanyWants");
-        }
+            await OnGetAsync();
+        } 
     }
 }

@@ -18,15 +18,13 @@
 <form method="post">
     <div class="row">
         <div class="col-lg-4">
-            @*<div class="justify-content-between mb-2">
-                <div>
-                    <label for="email">Epost:</label>
-                </div>
-                <div>
-                    <input type="hidden" value="@Model.AUser.PersonalUserId" asp-for="AUser.PersonalUserId" />
-                    <input type="text" value="@Model.AUser.Email" id="Email" name="Email" />
-                </div>
-            </div>*@
+            <div>
+                <label for="password">Nuvarande lösenord</label>
+            </div>
+            <div>
+                <input class="form-control" type="password" id="CurrentPassword" name="CurrentPassword" placeholder="Nuvarande lösenordet" />
+            </div>
+            <br />
             <div class="justify-content-between mb-2">
                 <div>
                     <label for="password">Lösenord:</label>

@@ -64,7 +64,7 @@ namespace Merit.Web.Pages
                 CompanyMerits = meritService.ReadCompanyMerits(companyUser.CompanyUserId);
 
             }
-            CompanyImage img = profileService.GetImage(AUser);
+            CompanyImage img = await profileService.GetImage(AUser);
             if (img == null)
             {
                 ImageUrl = "http://placehold.it/300x300";
@@ -100,8 +100,6 @@ namespace Merit.Web.Pages
                 return Redirect("/Login");
             }
 
-            IdentityUser identity = await userManager.GetUserAsync(User);
-            IUser cUser = identity.GetUser();
 
 
             CompanyImage img = new CompanyImage();
@@ -116,9 +114,9 @@ namespace Merit.Web.Pages
                 file.CopyTo(ms);
                 img.ImageData = ms.ToArray();
             }
-            profileService.SaveImage(img);
+            await profileService.SaveImage(img);
 
-            return RedirectToPage();
+            return await OnGetAsync();
         }
     }
 }

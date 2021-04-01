@@ -1,6 +1,10 @@
 ﻿@page
 @model Merit.Web.Pages.EditCompanyUserModel
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 @{
+    var user = await UserManager.GetUserAsync(User);
 }
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
     <a class="navbar-brand js-scroll-trigger" href="#page-top">
@@ -23,16 +27,14 @@
         <div class="col-lg-4">
             <div class="justify-content-between mb-2">
                 <div>
-                    <label for="email">Epost:</label>
+                    <label for="password">Nuvarande lösenord</label>
                 </div>
                 <div>
-                    <input type="hidden" value="@Model.ACompanyUser.CompanyUserId" asp-for="ACompanyUser.CompanyUserId" />
-                    <input type="text" value="@Model.ACompanyUser.Email" id="Email" name="Email" />
+                    <input class="form-control" type="password" id="CurrentPassword" name="CurrentPassword" placeholder="Nuvarande lösenordet"/>
                 </div>
-            </div>
-            <div class="justify-content-between mb-2">
+                <br />
                 <div>
-                    <label for="password">Lösenord:</label>
+                    <label for="password">Nytt lösenord:</label>
                 </div>
                 <div>
                     <input class="form-control" type="password" id="PasswordCheck1" name="PasswordCheck1" placeholder="Lösenord" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" />

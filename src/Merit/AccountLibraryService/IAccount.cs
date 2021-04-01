@@ -10,9 +10,5 @@ namespace Merit.AccountService
         public void EditPersonalUser(PersonalUser user);
         public void EditCompanyUser(CompanyUser company);
         public CompanyUser GetCompanyUser(string id);
-        public int CheckExistingAccount(PersonalUser user);
-        public int CheckExistingAccount(CompanyUser user);
-        public int[] CheckLogin(User user);
-
     }
 }
