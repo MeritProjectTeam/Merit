@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace Merit.Web.Services.BankId
 {
-    public record BankIdError : IBankIdResponse
+    public record ErrorResponse : IBankIdResponse
     {
         [JsonIgnore]
         public MessageCode MessageCode { get; init; }
