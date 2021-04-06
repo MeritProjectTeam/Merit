@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Merit.Data.Models;
 using Merit.WantsService;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -12,6 +13,15 @@ namespace Merit.Web.Pages
     public class EditCompanyWantsModel : PageModel
     {
         private IWantsService wService = new WantsService.WantsService();
+
+        private readonly UserManager<IdentityUser> userManager;
+        private readonly SignInManager<IdentityUser> signInManager;
+
+        public EditCompanyWantsModel(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        {
+            this.signInManager = signInManager;
+            this.userManager = userManager;
+        }
 
         [BindProperty(SupportsGet = true)]
         public List<CompanyWants> CompanyWantsList { get; set; }
@@ -30,12 +40,24 @@ namespace Merit.Web.Pages
         [BindProperty(SupportsGet = true)]
         public bool Visi { get; set; } = false;
 
-        int companyUserId = AccountService.Account.CheckCookie();
-
-        public void OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
-            CompanyWantsList = wService.GetAllCompanyWants(companyUserId);
+            if (!signInManager.IsSignedIn(User))
+            {
+                return Redirect("/Login");
+            }
 
+            IdentityUser identity = await userManager.GetUserAsync(User);
+            IUser cUser = identity.GetUser();
+
+            if (cUser is CompanyUser companyUser)
+            {
+                CompanyWantsList = wService.GetAllCompanyWants(companyUser.CompanyUserId);
+            }
+            else if (cUser is PersonalUser)
+            {
+                return Redirect("/PersonalInfoPage");
+            }
             foreach (var want in CompanyWantsList)
             {
                 if(want.CompanyWantsId == SelectedCompanyWantId)
@@ -45,24 +67,25 @@ namespace Merit.Web.Pages
                 }
 
             }
+            return Page();
         }
 
-        public void OnPostEdit()
+        public async Task OnPostEdit()
         {
             wService.EditCompanyWant(CWant);
             Visi = true;
             Message = "Önskemål ändrat";
             SelectedCompanyWantId = 0;
-            OnGet();
+            await OnGetAsync();
         }
 
-        public void OnPostDelete()
+        public async Task OnPostDelete()
         {
             wService.DeleteCompanyWant(CWant);
             Visi = true;
             Message = "Önskemål borttaget";
             SelectedCompanyWantId = 0;
-            OnGet();
-        }
+            await OnGetAsync();
+        } 
     }
 }

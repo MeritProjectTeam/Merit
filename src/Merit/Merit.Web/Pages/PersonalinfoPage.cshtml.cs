@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using System.Threading;
+using Microsoft.AspNetCore.Identity;
 
 namespace Merit.Web.Pages
 {
@@ -19,10 +20,15 @@ namespace Merit.Web.Pages
         private IAccount accountService = new Account();
         private IMeritService meritService = new MeritService.MeritService();
         private IWantsService wantsService = new WantsService.WantsService();
-        
-        
-        
 
+        private readonly UserManager<IdentityUser> userManager;
+        private readonly SignInManager<IdentityUser> signInManager;
+
+        public PersonalinfoPageModel(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        {
+            this.signInManager = signInManager;
+            this.userManager = userManager;
+        }
 
         [BindProperty]
         public PersonalUser AUser { get; set; }
@@ -36,12 +42,21 @@ namespace Merit.Web.Pages
 
         [BindProperty]
         public string ImageUrl { get; set; }
-        public void OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
-            int userId = Account.CheckCookie();
+            if (!signInManager.IsSignedIn(User))
+            {
+                return Redirect("/Login");
+            }
 
-            AUser = accountService.GetPersonalUser(userId);
-            PersonalImage img = profileService.GetImage(AUser);
+            IdentityUser identity = await userManager.GetUserAsync(User);
+            IUser pUser = identity.GetUser();
+            if (pUser is CompanyUser)
+            {
+                return Redirect("/CompanyInfoPage");
+            }
+            AUser = accountService.GetPersonalUser(pUser.Identity);
+            PersonalImage img = await profileService.GetImage(AUser);
             if (img == null)
             {
                 ImageUrl = "http://placehold.it/300x300";
@@ -51,37 +66,43 @@ namespace Merit.Web.Pages
                 string imageBase64Data = Convert.ToBase64String(img.ImageData);
                 ImageUrl = string.Format($"data:image/jpg;base64, {imageBase64Data}");
             }
-            PersonalInfo = profileService.Get(userId);
-            PersonalWants = wantsService.GetAllPersonalWants(userId);
-            
-            PersonalMerits = meritService.ReadPersonalMerits(userId);
+            if (pUser is PersonalUser personalUser)
+            {
+                PersonalInfo = profileService.Get(personalUser.PersonalUserId);
+                PersonalWants = wantsService.GetAllPersonalWants(personalUser.PersonalUserId);
+                PersonalMerits = meritService.ReadPersonalMerits(personalUser.PersonalUserId);
+            }
+
+            return Page();
         }
-        public void OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
-            int userId = Account.CheckCookie();
-            AUser = accountService.GetPersonalUser(userId);
-            UploadImage();
+            if (!signInManager.IsSignedIn(User))
+            {
+                return Redirect("/Login");
+            }
+
+            IdentityUser identity = await userManager.GetUserAsync(User);
+            IUser pUser = identity.GetUser();
+            AUser = accountService.GetPersonalUser(pUser.Identity);
+            await UploadImage();
+            return await OnGetAsync();
         }
 
-        public IActionResult UploadImage()
+        public async Task UploadImage()
         {
             PersonalImage img = new PersonalImage();
             var files = Request.Form.Files;
-            if (files.Count != 0)
+            var file = files[0];
+            img.ImageTitle = file.FileName;
+            img.PersonalUserId = AUser.PersonalUserId;
+            
+            using (MemoryStream ms = new MemoryStream())
             {
-                var file = files[0];
-                img.ImageTitle = file.FileName;
-                img.PersonalUserId = AUser.PersonalUserId;
-
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    file.CopyTo(ms);
-                    img.ImageData = ms.ToArray();
-                }
-                profileService.SaveImage(img);
+                file.CopyTo(ms);
+                img.ImageData = ms.ToArray();
             }
-            else { return Page(); }
-            return RedirectToPage();
+            await profileService.SaveImage(img);
         }
         
        

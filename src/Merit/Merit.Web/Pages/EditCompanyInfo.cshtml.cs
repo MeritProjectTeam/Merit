@@ -6,6 +6,7 @@ using Merit.CompanyService;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Merit.Data.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace Merit.Web.Pages
 {
@@ -13,26 +14,59 @@ namespace Merit.Web.Pages
     {
         private readonly ICompanyService companyService = new CompanyService.CompanyService();
 
+        private readonly UserManager<IdentityUser> userManager;
+        private readonly SignInManager<IdentityUser> signInManager;
+
+        public EditCompanyInfoModel(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        {
+            this.signInManager = signInManager;
+            this.userManager = userManager;
+        }
+
         [BindProperty]
         public string Message { get; set; }
         [BindProperty]
         public CompanyInfo ACompany { get; set; }
         public bool Visi { get; set; }
 
-        int companyUserId = AccountService.Account.CheckCookie();
-        public void OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
-            if (companyUserId != 0)
+            if (!signInManager.IsSignedIn(User))
             {
-                ACompany = companyService.Get(companyUserId);
+                return Redirect("/Login");
             }
+
+            IdentityUser identity = await userManager.GetUserAsync(User);
+            IUser cUser = identity.GetUser();
+            if (cUser is CompanyUser companyUser)
+            {
+                ACompany = companyService.Get(companyUser.CompanyUserId);
+            }
+            return Page();
         }
-        public void OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
+            if (!signInManager.IsSignedIn(User))
+            {
+                return Redirect("/Login");
+            }
+
+            IdentityUser identity = await userManager.GetUserAsync(User);
+            IUser cUser = identity.GetUser();
+
             Visi = true;
             Message = "Företagsinfo sparad.";
-            ACompany.CompanyUserID = AccountService.Account.CheckCookie();
+            if (cUser is CompanyUser companyUser)
+            {
+                ACompany.CompanyUserId = companyUser.CompanyUserId;
+            }
+            else if (cUser is PersonalUser)
+            {
+                return Redirect("/PersonalInfoPage");
+            }
             companyService.EditCompanyInfo(ACompany);
+            
+            return Page();
         }
     }
 }

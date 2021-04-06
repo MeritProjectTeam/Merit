@@ -1,87 +1,41 @@
 ﻿@page
-@model LoginWebTesting.Pages.RegisterModel
-@{
-}
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
-    <a class="navbar-brand js-scroll-trigger" href="#page-top">
-        <span class="d-block d-lg-none">MERIT</span>
-        <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="/images/merit2.png" alt="" /></span>
-    </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav">
-            <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-page="/Index">Hem</a></li>
-
-            <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-page="/LogIn">Logga in</a></li>
-            <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-page="/Register">Registrera</a></li>
-            <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-page="/Team">Team</a></li>
-
-        </ul>
-    </div>
-</nav>
-<h3>Registrera användare</h3>
-<p></p>
+@model RegisterModel
+@{ }
+<h3>Registrera Användare</h3>
 <hr />
-<form method="post">
-    <div class="row">
-        <div class="col-lg-4">
-            <div class="justify-content-between mb-2">
-                <div>
-                    <label for="username">Användarnamn:</label>
-                </div>
-                <div>
-                    <input class="form-control" type="text" asp-for="NewUser.UserName" name="username" placeholder="Användarnamn" required />
-                </div>
-            </div>
-            <div class="justify-content-between mb-2">
-                <div>
-                    <label for="email">Epost:</label>
-                </div>
-                <div>
-                    <input class="form-control" type="email" asp-for="NewUser.Email" name="email" placeholder="Epost" required />
-                </div>
-            </div>
-            <div class="justify-content-between mb-2">
-                <div>
-                    <label for="password">Lösenord:</label>
-
-                </div>
-
-                <div>
-                    <input class="form-control" type="password" asp-for="NewUser.Password" name="password" placeholder="Lösenord" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required />
-                    <small id="emailHelp" class="form-text text-muted">Lösenordet måste innehålla en siffra, stor bokstav, liten bokstav och vara minst 8 tecken långt.</small>
-
-                </div>
-            </div>
-            <div class="justify-content-between mb-2">
-                <div>
-                    <label for="passwordcheck">Upprepa lösenordet:</label>
-                </div>
-
-                <div>
-                    <input class="form-control" type="password" asp-for="PasswordCheck" name="passwordcheck" placeholder="Upprepa lösenordet" minlength="8" required />
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="accountType">Välj kontotyp</label>
-                <select class="form-control" id="accountType" asp-for="AccountType">
-                    <option value="1">Personligt konto</option>
-                    <option value="2">Företagskonto</option>
-                </select>
-            </div>
-            <div>
-                <input type="checkbox" required /><span> Jag har läst och godkänner <a href="/Privacy">integritetspolicyn</a>.</span>
-            </div>
-        </div>
-        </div>
-    <br />
+<form method="post" class="col-lg-4">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="Input.AccountType"></label>
+        <select asp-for="Input.AccountType" class="form-control">
+            <option value="@Merit.AccountService.AccountType.Personal">Personligt Konto</option>
+            <option value="@Merit.AccountService.AccountType.Company">Företagskonto</option>
+        </select>
+        <span asp-validation-for="Input.AccountType" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Input.Email"></label>
+        <input asp-for="Input.Email" class="form-control" />
+        <span asp-validation-for="Input.Email" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Input.Password"></label>
+        <input asp-for="Input.Password" class="form-control" />
+        <span asp-validation-for="Input.Password" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Input.ConfirmPassword"></label>
+        <input asp-for="Input.ConfirmPassword" class="form-control" />
+        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+    </div>
+    <div class="form-group m-2">
+        <input required asp-for="Input.PrivacyConsent" class="form-check-input" />
+        <label asp-for="Input.PrivacyConsent" class="form-check-label"></label>
+        <span asp-validation-for="Input.PrivacyConsent" class="text-danger"></span>
+    </div>
     <button class="btn btn-primary" type="submit">Registrera</button>
 </form>
 
-@if(Model.Visi)
-{
-   <br />
-   <div class="alert alert-@Model.TypeString ">@Model.RegisterMessage</div>
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
 }
-
-<p></p>
