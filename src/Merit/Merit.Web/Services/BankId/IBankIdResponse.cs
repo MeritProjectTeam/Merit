@@ -5,6 +5,6 @@ namespace Merit.Web.Services.BankId
     public interface IBankIdResponse
     {
         [JsonIgnore]
-        public MessageCode MessageCode { get; }
+        public MessageCode MessageCode => MessageCode.None;
     }
 }
