@@ -6,6 +6,7 @@ using Merit.AdvertisementService;
 using Merit.Data.Models;
 using Merit.MeritService;
 using Merit.WantsService;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -19,10 +20,18 @@ namespace Merit.Web.Pages
         public IMeritService meritService = new MeritService.MeritService();
         public IWantsService wantsService = new WantsService.WantsService();
 
+        private readonly UserManager<IdentityUser> userManager;
+        private readonly SignInManager<IdentityUser> signInManager;
+
+        public EditCompanyAdvertisementModel(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        {
+            this.signInManager = signInManager;
+            this.userManager = userManager;
+        }
+
         public List<CompanyMerit> CompanyMerits { get; set; }
         public List<CompanyWants> CompanyWants { get; set; }
 
-        int userId = AccountService.Account.CheckCookie();
 
         [BindProperty]
         public List<int> WantsId { get; set; }
@@ -38,27 +47,59 @@ namespace Merit.Web.Pages
 
         [BindProperty]
         public List<CompanyAdvertisement> companyAdvertisements { get; set; }
-        public void OnGet()
+        public async Task<IActionResult> OnGet()
         {
-            LoadDefaults();
+            if (!signInManager.IsSignedIn(User))
+            {
+                return Redirect("/Login");
+            }
 
-            companyAdvertisements = advertisementService.GetAllCompanyAdvertisements(userId);
+            IdentityUser identity = await userManager.GetUserAsync(User);
+            IUser cUser = identity.GetUser();
+
+            if (cUser is CompanyUser companyUser)
+            {
+                companyAdvertisements = advertisementService.GetAllCompanyAdvertisements(companyUser.CompanyUserId);
+                LoadDefaults(companyUser);
+            }
+            else if (cUser is PersonalUser)
+            {
+                return Redirect("/PersonalInfoPage");
+            }
+
+
 
             if (SelectedAdvertisementID != 0)
             {
                 SelectedAdvertisement = advertisementService.GetOneCompanyAdvertisement(SelectedAdvertisementID);
             }
+            return Page();
         }
 
-        private void LoadDefaults()
+        private void LoadDefaults(CompanyUser companyUser)
         {
-            CompanyWants = wantsService.GetAllCompanyWants(userId);
-            CompanyMerits = meritService.ReadCompanyMerits(userId);
+            CompanyWants = wantsService.GetAllCompanyWants(companyUser.CompanyUserId);
+            CompanyMerits = meritService.ReadCompanyMerits(companyUser.CompanyUserId);
         }
 
-        public IActionResult OnPostEdit()
+        public async Task<IActionResult> OnPostEdit()
         {
-            LoadDefaults();
+            if (!signInManager.IsSignedIn(User))
+            {
+                return Redirect("/Login");
+            }
+
+            IdentityUser identity = await userManager.GetUserAsync(User);
+            IUser cUser = identity.GetUser();
+
+            if (cUser is CompanyUser companyUser)
+            {
+                LoadDefaults(companyUser);
+            }
+            else if (cUser is PersonalUser)
+            {
+                return Redirect("/PersonalInfoPage");
+            }
 
             advertisementService.DeleteVisibleMerits(SelectedAdvertisement.CompanyAdvertisementId);
             advertisementService.DeleteVisibleWants(SelectedAdvertisement.CompanyAdvertisementId);
@@ -82,9 +123,24 @@ namespace Merit.Web.Pages
 
             return RedirectToPage();
         }
-        public IActionResult OnPostDelete()
+        public async Task<IActionResult> OnPostDelete()
         {
-            LoadDefaults();
+            if (!signInManager.IsSignedIn(User))
+            {
+                return Redirect("/Login");
+            }
+
+            IdentityUser identity = await userManager.GetUserAsync(User);
+            IUser cUser = identity.GetUser();
+
+            if (cUser is CompanyUser companyUser)
+            {
+                LoadDefaults(companyUser);
+            }
+            else if (cUser is PersonalUser)
+            {
+                return Redirect("/PersonalInfoPage");
+            }
             advertisementService.DeleteCompanyAdvertisement(SelectedAdvertisement.CompanyAdvertisementId);
             return RedirectToPage();
         }

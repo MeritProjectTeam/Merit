@@ -8,6 +8,7 @@ using Merit.MeritService;
 using Merit.Data.Models;
 using Merit.WantsService;
 using Merit.AdvertisementService;
+using Microsoft.AspNetCore.Identity;
 
 namespace Merit.Web.Pages
 {
@@ -19,7 +20,15 @@ namespace Merit.Web.Pages
         public IMeritService meritService = new MeritService.MeritService();
         public IWantsService wantsService = new WantsService.WantsService();
         public IAdvertisementService advertisementService = new AdvertisementService.AdvertisementService();
-        //public List<CompanyMerit> MeritList { get; set; }
+
+        private readonly UserManager<IdentityUser> userManager;
+        private readonly SignInManager<IdentityUser> signInManager;
+
+        public AddJobAdvertisementModel(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        {
+            this.signInManager = signInManager;
+            this.userManager = userManager;
+        }
         [BindProperty]
         public List<int> WantsId { get; set; }
         [BindProperty]
@@ -27,20 +36,52 @@ namespace Merit.Web.Pages
         public List<CompanyMerit> CompanyMerits { get; set; }
         public List<CompanyWants> CompanyWants { get; set; }
         [BindProperty]
-        public int companyUserId { get; set; } = AccountService.Account.CheckCookie();
-        [BindProperty]
         public CompanyAdvertisement CompanyAdd { get; set; }
-        public void OnGet()
+        [BindProperty]
+        public int CompanyUserId { get; set; }
+        public async Task<IActionResult> OnGet()
         {
-           
-            CompanyMerits = meritService.ReadCompanyMerits(companyUserId);
-            CompanyWants = wantsService.GetAllCompanyWants(companyUserId);
+            if (!signInManager.IsSignedIn(User))
+            {
+                return Redirect("/Login");
+            }
+
+            IdentityUser identity = await userManager.GetUserAsync(User);
+            IUser pUser = identity.GetUser();
+            if (pUser is PersonalUser)
+            {
+                return Redirect("/PersonalInfoPage");
+            }
+            else if (pUser is CompanyUser companyUser)
+            {
+                CompanyMerits = meritService.ReadCompanyMerits(companyUser.CompanyUserId);
+                CompanyWants = wantsService.GetAllCompanyWants(companyUser.CompanyUserId);
+                CompanyUserId = companyUser.CompanyUserId;
+            }
+
+            return Page();
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPost()
         {
-            CompanyMerits = meritService.ReadCompanyMerits(companyUserId);
-            CompanyWants = wantsService.GetAllCompanyWants(companyUserId);
+            if (!signInManager.IsSignedIn(User))
+            {
+                return Redirect("/Login");
+            }
+
+            IdentityUser identity = await userManager.GetUserAsync(User);
+            IUser pUser = identity.GetUser();
+            if (pUser is PersonalUser)
+            {
+                return Redirect("/PersonalInfoPage");
+            }
+            else if (pUser is CompanyUser companyUser)
+            {
+                CompanyMerits = meritService.ReadCompanyMerits(companyUser.CompanyUserId);
+                CompanyWants = wantsService.GetAllCompanyWants(companyUser.CompanyUserId);
+                CompanyUserId = companyUser.CompanyUserId;
+            }
+
 
             int advertisementId = advertisementService.SaveAdvertisement(CompanyAdd);
             
@@ -64,7 +105,6 @@ namespace Merit.Web.Pages
 
             //felmeddelande om ej skapats
 
-            //return RedirectToPage($"/ShowJobAdvertisement?AdvertisementId={advertisementId}");
             return RedirectToPage("ShowJobAdvertisement", new { advertisementid = advertisementId });
 
 

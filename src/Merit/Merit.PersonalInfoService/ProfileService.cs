@@ -87,7 +87,7 @@ namespace Merit.PersonalInfoService
             { 
                 db.PersonalImages.Remove(imageInfo); 
             }
-            var personalInfo = db.PersonalInfo.FirstOrDefault(x => x.PersonalUserID == userId);
+            var personalInfo = db.PersonalInfo.FirstOrDefault(x => x.PersonalUserId == userId);
             db.PersonalInfo.Remove(personalInfo);
             db.SaveChanges();
         }

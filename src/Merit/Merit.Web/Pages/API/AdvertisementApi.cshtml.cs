@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Merit.AccountService;
 using Merit.AdvertisementService;
+using Merit.Data.Data;
+using Merit.Data.Models;
 using Merit.MeritService;
 using Merit.WantsService;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +21,7 @@ namespace Merit.Web.Pages.API
         public IWantsService wantsService = new WantsService.WantsService();
         public IAccount account = new Account();
 
-        public Data.Data.MeritContext db = new();
+        public MeritContext db = new();
 
         public IActionResult OnGet(int? advertisementId, int? companyId)
         {
@@ -34,7 +36,9 @@ namespace Merit.Web.Pages.API
                 result.CompanyMerits = advertisementService.GetAdvertisementMerits((int)advertisementId);
                 result.CompanyWants = advertisementService.GetAdvertisementWants((int)advertisementId);
 
-                return new JsonResult(new { account.GetCompanyUser(result.CompanyUserId).UserName, result });
+                var companyUserName = db.CompanyUsers.FirstOrDefault(x => x.CompanyUserId == result.CompanyUserId).UserName.ToString();
+
+                return new JsonResult(new { companyUserName, result });
             }
             else if (advertisementId == null && companyId != null)
             {
@@ -48,7 +52,9 @@ namespace Merit.Web.Pages.API
                     advertisement.CompanyMerits = advertisementService.GetAdvertisementMerits(advertisement.CompanyAdvertisementId);
                     advertisement.CompanyWants = advertisementService.GetAdvertisementWants(advertisement.CompanyAdvertisementId);
                 }
-                return new JsonResult(new { account.GetCompanyUser(result[0].CompanyUserId).UserName, result });
+
+                string CompanyUserName = db.CompanyUsers.FirstOrDefault(x => x.CompanyUserId == (int)companyId).UserName;
+                return new JsonResult(new { CompanyUserName, result });
             }
             else
             {
@@ -57,7 +63,7 @@ namespace Merit.Web.Pages.API
                 {
                     return new JsonResult("Inga annonser hittades i databasen");
                 }
-                Dictionary<string, Data.Models.CompanyAdvertisement[]> list = new();
+                Dictionary<string, CompanyAdvertisement[]> list = new();
 
                 foreach (var advertisement in result)
                 {

@@ -9,6 +9,7 @@ namespace Merit.AccountService
         public PersonalUser GetPersonalUser(string id);
         public void EditPersonalUser(PersonalUser user);
         public void EditCompanyUser(CompanyUser company);
-        public CompanyUser GetCompanyUser(string id);
+        public CompanyUser GetCompanyUser(string identity);
+        public CompanyUser GetCompanyUser(int companyUserId);
     }
 }

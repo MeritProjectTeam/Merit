@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Merit.Data.Migrations
 {
-    public partial class identity : Migration
+    public partial class v1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -41,6 +41,32 @@ namespace Merit.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CompanyAdvertisements",
+                columns: table => new
+                {
+                    CompanyAdvertisementId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Profession = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Place = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Extent = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Duration = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FormOfEmployment = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Information = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Salary = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CompanyUserId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CompanyAdvertisements", x => x.CompanyAdvertisementId);
+                    table.ForeignKey(
+                        name: "FK_CompanyAdvertisements_CompanyUsers_CompanyUserId",
+                        column: x => x.CompanyUserId,
+                        principalTable: "CompanyUsers",
+                        principalColumn: "CompanyUserId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CompanyImages",
                 columns: table => new
                 {
@@ -74,14 +100,14 @@ namespace Merit.Data.Migrations
                     Street = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ZipCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     City = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CompanyUserID = table.Column<int>(type: "int", nullable: false)
+                    CompanyUserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CompanyInfo", x => x.CompanyInfoId);
                     table.ForeignKey(
-                        name: "FK_CompanyInfo_CompanyUsers_CompanyUserID",
-                        column: x => x.CompanyUserID,
+                        name: "FK_CompanyInfo_CompanyUsers_CompanyUserId",
+                        column: x => x.CompanyUserId,
                         principalTable: "CompanyUsers",
                         principalColumn: "CompanyUserId",
                         onDelete: ReferentialAction.Cascade);
@@ -163,14 +189,14 @@ namespace Merit.Data.Migrations
                     City = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Street = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ZipCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PersonalUserID = table.Column<int>(type: "int", nullable: false)
+                    PersonalUserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PersonalInfo", x => x.PersonalInfoId);
                     table.ForeignKey(
-                        name: "FK_PersonalInfo_PersonalUsers_PersonalUserID",
-                        column: x => x.PersonalUserID,
+                        name: "FK_PersonalInfo_PersonalUsers_PersonalUserId",
+                        column: x => x.PersonalUserId,
                         principalTable: "PersonalUsers",
                         principalColumn: "PersonalUserId",
                         onDelete: ReferentialAction.Cascade);
@@ -219,6 +245,55 @@ namespace Merit.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "VisibleMerits",
+                columns: table => new
+                {
+                    CompanyAdvertisementId = table.Column<int>(type: "int", nullable: false),
+                    CompanyMeritId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_VisibleMerits", x => new { x.CompanyAdvertisementId, x.CompanyMeritId });
+                    table.ForeignKey(
+                        name: "FK_VisibleMerits_CompanyAdvertisements_CompanyAdvertisementId",
+                        column: x => x.CompanyAdvertisementId,
+                        principalTable: "CompanyAdvertisements",
+                        principalColumn: "CompanyAdvertisementId");
+                    table.ForeignKey(
+                        name: "FK_VisibleMerits_CompanyMerits_CompanyMeritId",
+                        column: x => x.CompanyMeritId,
+                        principalTable: "CompanyMerits",
+                        principalColumn: "CompanyMeritId");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "VisibleWants",
+                columns: table => new
+                {
+                    CompanyAdvertisementId = table.Column<int>(type: "int", nullable: false),
+                    CompanyWantsId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_VisibleWants", x => new { x.CompanyAdvertisementId, x.CompanyWantsId });
+                    table.ForeignKey(
+                        name: "FK_VisibleWants_CompanyAdvertisements_CompanyAdvertisementId",
+                        column: x => x.CompanyAdvertisementId,
+                        principalTable: "CompanyAdvertisements",
+                        principalColumn: "CompanyAdvertisementId");
+                    table.ForeignKey(
+                        name: "FK_VisibleWants_CompanyWants_CompanyWantsId",
+                        column: x => x.CompanyWantsId,
+                        principalTable: "CompanyWants",
+                        principalColumn: "CompanyWantsId");
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CompanyAdvertisements_CompanyUserId",
+                table: "CompanyAdvertisements",
+                column: "CompanyUserId");
+
             migrationBuilder.CreateIndex(
                 name: "IX_CompanyImages_CompanyUserId",
                 table: "CompanyImages",
@@ -226,9 +301,9 @@ namespace Merit.Data.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_CompanyInfo_CompanyUserID",
+                name: "IX_CompanyInfo_CompanyUserId",
                 table: "CompanyInfo",
-                column: "CompanyUserID",
+                column: "CompanyUserId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -248,9 +323,9 @@ namespace Merit.Data.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_PersonalInfo_PersonalUserID",
+                name: "IX_PersonalInfo_PersonalUserId",
                 table: "PersonalInfo",
-                column: "PersonalUserID",
+                column: "PersonalUserId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -262,6 +337,16 @@ namespace Merit.Data.Migrations
                 name: "IX_PersonalWants_PersonalUserId",
                 table: "PersonalWants",
                 column: "PersonalUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_VisibleMerits_CompanyMeritId",
+                table: "VisibleMerits",
+                column: "CompanyMeritId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_VisibleWants_CompanyWantsId",
+                table: "VisibleWants",
+                column: "CompanyWantsId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -271,12 +356,6 @@ namespace Merit.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "CompanyInfo");
-
-            migrationBuilder.DropTable(
-                name: "CompanyMerits");
-
-            migrationBuilder.DropTable(
-                name: "CompanyWants");
 
             migrationBuilder.DropTable(
                 name: "PersonalImages");
@@ -291,10 +370,25 @@ namespace Merit.Data.Migrations
                 name: "PersonalWants");
 
             migrationBuilder.DropTable(
-                name: "CompanyUsers");
+                name: "VisibleMerits");
+
+            migrationBuilder.DropTable(
+                name: "VisibleWants");
 
             migrationBuilder.DropTable(
                 name: "PersonalUsers");
+
+            migrationBuilder.DropTable(
+                name: "CompanyMerits");
+
+            migrationBuilder.DropTable(
+                name: "CompanyAdvertisements");
+
+            migrationBuilder.DropTable(
+                name: "CompanyWants");
+
+            migrationBuilder.DropTable(
+                name: "CompanyUsers");
         }
     }
 }

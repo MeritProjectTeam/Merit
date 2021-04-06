@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Merit.AccountService;
+using Merit.AdvertisementService;
 using Merit.CompanyService;
 using Merit.Data.Models;
 using Merit.MeritService;
@@ -22,6 +23,7 @@ namespace Merit.Web.Pages
         private IMeritService meritService = new MeritService.MeritService();
         private IWantsService wantsService = new WantsService.WantsService();
         private IProfileService profileService = new ProfileService();
+        private IAdvertisementService advertisementService = new AdvertisementService.AdvertisementService();
 
         private readonly UserManager<IdentityUser> userManager;
         private readonly SignInManager<IdentityUser> signInManager;
@@ -41,6 +43,8 @@ namespace Merit.Web.Pages
 
         [BindProperty]
         public List<CompanyWants> CompanyWants { get; set; }
+        [BindProperty]
+        public List<CompanyAdvertisement> CompanyAdvertisements { get; set; }
         [BindProperty]
         public string ImageUrl { get; set; }
         [BindProperty(SupportsGet =true)]
@@ -62,7 +66,7 @@ namespace Merit.Web.Pages
                 CompanyInfo = companyService.Get(companyUser.CompanyUserId);
                 CompanyWants = wantsService.GetAllCompanyWants(companyUser.CompanyUserId);
                 CompanyMerits = meritService.ReadCompanyMerits(companyUser.CompanyUserId);
-
+                CompanyAdvertisements = advertisementService.GetAllCompanyAdvertisements(companyUser.CompanyUserId);
             }
             else if (cUser is PersonalUser)
             {

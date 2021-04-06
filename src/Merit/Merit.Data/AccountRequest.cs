@@ -21,7 +21,7 @@ namespace Merit.Data
                 try
                 {
                     PersonalInfo info = new PersonalInfo();
-                    info.PersonalUserID = user.PersonalUserId;
+                    info.PersonalUserId = user.PersonalUserId;
                     db.Add(info);
                     db.SaveChanges();
                 }
@@ -46,7 +46,7 @@ namespace Merit.Data
                 try
                 {
                     CompanyInfo info = new CompanyInfo();
-                    info.CompanyUserID = user.CompanyUserId;
+                    info.CompanyUserId = user.CompanyUserId;
                     db.Add(info);
                     db.SaveChanges();
                 }

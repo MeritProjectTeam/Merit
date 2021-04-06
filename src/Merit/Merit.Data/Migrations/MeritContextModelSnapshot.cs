@@ -132,13 +132,10 @@ namespace Merit.Data.Migrations
                     b.Property<string>("Category")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CompanyUserId")
+                    b.Property<int>("CompanyUserId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Identity")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SubCategory")
@@ -182,11 +179,8 @@ namespace Merit.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CompanyUserId")
+                    b.Property<int>("CompanyUserId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Identity")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Want")
                         .HasColumnType("nvarchar(max)");
@@ -279,10 +273,7 @@ namespace Merit.Data.Migrations
                     b.Property<string>("Duration")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Identity")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("PersonalUserId")
+                    b.Property<int>("PersonalUserId")
                         .HasColumnType("int");
 
                     b.Property<string>("SubCategory")
@@ -329,10 +320,7 @@ namespace Merit.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Identity")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("PersonalUserId")
+                    b.Property<int>("PersonalUserId")
                         .HasColumnType("int");
 
                     b.Property<string>("Want")
@@ -378,7 +366,7 @@ namespace Merit.Data.Migrations
             modelBuilder.Entity("Merit.Data.Models.CompanyAdvertisement", b =>
                 {
                     b.HasOne("Merit.Data.Models.CompanyUser", "CompanyUser")
-                        .WithMany("CompanyAdvertisements")
+                        .WithMany()
                         .HasForeignKey("CompanyUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -412,7 +400,9 @@ namespace Merit.Data.Migrations
                 {
                     b.HasOne("Merit.Data.Models.CompanyUser", "CompanyUser")
                         .WithMany("CompanyMerits")
-                        .HasForeignKey("CompanyUserId");
+                        .HasForeignKey("CompanyUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("CompanyUser");
                 });
@@ -421,7 +411,9 @@ namespace Merit.Data.Migrations
                 {
                     b.HasOne("Merit.Data.Models.CompanyUser", "CompanyUser")
                         .WithMany("CompanyWants")
-                        .HasForeignKey("CompanyUserId");
+                        .HasForeignKey("CompanyUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("CompanyUser");
                 });
@@ -452,7 +444,9 @@ namespace Merit.Data.Migrations
                 {
                     b.HasOne("Merit.Data.Models.PersonalUser", "PersonalUser")
                         .WithMany("PersonalMerits")
-                        .HasForeignKey("PersonalUserId");
+                        .HasForeignKey("PersonalUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("PersonalUser");
                 });
@@ -461,7 +455,9 @@ namespace Merit.Data.Migrations
                 {
                     b.HasOne("Merit.Data.Models.PersonalUser", "PersonalUser")
                         .WithMany("PersonalWants")
-                        .HasForeignKey("PersonalUserId");
+                        .HasForeignKey("PersonalUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("PersonalUser");
                 });
@@ -513,8 +509,6 @@ namespace Merit.Data.Migrations
 
             modelBuilder.Entity("Merit.Data.Models.CompanyUser", b =>
                 {
-                    b.Navigation("CompanyAdvertisements");
-
                     b.Navigation("CompanyImage");
 
                     b.Navigation("CompanyInfo");

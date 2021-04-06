@@ -17,7 +17,9 @@ namespace Merit.AccountService
     public class Account : IAccount
     {
         private AccountRequest source = new();
-
+        public void AddAccount(PersonalUser user)
+        {
+            using var db = new MeritContext();
             db.Add(user);
             db.SaveChanges();
 
@@ -30,11 +32,14 @@ namespace Merit.AccountService
             }
             catch (Exception)
             {
-                return id;
+                db.Remove(user);
+                db.SaveChanges();
             }
-            return 0;
         }
 
+        public void AddAccount(CompanyUser user)
+        {
+            using var db = new MeritContext();
             db.Add(user);
             db.SaveChanges();
 
@@ -52,11 +57,11 @@ namespace Merit.AccountService
             }
         }
 
-        public PersonalUser GetPersonalUser(string id)
+        public PersonalUser GetPersonalUser(string identity)
         {
             using var db = new MeritContext();
             return db.PersonalUsers
-                .FirstOrDefault(p => p.Identity == id);
+                .FirstOrDefault(p => p.Identity == identity);
         }
         public void EditPersonalUser(PersonalUser user)
         {
@@ -64,32 +69,23 @@ namespace Merit.AccountService
             db.Attach(user).State = EntityState.Modified;
             db.SaveChanges();
         }
-        public CompanyUser GetCompanyUser(string id)
+        public CompanyUser GetCompanyUser(string identity)
         {
             using var db = new MeritContext();
             return db.CompanyUsers
-                .FirstOrDefault(p => p.Identity == id);
+                .FirstOrDefault(p => p.Identity == identity);
         }
-
-        public void AddAccount(CompanyUser user)
+        public void EditCompanyUser(CompanyUser user)
         {
-            user.Password = EncryptPassword(user.Password);
-            source.AddAccount(user);
+            using var db = new MeritContext();
+            db.Attach(user).State = EntityState.Modified;
+            db.SaveChanges();
         }
-        //public static string EncryptPassword(string password)
-        //{
-        //    MD5 mD5 = MD5.Create();
-        //    byte[] inputBytes = Encoding.ASCII.GetBytes(password);
-        //    byte[] hash = mD5.ComputeHash(inputBytes);
 
-        //    string result = "";
-
-        //    foreach (var h in hash)
-        //    {
-        //        result += h.ToString("X2");
-        //    }
-
-        //    return result;
-        //}
+        public CompanyUser GetCompanyUser(int companyUserId)
+        {
+            using var db = new MeritContext();
+            return db.CompanyUsers.FirstOrDefault(x => x.CompanyUserId == companyUserId);
+        }
     }
 }
