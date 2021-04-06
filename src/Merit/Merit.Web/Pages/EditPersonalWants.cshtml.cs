@@ -25,7 +25,7 @@ namespace Merit.Web.Pages
         }
 
 
-        [BindProperty(SupportsGet = true)]
+        [BindProperty]
         public List<PersonalWants> PersonalWantsList { get; set; }
 
         [BindProperty(SupportsGet = true)]
@@ -54,6 +54,10 @@ namespace Merit.Web.Pages
             if (pUser is PersonalUser personalUser)
             {
                 PersonalWantsList = wService.GetAllPersonalWants(personalUser.PersonalUserId);
+                if (SelectedPersonalWantId != 0 && PersonalWantsList.FirstOrDefault(x => x.PersonalWantsID == SelectedPersonalWantId) == null)
+                {
+                    return Redirect($"/PersonalInfoPage");
+                }
             }
             else if (pUser is CompanyUser)
             {

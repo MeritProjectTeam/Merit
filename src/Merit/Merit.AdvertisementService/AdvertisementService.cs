@@ -168,6 +168,28 @@ namespace Merit.AdvertisementService
 
         }
 
+        public bool WantExistsInAdvertisement(int companyWantId)
+        {
+            var db = new MeritContext();
+            if (db.VisibleWants.FirstOrDefault(x => x.CompanyWantsId == companyWantId) == null)
+            {
+                return false;
+            }
+            return true;
 
+
+        }
+
+        public bool MeritExistsInAdvertisement(int companyMeritId)
+        {
+            var db = new MeritContext();
+            if (db.VisibleMerits.FirstOrDefault(x => x.CompanyMeritId == companyMeritId) == null)
+            {
+                return false;
+            }
+            return true;
+
+
+        }
     }
 }

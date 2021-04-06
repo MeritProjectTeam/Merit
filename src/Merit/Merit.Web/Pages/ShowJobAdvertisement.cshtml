@@ -1,6 +1,10 @@
 ﻿@page
+@using Microsoft.AspNetCore.Identity 
 @model Merit.Web.Pages.ShowJobAdvertisementModel
+@inject SignInManager<IdentityUser> signInManager
+@inject UserManager<IdentityUser> userManager
 @{
+    var user = await userManager.GetUserAsync(User);
 }
 
 <body>
@@ -99,8 +103,17 @@
                                 </ul>
                             </div>
                         </div>
-                        <div class="card-footer-2">
+                        <div class="card-footer">
 
+                            @if (signInManager.IsSignedIn(User) && Model.CompanyUser && Model.AUser.CompanyUserId == Model.CompanyAdvertisement.CompanyUserId )
+                            {
+                                <a href="/CompanyInfoPage" class="btn btn-primary btn-sm">Tillbaka till förestagssida</a>
+                                <a href="/EditCompanyAdvertisement?selectedadvertisementid=@Model.CompanyAdvertisement.CompanyAdvertisementId" class="btn btn-primary btn-sm">Redigera annonsen</a>
+                            }
+                            else
+                            {
+                                <a href="/CompanyInfoPage" class="btn btn-primary btn-sm">Besök förestagssida</a>
+                            }
                         </div>
                     </div>
                 </div>

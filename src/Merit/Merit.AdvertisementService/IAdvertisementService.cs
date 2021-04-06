@@ -33,5 +33,8 @@ namespace Merit.AdvertisementService
         public void DeleteVisibleWants(int selectedAdvertisementId);
         public ICollection<VisibleMerit> GetVisibleMerits(int selectedAdvertisementId);
         public ICollection<VisibleWant> GetVisibleWants(int selectedAdvertisementId);
+
+        public bool WantExistsInAdvertisement(int companyWantId);
+        public bool MeritExistsInAdvertisement(int companyMeritId);
     }
 }
