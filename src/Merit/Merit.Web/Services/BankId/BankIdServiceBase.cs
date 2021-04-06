@@ -31,7 +31,7 @@ namespace Merit.Web.Services.BankId
             httpClient.DefaultRequestVersion = HttpVersion.Version11; // Default value, but made explicit for this API.
         }
 
-        public async Task<BankIdResponse> BeginAuthorizeAsync(string personalNr, string userIp)
+        public async Task<IBankIdResponse> BeginAuthorizeAsync(string personalNr, string userIp)
         {
             JsonContent content = JsonContent.Create(new
             {
@@ -45,7 +45,32 @@ namespace Merit.Web.Services.BankId
                 return await response.Content.ReadFromJsonAsync<BankIdSignResponse>();
             }
 
-            return await response.Content.ReadFromJsonAsync<BankIdResponse>();
+            return await ParseErrorAsync(response);
+        }
+
+        private async Task<BankIdError> ParseErrorAsync(HttpResponseMessage response)
+        {
+            var error = await response.Content.ReadFromJsonAsync<BankIdError>();
+            var messageCode = response.StatusCode switch
+            {
+                HttpStatusCode.BadRequest => error.ErrorCode switch
+                {
+                    "alreadyInProgress" => MessageCode.RFA4,
+                    "invalidParameters" => throw new BankIdException("Invalid parameter, method usage, or stale 'orderRef' parameter."),
+                    _ => MessageCode.RFA22
+                },
+                HttpStatusCode.Unauthorized 
+                or HttpStatusCode.Forbidden => throw new BankIdException("RP does not have access to the service."),
+                HttpStatusCode.NotFound => throw new BankIdException("An erroneouslyURLpathwas used."),
+                HttpStatusCode.MethodNotAllowed => throw new BankIdException("Only http method POST is allowed."),
+                HttpStatusCode.RequestTimeout => MessageCode.RFA5,
+                HttpStatusCode.UnsupportedMediaType => throw new BankIdException("Invalid use of 'charset' parameter in content-type header."),
+                HttpStatusCode.InternalServerError => MessageCode.RFA5,
+                HttpStatusCode.ServiceUnavailable => MessageCode.RFA5,
+                _ => throw new BankIdException("An unknown error was returned from server.")
+            };
+            
+            return error with { MessageCode = messageCode };
         }
 
         protected abstract bool ValidateServerCertificate(HttpRequestMessage requestMessage, X509Certificate2 cert, X509Chain chain, SslPolicyErrors errors);
