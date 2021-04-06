@@ -1,0 +1,123 @@
+﻿@page
+@model Merit.Web.Pages.EditCompanyAdvertisementModel
+@{
+}
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
+    <a class="navbar-brand js-scroll-trigger" href="#page-top">
+        <span class="d-block d-lg-none">Annonser</span>
+        <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="/images/merit2.png" alt="" /></span>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-page="/CompanyInfoPage">Företagssida</a></li>
+
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-page="/LogOut">Logga ut</a></li>
+
+        </ul>
+    </div>
+</nav>
+<form method="post">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 mb-5">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="card-header">
+                            <h4 class="card-title">Annonser</h4>
+                        </div>
+                        <p></p>
+                        <p class="card-text">
+                            @foreach (var advertisement in Model.companyAdvertisements)
+                            {
+
+                                <div>
+                                    Roll: @advertisement.Profession
+                                </div>
+                                <div>
+                                    Placering: @advertisement.Place
+                                </div>
+                                <div>
+                                    Omfattning: @advertisement.Extent
+                                </div>
+                                <div>
+                                    Varaktighet: @advertisement.Duration
+                                </div>
+                                <div>
+                                    Anställningsform: @advertisement.FormOfEmployment
+                                </div>
+                                <div>
+                                    Information: @advertisement.Information
+                                </div>
+                                <div class="form-group">
+                                    <label for="accountType">Meriter: </label><br />
+                                    @foreach (var merit in Model.advertisementService.GetAdvertisementMerits(advertisement.CompanyAdvertisementId))
+                                    {
+                                        <input name="MeritsId" type="checkbox" checked="@merit.CompanyMeritId" disabled />
+                                        <label>@merit.Description</label><br />
+                                    }
+                                </div>
+                                <div class="form-group">
+                                    <label for="accountType">Wants: </label><br />
+                                    @foreach (var want in Model.advertisementService.GetAdvertisementWants(advertisement.CompanyAdvertisementId))
+                                    {
+                                        <input name="WantsId" type="checkbox" checked="@want.CompanyWantsId" disabled />
+                                        <label>@want.Want</label><br />
+                                    }
+                                </div>
+                                <div>
+                                    Lön: @advertisement.Salary
+                                </div>
+
+                                <div><a href="?SelectedAdvertisementId=@advertisement.CompanyAdvertisementId">Välj att redigera</a></div>
+                                <hr />
+                            }
+                        </p>
+                    </div>
+                    <div class="card-footer">
+
+                    </div>
+                </div>
+            </div>
+
+            @if (Model.SelectedAdvertisement != null)
+            {
+        <div class="col-lg-3" row="10">
+            <p><h4 c>Redigera</h4></p>
+            <input type="hidden" value="@Model.SelectedAdvertisement.CompanyAdvertisementId" asp-for="SelectedAdvertisement.CompanyAdvertisementId" />
+            <input type="hidden" value="@Model.SelectedAdvertisement.CompanyUserId" asp-for="SelectedAdvertisement.CompanyUserId" />
+            <div><input type="text" value="@Model.SelectedAdvertisement.Profession" asp-for="SelectedAdvertisement.Profession" /></div>
+            <div><input type="text" value="@Model.SelectedAdvertisement.Place" asp-for="SelectedAdvertisement.Place" /></div>
+            <div><input type="text" value="@Model.SelectedAdvertisement.Extent" asp-for="SelectedAdvertisement.Extent" /></div>
+            <div><input type="text" value="@Model.SelectedAdvertisement.Duration" asp-for="SelectedAdvertisement.Duration" /></div>
+            <div><input type="text" value="@Model.SelectedAdvertisement.FormOfEmployment" asp-for="SelectedAdvertisement.FormOfEmployment" /></div>
+            <div><input type="text" value="@Model.SelectedAdvertisement.Information" asp-for="SelectedAdvertisement.Information" /></div>
+            <div class="form-group">
+                <label for="accountType">Meriter: </label><br />
+                @foreach (var merit in Model.CompanyMerits)
+                {
+                    <input name="MeritsId" type="checkbox" value="@merit.CompanyMeritId" checked="@Model.advertisementService.GetAdvertisementMerits(Model.SelectedAdvertisement.CompanyAdvertisementId).FirstOrDefault(x => x.Description == merit.Description)" />
+                    <label>@merit.Description</label><br />
+                }
+            </div>
+            <div class="form-group">
+                <label for="accountType">Wants: </label><br />
+                @foreach (var want in Model.CompanyWants)
+                {
+                    <input name="WantsId" type="checkbox" value="@want.CompanyWantsId" checked="@Model.advertisementService.GetAdvertisementWants(Model.SelectedAdvertisement.CompanyAdvertisementId).FirstOrDefault(x => x.Want == want.Want)" />
+                    <label>@want.Want</label><br />
+                }
+            </div>
+            <div><input type="text" value="@Model.SelectedAdvertisement.Salary" asp-for="SelectedAdvertisement.Salary" /></div>
+
+
+            <span class="justify-content-between mb-2">
+
+                <button type="submit" class="btn btn-primary btn-sm" asp-page-handler="Edit">Ändra</button>
+                <button type="submit" class="btn btn-primary btn-sm" asp-page-handler="Delete">Delete</button>
+            </span>
+        </div>
+            }
+        </div>
+    </div>
+</form>

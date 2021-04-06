@@ -1,21 +1,22 @@
-﻿using System;
+﻿using Merit.Data;
+using Merit.Data.Data;
+using Merit.Data.Models;
+using Merit.MeritService;
+using Merit.PersonalInfoService;
+using Merit.WantsService;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using Merit.Data.Data;
-using Merit.Data.Models;
-using Merit.CompanyService;
-using Microsoft.EntityFrameworkCore;
 
 namespace Merit.AccountService
 {
     public class Account : IAccount
     {
-        public void AddAccount(PersonalUser user)
-        {
-            //krypteringen sker på server-sidan, bör bytas till klient-sidan
-            using var db = new MeritContext();
+        private AccountRequest source = new();
 
             db.Add(user);
             db.SaveChanges();
@@ -29,14 +30,10 @@ namespace Merit.AccountService
             }
             catch (Exception)
             {
-                db.Remove(user);
-                db.SaveChanges();
+                return id;
             }
+            return 0;
         }
-        public void AddAccount(CompanyUser user)
-        {
-            //krypteringen sker på server-sidan, bör bytas till klient-sidan
-            using var db = new MeritContext();
 
             db.Add(user);
             db.SaveChanges();
@@ -73,11 +70,11 @@ namespace Merit.AccountService
             return db.CompanyUsers
                 .FirstOrDefault(p => p.Identity == id);
         }
-        public void EditCompanyUser(CompanyUser company)
+
+        public void AddAccount(CompanyUser user)
         {
-            using var db = new MeritContext();
-            db.Attach(company).State = EntityState.Modified;
-            db.SaveChanges();
+            user.Password = EncryptPassword(user.Password);
+            source.AddAccount(user);
         }
         //public static string EncryptPassword(string password)
         //{
