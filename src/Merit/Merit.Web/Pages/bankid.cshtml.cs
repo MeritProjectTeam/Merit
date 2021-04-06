@@ -15,10 +15,10 @@ namespace Merit.Web.Pages
         {
             var bankid = new BankIdTestService();
             var ip = HttpContext.Connection.RemoteIpAddress.ToString();
-            BankIdResponse response = await bankid.BeginAuthorizeAsync(bankid.TestPersonalNumber, ip);
+            IBankIdResponse response = await bankid.BeginAuthorizeAsync(bankid.TestPersonalNumber, ip);
             ViewData["TestResponse"] = response is BankIdSignResponse signResponse 
                 ? signResponse.ToString() 
-                : response.ToString();
+                : (response as BankIdError).ToString();
         }
     }
 }
