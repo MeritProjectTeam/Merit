@@ -40,4 +40,10 @@
     <ProjectReference Include="..\Merit.WantsService2\Merit.WantsService.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="FPTestcert3_20200618.p12">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
