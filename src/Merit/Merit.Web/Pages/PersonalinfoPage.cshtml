@@ -19,19 +19,28 @@
         <!-- /.col-lg-8 -->
         <div class="col-lg-5">
             <hr />
-            <h3>Välkommen, @Model.PersonalInfo.FirstName @Model.PersonalInfo.LastName!</h3>
-            <p>Här kan du uppdatera din profilinformation, lägga till meriter samt lägga till Wants.</p>
-            <div>
-                <form method="post"
-                      enctype="multipart/form-data">
-                    <span id="b">
-                        <input onchange="ConfirmX(true)" type="file" id="file1" name="file1" />
-                    </span>
-                    <span style="display:none" id="a">
-                        <button type="submit" class="btn btn-success">Ladda upp bild</button>
-                    </span>
-                </form>
-            </div>
+            @if (Model.Owner)
+            {
+
+                <h3>Välkommen, @Model.PersonalInfo.FirstName @Model.PersonalInfo.LastName!</h3>
+                <p>Här kan du uppdatera din profilinformation, lägga till meriter samt lägga till Wants.</p>
+                <div>
+                    <form method="post"
+                          enctype="multipart/form-data">
+                        <span id="b">
+                            <input onchange="ConfirmX(true)" type="file" id="file1" name="file1" />
+                        </span>
+                        <span style="display:none" id="a">
+                            <button type="submit" class="btn btn-success">Ladda upp bild</button>
+                        </span>
+                    </form>
+                </div>
+            }
+            else
+            {
+                <h3>@Model.PersonalInfo.FirstName @Model.PersonalInfo.LastName</h3>
+
+            }
             <p></p>
             <hr />
         </div>
@@ -56,7 +65,7 @@
 
                     <hr />
 
-                    <div>Email: @user.Email</div>
+                    <div>Email: @Model.Email</div>
 
                     <div>Tele: @Model.PersonalInfo.PhoneNumber</div>
 
@@ -68,11 +77,14 @@
 
                     <div>Ort: @Model.PersonalInfo.City</div>
                 </div>
-                <div class="card-footer">
-                    <a href="/EditPersonalInfo" class="btn btn-primary btn-sm">Uppdatera profil</a>
-                    <a href="/EditUserInfo" class="btn btn-primary btn-sm">Ändra Lösenord</a>
+                @if (Model.Owner)
+                {
+                    <div class="card-footer">
+                        <a href="/EditPersonalInfo" class="btn btn-primary btn-sm">Uppdatera profil</a>
+                        <a href="/EditUserInfo" class="btn btn-primary btn-sm">Ändra Lösenord</a>
+                    </div>
+                }
                 </div>
-            </div>
         </div>
         <!-- /.col-md-4 -->
         <div class="col-md-4 mb-5">
@@ -102,11 +114,14 @@
                         }
                     </p>
                 </div>
-                <div class="card-footer">
-                    <a href="/AddMerit" class="btn btn-primary btn-sm">Lägg till ny merit</a>
-                    <a href="/EditPersonalMerits" class="btn btn-primary btn-sm">Redigera meriter</a>
+                    @if (Model.Owner)
+                    {
+                        <div class="card-footer">
+                            <a href="/AddMerit" class="btn btn-primary btn-sm">Lägg till ny merit</a>
+                            <a href="/EditPersonalMerits" class="btn btn-primary btn-sm">Redigera meriter</a>
+                        </div>
+                    }
                 </div>
-            </div>
         </div>
         <!-- /.col-md-4 -->
         <div class="col-md-4 mb-5">
@@ -130,11 +145,14 @@
 
                     </p>
                 </div>
-                <div class="card-footer">
-                    <a href="/AddWant" class="btn btn-primary btn-sm">Lägg till Want</a>
-                    <a href="/EditPersonalWants" class="btn btn-primary btn-sm">Redigera Wants</a>
+                @if (Model.Owner)
+                {
+                    <div class="card-footer">
+                        <a href="/AddWant" class="btn btn-primary btn-sm">Lägg till Want</a>
+                        <a href="/EditPersonalWants" class="btn btn-primary btn-sm">Redigera Wants</a>
+                    </div>
+                }
                 </div>
-            </div>
         </div>
         <!-- /.col-md-4 -->
     </div>

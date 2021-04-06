@@ -10,6 +10,7 @@ using Merit.Data.Models;
 using Merit.MeritService;
 using Merit.PersonalInfoService;
 using Merit.WantsService;
+using Merit.Web.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -27,6 +28,10 @@ namespace Merit.Web.Pages
 
         private readonly UserManager<IdentityUser> userManager;
         private readonly SignInManager<IdentityUser> signInManager;
+        [BindProperty(SupportsGet = true)]
+        public int CompanyId { get; set; }
+
+        public bool Owner { get; set; } = true;
 
         public CompanyInfoPageModel(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
@@ -40,6 +45,8 @@ namespace Merit.Web.Pages
         public CompanyInfo CompanyInfo { get; set; }
         [BindProperty]
         public List<CompanyMerit> CompanyMerits { get; set; }
+
+        public string Email { get; set; }
 
         [BindProperty]
         public List<CompanyWants> CompanyWants { get; set; }
@@ -59,18 +66,31 @@ namespace Merit.Web.Pages
 
             IdentityUser identity = await userManager.GetUserAsync(User);
             IUser cUser = identity.GetUser();
-
             AUser = accountService.GetCompanyUser(cUser.Identity);
+
+           
+            if (CompanyId != 0 && (AUser == null || CompanyId != AUser.CompanyUserId))
+            {
+                Owner = false;
+                cUser = accountService.GetCompanyUser(CompanyId);
+                if (cUser == null)
+                {
+                    return NotFound();
+                }
+                AUser = accountService.GetCompanyUser(cUser.Identity);
+            }
+            else if (CompanyId == 0 && cUser is PersonalUser)
+            {
+                return Redirect("/PersonalInfoPage");
+            }
+
             if (cUser is CompanyUser companyUser)
             {
                 CompanyInfo = companyService.Get(companyUser.CompanyUserId);
                 CompanyWants = wantsService.GetAllCompanyWants(companyUser.CompanyUserId);
                 CompanyMerits = meritService.ReadCompanyMerits(companyUser.CompanyUserId);
-                CompanyAdvertisements = advertisementService.GetAllCompanyAdvertisements(companyUser.CompanyUserId);
-            }
-            else if (cUser is PersonalUser)
-            {
-                return Redirect("/PersonalInfoPage");
+                CompanyAdvertisements = advertisementService.GetAllCompanyAdvertisements(companyUser.CompanyUserId);            
+                Email = userManager.Users.FirstOrDefault(x => x.Id == companyUser.Identity).Email;
             }
             CompanyImage img = await profileService.GetImage(AUser);
             if (img == null)
@@ -126,5 +146,6 @@ namespace Merit.Web.Pages
 
             return await OnGetAsync();
         }
+
     }
 }

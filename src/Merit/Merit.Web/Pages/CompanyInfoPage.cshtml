@@ -19,19 +19,27 @@
             <!-- /.col-lg-8 -->
             <div class="col-lg-5">
                 <hr />
-                <h3>Välkommen, @Model.CompanyInfo.CompanyName!</h3>
-                <p>Här kan du uppdatera din profilinformation, lägga till meriter samt lägga till Wants.</p>
-                <div>
-                    <form method="post"
-                          enctype="multipart/form-data">
-                        <span id="b">
-                            <input onchange="ConfirmX(true)" type="file" id="file1" name="file1" />
-                        </span>
-                        <span style="display:none" id="a">
-                            <button type="submit" class="btn btn-success">Ladda upp bild</button>
-                        </span>
-                    </form>
-                </div>
+                @if (Model.Owner)
+                {
+                    <h3>Välkommen, @Model.CompanyInfo.CompanyName!</h3>
+                    <p>Här kan du uppdatera din profilinformation, lägga till meriter samt lägga till Wants.</p>
+
+                    <div>
+                        <form method="post"
+                              enctype="multipart/form-data">
+                            <span id="b">
+                                <input onchange="ConfirmX(true)" type="file" id="file1" name="file1" />
+                            </span>
+                            <span style="display:none" id="a">
+                                <button type="submit" class="btn btn-success">Ladda upp bild</button>
+                            </span>
+                        </form>
+                    </div>
+                }
+                else
+                {
+                    <h3>@Model.CompanyInfo.CompanyName</h3>
+                }
 
                 <p></p>
                 <hr />
@@ -52,17 +60,20 @@
                         <div>Företagsnamn: @Model.CompanyInfo.CompanyName</div>
                         <div>Organisationsnummer: @Model.CompanyInfo.OrgNumber</div>
                         <hr />
-                        <div>Email: @user.Email</div>
+                        <div>Email: @Model.Email</div>
                         <div>Tele: @Model.CompanyInfo.Phone</div>
                         <hr />
                         <div>Gata: @Model.CompanyInfo.Street</div>
                         <div>Postnr: @Model.CompanyInfo.ZipCode</div>
                         <div>Ort: @Model.CompanyInfo.City</div>
                     </div>
-                    <div class="card-footer">
-                        <a href="/EditCompanyInfo" class="btn btn-primary btn-sm">Uppdatera profil</a>
-                        <a href="/EditCompanyUser" class="btn btn-primary btn-sm">Ändra Lösenord</a>
-                    </div>
+                    @if (Model.Owner)
+                    {
+                        <div class="card-footer">
+                            <a href="/EditCompanyInfo" class="btn btn-primary btn-sm">Uppdatera profil</a>
+                            <a href="/EditCompanyUser" class="btn btn-primary btn-sm">Ändra Lösenord</a>
+                        </div>
+                    }
                 </div>
             </div>
             <!-- /.col-md-4 -->
@@ -82,11 +93,14 @@
                             }
                         </p>
                     </div>
-                    <div class="card-footer">
-                        <a href="/AddJobAdvertisement" class="btn btn-primary btn-sm">Lägg till ny annons</a>
-                        <a href="/EditCompanyAdvertisement" class="btn btn-primary btn-sm">Redigera annonser</a>
+                    @if (Model.Owner)
+                    {
+                        <div class="card-footer">
+                            <a href="/AddJobAdvertisement" class="btn btn-primary btn-sm">Lägg till ny annons</a>
+                            <a href="/EditCompanyAdvertisement" class="btn btn-primary btn-sm">Redigera annonser</a>
+                        </div>
+                    }
                     </div>
-                </div>
             </div>
         </div>
         <!-- /.row -->
@@ -117,11 +131,14 @@
                             }
                         </p>
                     </div>
-                    <div class="card-footer">
-                        <a href="/AddMeritBusiness" class="btn btn-primary btn-sm">Lägg till ny merit</a>
-                        <a href="/EditCompanyMerits" class="btn btn-primary btn-sm">Redigera meriter</a>
+                    @if (Model.Owner)
+                    {
+                        <div class="card-footer">
+                            <a href="/AddMeritBusiness" class="btn btn-primary btn-sm">Lägg till ny merit</a>
+                            <a href="/EditCompanyMerits" class="btn btn-primary btn-sm">Redigera meriter</a>
+                        </div>
+                    }
                     </div>
-                </div>
             </div>
             <!-- /.col-md-4 -->
             <div class="col-md-5 mb-5">
@@ -144,13 +161,17 @@
 
                         </p>
                     </div>
-                    <div class="card-footer">
+                    @if (Model.Owner)
+                    {
 
-                        <a href="/AddWantCompany" class="btn btn-primary btn-sm">Lägg till Want</a>
-                        <a href="/EditCompanyWants" class="btn btn-primary btn-sm">Redigera Wants</a>
+                        <div class="card-footer">
 
+                            <a href="/AddWantCompany" class="btn btn-primary btn-sm">Lägg till Want</a>
+                            <a href="/EditCompanyWants" class="btn btn-primary btn-sm">Redigera Wants</a>
+
+                        </div>
+                    }
                     </div>
-                </div>
             </div>
             <!-- /.col-md-4 -->
 

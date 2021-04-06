@@ -63,6 +63,12 @@ namespace Merit.AccountService
             return db.PersonalUsers
                 .FirstOrDefault(p => p.Identity == identity);
         }
+        public PersonalUser GetPersonalUser(int personalUserId)
+        {
+            using var db = new MeritContext();
+            return db.PersonalUsers
+                .FirstOrDefault(p => p.PersonalUserId == personalUserId);
+        }
         public void EditPersonalUser(PersonalUser user)
         {
             using var db = new MeritContext();
@@ -87,5 +93,6 @@ namespace Merit.AccountService
             using var db = new MeritContext();
             return db.CompanyUsers.FirstOrDefault(x => x.CompanyUserId == companyUserId);
         }
+
     }
 }

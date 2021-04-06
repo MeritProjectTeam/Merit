@@ -6,7 +6,8 @@ namespace Merit.AccountService
     {
         public void AddAccount(PersonalUser user);
         public void AddAccount(CompanyUser user);
-        public PersonalUser GetPersonalUser(string id);
+        public PersonalUser GetPersonalUser(string identity);
+        public PersonalUser GetPersonalUser(int personalUserId);
         public void EditPersonalUser(PersonalUser user);
         public void EditCompanyUser(CompanyUser company);
         public CompanyUser GetCompanyUser(string identity);

@@ -11,6 +11,7 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Threading;
 using Microsoft.AspNetCore.Identity;
+using System.Linq;
 
 namespace Merit.Web.Pages
 {
@@ -29,6 +30,13 @@ namespace Merit.Web.Pages
             this.signInManager = signInManager;
             this.userManager = userManager;
         }
+
+        public bool Owner { get; set; } = true;
+        
+        [BindProperty(SupportsGet = true)]
+        public int PersonalId { get; set; }
+
+        public string Email { get; set; }
 
         [BindProperty]
         public PersonalUser AUser { get; set; }
@@ -51,11 +59,24 @@ namespace Merit.Web.Pages
 
             IdentityUser identity = await userManager.GetUserAsync(User);
             IUser pUser = identity.GetUser();
-            if (pUser is CompanyUser)
-            {
-                return Redirect("/CompanyInfoPage");
-            }
             AUser = accountService.GetPersonalUser(pUser.Identity);
+
+            if (PersonalId != 0 && (AUser == null || PersonalId != AUser.PersonalUserId))
+            {
+                Owner = false;
+                pUser = accountService.GetPersonalUser(PersonalId);
+                if (pUser == null)
+                {
+                    return NotFound();
+                }
+                AUser = accountService.GetPersonalUser(pUser.Identity);
+            }
+            else if (PersonalId == 0 && pUser is CompanyUser )
+            {
+                return Redirect("/Companyinfopage");
+            }
+
+
             PersonalImage img = await profileService.GetImage(AUser);
             if (img == null)
             {
@@ -71,6 +92,8 @@ namespace Merit.Web.Pages
                 PersonalInfo = profileService.Get(personalUser.PersonalUserId);
                 PersonalWants = wantsService.GetAllPersonalWants(personalUser.PersonalUserId);
                 PersonalMerits = meritService.ReadPersonalMerits(personalUser.PersonalUserId);
+                Email = userManager.Users.FirstOrDefault(x => x.Id == personalUser.Identity).Email;
+
             }
 
             return Page();
