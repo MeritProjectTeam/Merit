@@ -5,7 +5,7 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace Merit.Web.Services.BankId
 {
-    public class BankIdTestService : BankIdServiceBase
+    public class BankIdTestService : BankIdService
     {
         private const string certName = "FPTestcert3_20200618.p12";
         private const string certPass = "qwerty123";
@@ -21,7 +21,7 @@ namespace Merit.Web.Services.BankId
 
         protected override bool ValidateServerCertificate(HttpRequestMessage requestMessage, X509Certificate2 cert, X509Chain chain, SslPolicyErrors errors)
         {
-            // Just accept the test-server certificate, ignoring errors.
+            // Ignore errors, since this is a test-service with invalid chain.
             return true;
         }
     }
