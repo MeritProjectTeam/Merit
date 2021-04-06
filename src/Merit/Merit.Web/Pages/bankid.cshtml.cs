@@ -9,16 +9,18 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Merit.Web.Pages
 {
-    public class bankidModel : PageModel
+    public class BankIdModel : PageModel
     {
+        private static readonly Dictionary<Guid, IBankIdResponse> PendingOrders = new();
         public async Task OnGetAsync()
         {
             var bankid = new BankIdTestService();
             var ip = HttpContext.Connection.RemoteIpAddress.ToString();
-            IBankIdResponse response = await bankid.BeginAuthorizeAsync(bankid.TestPersonalNumber, ip);
-            ViewData["TestResponse"] = response is BankIdSignResponse signResponse 
+            IBankIdResponse response = await bankid.AuthorizeAsync(bankid.TestPersonalNumber, ip);
+            ViewData["AuthResponse"] = response is AuthResponse signResponse 
                 ? signResponse.ToString() 
-                : (response as BankIdError).ToString();
+                : (response as ErrorResponse).ToString();
+
         }
     }
 }
