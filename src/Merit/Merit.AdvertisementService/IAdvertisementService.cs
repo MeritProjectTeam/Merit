@@ -19,7 +19,10 @@ namespace Merit.AdvertisementService
 
         public CompanyAdvertisement GetOneCompanyAdvertisement(int advertisementId);
         public List<CompanyAdvertisement> GetAllCompanyAdvertisements(int userId);
+        public List<CompanyAdvertisement> FreeSearchAdvertisements(string freeText);
 
+        public List<CompanyAdvertisement> FreeSearchMeritsInAdvertisements(string freeText);
+        public List<CompanyAdvertisement> FreeSearchWantsInAdvertisements(string freeText);
         public List<CompanyMerit> GetAdvertisementMerits(int advertisementId);
 
         public List<CompanyWants> GetAdvertisementWants(int advertisementId);
@@ -30,5 +33,8 @@ namespace Merit.AdvertisementService
         public void DeleteVisibleWants(int selectedAdvertisementId);
         public ICollection<VisibleMerit> GetVisibleMerits(int selectedAdvertisementId);
         public ICollection<VisibleWant> GetVisibleWants(int selectedAdvertisementId);
+
+        public bool WantExistsInAdvertisement(int companyWantId);
+        public bool MeritExistsInAdvertisement(int companyMeritId);
     }
 }

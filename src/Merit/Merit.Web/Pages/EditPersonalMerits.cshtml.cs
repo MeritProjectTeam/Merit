@@ -24,7 +24,7 @@ namespace Merit.Web.Pages
             this.userManager = userManager;
         }
 
-        [BindProperty(SupportsGet  = true)]
+        [BindProperty]
         public List<PersonalMerit> MeritList { get; set; }
 
         [BindProperty(SupportsGet=true)]
@@ -59,6 +59,10 @@ namespace Merit.Web.Pages
             if (pUser is PersonalUser personalUser)
             {
                 MeritList = meritService.ReadPersonalMerits(personalUser.PersonalUserId);
+                if (SelectedMeritID != 0 && MeritList.FirstOrDefault(x => x.PersonalMeritId == SelectedMeritID) == null)
+                {
+                    return Redirect($"/PersonalInfoPage");
+                }
             }
             else if (pUser is CompanyUser)
             {

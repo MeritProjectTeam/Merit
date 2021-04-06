@@ -24,7 +24,7 @@ namespace Merit.Web.Pages
         }
 
 
-        [BindProperty(SupportsGet = true)]
+        [BindProperty]
         public CompanyUser ACompanyUser { get; set; }
 
         [BindProperty]

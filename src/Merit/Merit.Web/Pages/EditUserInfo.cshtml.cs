@@ -25,7 +25,7 @@ namespace Merit.Web.Pages
             this.userManager = userManager;
         }
 
-        [BindProperty(SupportsGet = true)]
+        [BindProperty]
         public PersonalUser AUser { get; set; }
 
         [BindProperty]

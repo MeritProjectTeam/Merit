@@ -1,6 +1,5 @@
 ﻿using Merit.Data.Data;
 using Merit.Data.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -110,6 +109,87 @@ namespace Merit.AdvertisementService
         {
             var db = new MeritContext();
             return db.VisibleWants.Where(x => x.CompanyAdvertisementId == selectedAdvertisementId).ToList();
+        }
+
+        public List<CompanyAdvertisement> FreeSearchAdvertisements(string freeText)
+        {
+            var db = new MeritContext();
+            freeText = freeText.ToLower();
+            var result = db.CompanyAdvertisements
+               .Where(x => x.Duration.ToLower().Contains(freeText) || x.Extent.ToLower().Contains(freeText) || x.FormOfEmployment.ToLower().Contains(freeText) || x.Information.ToLower().Contains(freeText) || x.Place.ToLower().Contains(freeText) || x.Profession.ToLower().Contains(freeText) || x.Salary.ToLower().Contains(freeText)).ToList();
+
+            List<CompanyAdvertisement> meritSearch = FreeSearchMeritsInAdvertisements(freeText);
+            List<CompanyAdvertisement> wantsSearch = FreeSearchWantsInAdvertisements(freeText);
+
+            foreach (var ad in meritSearch)
+            {
+                if (result.FirstOrDefault(s => s.CompanyAdvertisementId == ad.CompanyAdvertisementId) == null)
+                {
+                    result.Add(ad);
+                }
+            }
+            foreach (var ad in wantsSearch)
+            {
+                if (result.FirstOrDefault(s => s.CompanyAdvertisementId == ad.CompanyAdvertisementId) == null)
+                {
+                    result.Add(ad);
+                }
+            }
+
+            result.OrderBy(x => x.CompanyAdvertisementId);
+
+            return result;
+        }
+
+
+        public List<CompanyAdvertisement> FreeSearchWantsInAdvertisements(string freeText)
+        {
+            var db = new MeritContext();
+            freeText = freeText.ToLower();
+            var advertisements = db.VisibleWants
+           .Where(x => x.CompanyWants.Want.ToLower().Contains(freeText))
+           .Select(s => s.CompanyAdvertisement).ToList();
+
+
+            return advertisements;
+        }
+
+        public List<CompanyAdvertisement> FreeSearchMeritsInAdvertisements(string freeText)
+        {
+
+            var db = new MeritContext();
+            freeText = freeText.ToLower();
+            var advertisements = db.VisibleMerits
+           .Where(x => x.CompanyMerit.Category.ToLower().Contains(freeText) || x.CompanyMerit.SubCategory.ToLower().Contains(freeText) || x.CompanyMerit.Description.ToLower().Contains(freeText))
+           .Select(s => s.CompanyAdvertisement).ToList();
+
+
+            return advertisements;
+
+        }
+
+        public bool WantExistsInAdvertisement(int companyWantId)
+        {
+            var db = new MeritContext();
+            if (db.VisibleWants.FirstOrDefault(x => x.CompanyWantsId == companyWantId) == null)
+            {
+                return false;
+            }
+            return true;
+
+
+        }
+
+        public bool MeritExistsInAdvertisement(int companyMeritId)
+        {
+            var db = new MeritContext();
+            if (db.VisibleMerits.FirstOrDefault(x => x.CompanyMeritId == companyMeritId) == null)
+            {
+                return false;
+            }
+            return true;
+
+
         }
     }
 }

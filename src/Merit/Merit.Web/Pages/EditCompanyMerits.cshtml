@@ -9,9 +9,18 @@
             <div class="col-12">
                 @if (Model.Visi)
                 {
-                    <div class="alert alert-success">
-                        @Model.Message
-                    </div>
+                    @if (Model.Success)
+                    {
+                        <div class="alert alert-success">
+                            @Model.Message
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-danger">
+                            @Model.Message
+                        </div>
+                    }
                 }
             </div>
         </div>

@@ -60,7 +60,12 @@ namespace Merit.Web.Pages
             if (cUser is CompanyUser companyUser)
             {
                 companyAdvertisements = advertisementService.GetAllCompanyAdvertisements(companyUser.CompanyUserId);
+
                 LoadDefaults(companyUser);
+                if(SelectedAdvertisementID != 0 && companyAdvertisements.FirstOrDefault(x => x.CompanyAdvertisementId == SelectedAdvertisementID) == null)
+                {
+                    return Redirect($"/showjobadvertisement?AdvertisementId={SelectedAdvertisementID}");
+                }
             }
             else if (cUser is PersonalUser)
             {
