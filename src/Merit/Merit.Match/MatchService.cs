@@ -32,7 +32,7 @@ namespace Merit.MatchService
                                                   || q.Description.ToLower().Contains(want.Want.ToLower())).ToList();
                 foreach (var item in q)
                 {
-                    if (listOfPersonalUsers.Where(x => x.PersonalUserId == item.PersonalUserId) == null)
+                    if (listOfPersonalUsers.Find(x => x.PersonalUserId == item.PersonalUserId) == null)
                     {
                         listOfPersonalUsers.Add(db.PersonalUsers.FirstOrDefault(x => x.PersonalUserId == item.PersonalUserId));
                     }
@@ -46,7 +46,7 @@ namespace Merit.MatchService
                                                   || merit.Description.ToLower().Contains(q.Want.ToLower())).ToList();
                 foreach (var item in q)
                 {
-                    if (listOfPersonalUsers.Where(x => x.PersonalUserId == item.PersonalUserId) == null)
+                    if (listOfPersonalUsers.Find(x => x.PersonalUserId == item.PersonalUserId) == null)
                     {
                         listOfPersonalUsers.Add(db.PersonalUsers.FirstOrDefault(x => x.PersonalUserId == item.PersonalUserId));
                     }
@@ -125,8 +125,33 @@ namespace Merit.MatchService
             }
             foreach (var merit in merits)
             {
-                var q = db.CompanyAdvertisements.Where(advert => MatchAdvertProps(advert, merit)).ToList();
-                                                                
+                //var q = db.CompanyAdvertisements.Where(advert => MatchAdvertProps(advert, merit)).ToList();
+
+                var q = db.CompanyAdvertisements.Where(x => x.Duration.ToLower().Contains(merit.Category)
+                                                        || x.Extent.ToLower().Contains(merit.Category)
+                                                        || x.FormOfEmployment.ToLower().Contains(merit.Category)
+                                                        || x.Information.ToLower().Contains(merit.Category)
+                                                        || x.Place.ToLower().Contains(merit.Category)
+                                                        || x.Profession.ToLower().Contains(merit.Category)
+                                                        || x.Salary.ToLower().Contains(merit.Category)
+                                                        || x.Duration.ToLower().Contains(merit.SubCategory)
+                                                        || x.Extent.ToLower().Contains(merit.SubCategory)
+                                                        || x.FormOfEmployment.ToLower().Contains(merit.SubCategory)
+                                                        || x.Information.ToLower().Contains(merit.SubCategory)
+                                                        || x.Place.ToLower().Contains(merit.SubCategory)
+                                                        || x.Profession.ToLower().Contains(merit.SubCategory)
+                                                        || x.Salary.ToLower().Contains(merit.SubCategory)
+                                                        || x.Duration.ToLower().Contains(merit.Description)
+                                                        || x.Extent.ToLower().Contains(merit.Description)
+                                                        || x.FormOfEmployment.ToLower().Contains(merit.Description)
+                                                        || x.Information.ToLower().Contains(merit.Description)
+                                                        || x.Place.ToLower().Contains(merit.Description)
+                                                        || x.Profession.ToLower().Contains(merit.Description)
+                                                        || x.Salary.ToLower().Contains(merit.Description))
+                    .ToList();
+                                                        
+
+
                 foreach (var advertisement in q)
                 {
                     if (listOfAdvertisement.Find(x=> x.CompanyUserId == advertisement.CompanyUserId) == null)
@@ -138,21 +163,21 @@ namespace Merit.MatchService
             return listOfAdvertisement;
         }
 
-        private bool MatchAdvertProps(CompanyAdvertisement advert, PersonalMerit merit) =>
-            MatchMeritProps(advert.Duration, merit)
-            || MatchMeritProps(advert.Extent, merit)
-            || MatchMeritProps(advert.FormOfEmployment, merit)
-            || MatchMeritProps(advert.Information, merit)
-            || MatchMeritProps(advert.Place, merit)
-            || MatchMeritProps(advert.Profession, merit)
-            || MatchMeritProps(advert.Salary, merit);
+        //private bool MatchAdvertProps(CompanyAdvertisement advert, PersonalMerit merit) =>
+        //    MatchMeritProps(advert.Duration, merit)
+        //    || MatchMeritProps(advert.Extent, merit)
+        //    || MatchMeritProps(advert.FormOfEmployment, merit)
+        //    || MatchMeritProps(advert.Information, merit)
+        //    || MatchMeritProps(advert.Place, merit)
+        //    || MatchMeritProps(advert.Profession, merit)
+        //    || MatchMeritProps(advert.Salary, merit);
 
 
 
-        private bool MatchMeritProps(string value, PersonalMerit merit) =>
-            value.Contains(merit.Category, StringComparison.InvariantCultureIgnoreCase)
-            || value.Contains(merit.SubCategory, StringComparison.InvariantCultureIgnoreCase)
-            || value.Contains(merit.Description, StringComparison.InvariantCultureIgnoreCase);
+        //private bool MatchMeritProps(string value, PersonalMerit merit) =>
+        //    value.Contains(merit.Category, StringComparison.InvariantCultureIgnoreCase)
+        //    || value.Contains(merit.SubCategory, StringComparison.InvariantCultureIgnoreCase)
+        //    || value.Contains(merit.Description, StringComparison.InvariantCultureIgnoreCase);
              
 
 

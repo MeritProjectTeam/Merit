@@ -55,13 +55,13 @@ else if (Model.AUser is CompanyUser)
             <div class="card h-100">
                 <div class="card-body">
                     <div class="card-header">
-                        <h4 class="card-title">Företag</h4>
+                        <h4 class="card-title">Personer</h4>
                     </div>
                     <p></p>
                     <p class="card-text">
                         @foreach (var item in Model.ListOfMatchingPersonalUsers)
                         {
-                            <a href="/PersonalInfoPage?personalInfoId="@item.PersonalUserId>@profileService.Get(item.PersonalUserId).FirstName @profileService.Get(item.PersonalUserId).LastName</a>
+                            <a href="/PersonalInfoPage?personalId=@item.PersonalUserId">@profileService.Get(item.PersonalUserId).FirstName @profileService.Get(item.PersonalUserId).LastName</a>
                         }
                     </p>
                 </div>
