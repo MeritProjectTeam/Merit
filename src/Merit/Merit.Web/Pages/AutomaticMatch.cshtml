@@ -1,9 +1,11 @@
 ﻿@page
 @using Merit.Data.Models
 @using Merit.CompanyService
+@using Merit.PersonalInfoService
 @model Merit.Web.Pages.AutomaticMatchModel
 @{
     ICompanyService companyService = new CompanyService();
+    IProfileService profileService = new ProfileService();
 }
 
 @if (Model.AUser is PersonalUser)
@@ -39,6 +41,27 @@
                             <div>
                                 <a href="/ShowJobAdvertisement?advertisementid=@add.CompanyAdvertisementId">@add.CompanyAdvertisementId - @add.Profession</a>
                             </div>
+                        }
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else if (Model.AUser is CompanyUser)
+{
+    <div class="row">
+        <div class="col-md-5 mb-5">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="card-header">
+                        <h4 class="card-title">Företag</h4>
+                    </div>
+                    <p></p>
+                    <p class="card-text">
+                        @foreach (var item in Model.ListOfMatchingPersonalUsers)
+                        {
+                            <a href="/PersonalInfoPage?personalInfoId="@item.PersonalUserId>@profileService.Get(item.PersonalUserId).FirstName @profileService.Get(item.PersonalUserId).LastName</a>
                         }
                     </p>
                 </div>
