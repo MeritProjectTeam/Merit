@@ -11,7 +11,7 @@ namespace Merit.MatchService
     {
         public List<CompanyUser> MatchPersonalUser(PersonalUser pUser);
         public List<PersonalUser> MatchCompanyUser(CompanyUser cUser);
-        public List<CompanyAdvertisement> MatchAdvertisement();
+        public List<CompanyAdvertisement> MatchAdvertisement(PersonalUser pUser);
 
     }
 }

@@ -18,6 +18,7 @@ namespace Merit.Web.Pages
 
         public List<CompanyUser> ListOfMatchingCompanyUsers { get; set; }
         public List<PersonalUser> ListOfMatchingPersonalUsers { get; set; }
+        public List<CompanyAdvertisement> ListOfMatchingAdvertisiment { get; set; }
         public IUser AUser { get; set; }
 
         public AutomaticMatchModel(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
@@ -38,6 +39,7 @@ namespace Merit.Web.Pages
             if (AUser is PersonalUser personalUser)
             {
                 ListOfMatchingCompanyUsers = matchService.MatchPersonalUser(personalUser);
+                ListOfMatchingAdvertisiment = matchService.MatchAdvertisement(personalUser);
             }
 
             else if (AUser is CompanyUser companyUser)
