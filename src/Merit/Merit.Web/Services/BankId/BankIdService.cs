@@ -30,6 +30,33 @@ namespace Merit.Web.Services.BankId
             httpClient.DefaultRequestVersion = HttpVersion.Version11; // Default value, but made explicit for this API.
         }
 
+        public static string GetUserMessage(MessageCode code) => code switch
+        {
+            MessageCode.None => "",
+            MessageCode.RFA1 => UserMessages.RFA1,
+            MessageCode.RFA2 => UserMessages.RFA2,
+            MessageCode.RFA3 => UserMessages.RFA3,
+            MessageCode.RFA4 => UserMessages.RFA4,
+            MessageCode.RFA5 => UserMessages.RFA5,
+            MessageCode.RFA6 => UserMessages.RFA6,
+            MessageCode.RFA8 => UserMessages.RFA8,
+            MessageCode.RFA9 => UserMessages.RFA9,
+            MessageCode.RFA13 => UserMessages.RFA13,
+            MessageCode.RFA14A => UserMessages.RFA14_A_,
+            MessageCode.RFA14B => UserMessages.RFA14_B_,
+            MessageCode.RFA15A => UserMessages.RFA15_A_,
+            MessageCode.RFA15B => UserMessages.RFA15_B_,
+            MessageCode.RFA16 => UserMessages.RFA16,
+            MessageCode.RFA17A => UserMessages.RFA17_A_,
+            MessageCode.RFA17B => UserMessages.RFA17_B_,
+            MessageCode.RFA18 => UserMessages.RFA18,
+            MessageCode.RFA19 => UserMessages.RFA19,
+            MessageCode.RFA20 => UserMessages.RFA20,
+            MessageCode.RFA21 => UserMessages.RFA21,
+            MessageCode.RFA22 => UserMessages.RFA22,
+            _ => throw new NotImplementedException()
+        };
+
         public async Task<IBankIdResponse> AuthorizeAsync(string personalNr, string userIp)
         {
             HttpResponseMessage response = await PostToBankId("auth", new
@@ -41,6 +68,21 @@ namespace Merit.Web.Services.BankId
             if (response.IsSuccessStatusCode)
             {
                 return await response.Content.ReadFromJsonAsync<AuthResponse>();
+            }
+
+            return await ParseErrorAsync(response);
+        }
+
+        public async Task<IBankIdResponse> CancelAsync(Guid orderRef)
+        {
+            HttpResponseMessage response = await PostToBankId("cancel", new
+            {
+                orderRef = orderRef.ToString("D")
+            });
+
+            if (response.IsSuccessStatusCode)
+            {
+                return new EmptyResponse();
             }
 
             return await ParseErrorAsync(response);
@@ -69,20 +111,10 @@ namespace Merit.Web.Services.BankId
             return await ParseErrorAsync(response);
         }
 
-        public async Task<IBankIdResponse> CancelAsync(Guid orderRef)
-        {
-            HttpResponseMessage response = await PostToBankId("cancel", new
-            {
-                orderRef = orderRef.ToString("D")
-            });
-
-            if (response.IsSuccessStatusCode)
-            {
-                return new EmptyResponse();
-            }
-
-            return await ParseErrorAsync(response);
-        }
+        protected virtual bool ValidateServerCertificate(HttpRequestMessage requestMessage,
+                                                         X509Certificate2 cert,
+                                                         X509Chain chain,
+                                                         SslPolicyErrors errors) => errors == SslPolicyErrors.None;
 
         private IBankIdResponse ParseCollectResponse(CollectResponse collectResponse)
         {
@@ -111,11 +143,6 @@ namespace Merit.Web.Services.BankId
 
             return collectResponse with { MessageCode = messageCode };
         }
-
-        protected virtual bool ValidateServerCertificate(HttpRequestMessage requestMessage,
-                                                         X509Certificate2 cert,
-                                                         X509Chain chain,
-                                                         SslPolicyErrors errors) => errors == SslPolicyErrors.None;
 
         private async Task<ErrorResponse> ParseErrorAsync(HttpResponseMessage response)
         {
