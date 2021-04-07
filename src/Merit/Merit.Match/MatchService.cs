@@ -125,14 +125,7 @@ namespace Merit.MatchService
             }
             foreach (var merit in merits)
             {
-                var q = db.CompanyAdvertisements.Where(x => Match(merit,
-                                                                      x.Duration,
-                                                                      x.Extent,
-                                                                      x.FormOfEmployment,
-                                                                      x.Information,
-                                                                      x.Place,
-                                                                      x.Profession,
-                                                                      x.Salary)).ToList();
+                var q = db.CompanyAdvertisements.Where(advert => MatchAdvertProps(advert, merit)).ToList();
                                                                 
                 foreach (var advertisement in q)
                 {
@@ -145,19 +138,22 @@ namespace Merit.MatchService
             return listOfAdvertisement;
         }
 
-        private bool Match(PersonalMerit merit, params string[] values)
-        {
-            for (int i = 0; i < values.Length; i++)
-            {
-                if(values[i].Contains(merit.Category, StringComparison.InvariantCultureIgnoreCase)
-                    || values[i].Contains(merit.SubCategory, StringComparison.InvariantCultureIgnoreCase)
-                    || values[i].Contains(merit.Description, StringComparison.InvariantCultureIgnoreCase))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
+        private bool MatchAdvertProps(CompanyAdvertisement advert, PersonalMerit merit) =>
+            MatchMeritProps(advert.Duration, merit)
+            || MatchMeritProps(advert.Extent, merit)
+            || MatchMeritProps(advert.FormOfEmployment, merit)
+            || MatchMeritProps(advert.Information, merit)
+            || MatchMeritProps(advert.Place, merit)
+            || MatchMeritProps(advert.Profession, merit)
+            || MatchMeritProps(advert.Salary, merit);
+
+
+
+        private bool MatchMeritProps(string value, PersonalMerit merit) =>
+            value.Contains(merit.Category, StringComparison.InvariantCultureIgnoreCase)
+            || value.Contains(merit.SubCategory, StringComparison.InvariantCultureIgnoreCase)
+            || value.Contains(merit.Description, StringComparison.InvariantCultureIgnoreCase);
+             
 
 
     }
