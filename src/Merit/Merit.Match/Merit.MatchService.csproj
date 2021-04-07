@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AccountLibraryService\Merit.AccountService.csproj" />
+    <ProjectReference Include="..\Merit.Data\Merit.Data.csproj" />
+    <ProjectReference Include="..\Merit.MeritService2\Merit.MeritService.csproj" />
+    <ProjectReference Include="..\Merit.WantsService2\Merit.WantsService.csproj" />
+  </ItemGroup>
+
+</Project>

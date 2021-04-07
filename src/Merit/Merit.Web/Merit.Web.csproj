@@ -42,6 +42,7 @@
     <ProjectReference Include="..\Merit.AdvertisementService\Merit.AdvertisementService.csproj" />
     <ProjectReference Include="..\Merit.CompanyService\Merit.CompanyService.csproj" />
     <ProjectReference Include="..\Merit.Data\Merit.Data.csproj" />
+    <ProjectReference Include="..\Merit.Match\Merit.MatchService.csproj" />
     <ProjectReference Include="..\Merit.MeritService2\Merit.MeritService.csproj" />
     <ProjectReference Include="..\Merit.PersonalInfoService\Merit.PersonalInfoService.csproj" />
     <ProjectReference Include="..\Merit.WantsService2\Merit.WantsService.csproj" />

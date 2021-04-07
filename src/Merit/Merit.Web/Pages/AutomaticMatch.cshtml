@@ -1,0 +1,48 @@
+﻿@page
+@using Merit.Data.Models
+@using Merit.CompanyService
+@model Merit.Web.Pages.AutomaticMatchModel
+@{
+    ICompanyService companyService = new CompanyService();
+}
+
+@if (Model.AUser is PersonalUser)
+{
+    <div class="row">
+        <div class="col-md-5 mb-5">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="card-header">
+                        <h4 class="card-title">Företag</h4>
+                    </div>
+                    <p></p>
+                    <p class="card-text">
+                        @foreach (var item in Model.ListOfMatchingCompanyUsers)
+                        {
+                            <a href="/CompanyInfoPage?companyId=@item.CompanyUserId">@companyService.Get(item.CompanyUserId).CompanyName</a>
+                        }
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!-- /.col-md-4 -->
+        <div class="col-md-5 mb-5">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="card-header">
+                        <h4 class="card-title">Annonser</h4>
+                    </div>
+                    <p></p>
+                    <p class="card-text">
+                        @*@foreach (var add in Model.ListOfMatchingCompanyUsers)
+                        {
+                            <div>
+                                <a href="/ShowJobAdvertisement?advertisementid=@add.CompanyAdvertisementId">@add.CompanyAdvertisementId - @add.Profession</a>
+                            </div>
+                        }*@
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+}
