@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Merit.AdvertisementService\Merit.AdvertisementService.csproj" />
     <ProjectReference Include="..\Merit.CompanyService\Merit.CompanyService.csproj" />
     <ProjectReference Include="..\Merit.Data\Merit.Data.csproj" />
     <ProjectReference Include="..\Merit.MeritService2\Merit.MeritService.csproj" />

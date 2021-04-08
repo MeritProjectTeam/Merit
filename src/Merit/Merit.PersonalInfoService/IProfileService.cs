@@ -18,5 +18,6 @@ namespace Merit.PersonalInfoService
         public Task<PersonalImage> GetImage(PersonalUser personalUser);
 
         public List<PersonalInfo> GetAllPersons();
+        public void DeletePersonalInfo(int userId);
     }
 }

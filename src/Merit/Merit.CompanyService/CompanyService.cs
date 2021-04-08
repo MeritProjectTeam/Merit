@@ -50,5 +50,18 @@ namespace Merit.CompanyService
             using var db = new MeritContext();
             return aaa = db.CompanyInfo.ToList();
         }
+
+        public void DeleteCompanyInfo(int userId)
+        {
+            using var db = new MeritContext();
+            var imageInfo = db.CompanyImages.FirstOrDefault(x => x.CompanyUserId == userId);
+            if (imageInfo != null)
+            {
+                db.CompanyImages.Remove(imageInfo);
+            }
+            var companyInfo = db.CompanyInfo.FirstOrDefault(x => x.CompanyUserId == userId);
+            db.CompanyInfo.Remove(companyInfo);
+            db.SaveChanges();
+        }
     }
 }

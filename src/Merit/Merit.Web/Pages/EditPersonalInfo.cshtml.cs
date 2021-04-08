@@ -8,6 +8,7 @@ using Merit.PersonalInfoService;
 using Merit.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Merit.AccountService;
 
 namespace Merit.Web.Pages
 {
@@ -16,6 +17,7 @@ namespace Merit.Web.Pages
         private readonly IProfileService profileService = new ProfileService();
         private readonly UserManager<IdentityUser> userManager;
         private readonly SignInManager<IdentityUser> signInManager;
+        private readonly IAccount accountService = new Account();
 
         public EditPersonalInfoModel(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
@@ -67,6 +69,27 @@ namespace Merit.Web.Pages
             }
             profileService.EditPersonalInfo(APerson);
             return Page();
+        }
+        public async Task<IActionResult> OnPostDeleteAsync()
+        {
+            if (!signInManager.IsSignedIn(User))
+            {
+                return Redirect("/Login");
+            }
+
+            IdentityUser identity = await userManager.GetUserAsync(User);
+            IUser pUser = identity.GetUser();
+           
+            
+            if (pUser is PersonalUser personalUser)
+            {
+                APerson.PersonalUserId = personalUser.PersonalUserId;
+            }
+            accountService.DeletePersonalUser(APerson.PersonalUserId);
+            await signInManager.SignOutAsync();
+            await userManager.DeleteAsync(identity);
+
+            return RedirectToPage("/ConfirmedRemovedAccount");
         }
     }
 }

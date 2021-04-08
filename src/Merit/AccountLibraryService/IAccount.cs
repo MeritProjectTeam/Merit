@@ -12,5 +12,8 @@ namespace Merit.AccountService
         public void EditCompanyUser(CompanyUser company);
         public CompanyUser GetCompanyUser(string identity);
         public CompanyUser GetCompanyUser(int companyUserId);
+        public void DeletePersonalUser(int userId);
+
+        public void DeleteCompanyUser(int userId);
     }
 }

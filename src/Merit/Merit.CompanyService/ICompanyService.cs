@@ -9,7 +9,7 @@ namespace Merit.CompanyService
         public CompanyInfo Get(int id);
         public void SaveCompany(CompanyInfo company);
         public void EditCompanyInfo(CompanyInfo info);
-
         public List<CompanyInfo> GetAllCompany();
+        public void DeleteCompanyInfo(int userId);
     }
 }

@@ -97,5 +97,6 @@ namespace Merit.PersonalInfoService
             using var db = new MeritContext();
             return db.PersonalInfo.ToList();
         }
+      
     }
 }
