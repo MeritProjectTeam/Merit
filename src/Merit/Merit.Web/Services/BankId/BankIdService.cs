@@ -144,6 +144,11 @@ namespace Merit.Web.Services.BankId
             return collectResponse with { MessageCode = messageCode };
         }
 
+        protected virtual bool ValidateServerCertificate(HttpRequestMessage requestMessage,
+                                                         X509Certificate2 cert,
+                                                         X509Chain chain,
+                                                         SslPolicyErrors errors) => errors == SslPolicyErrors.None;
+
         private async Task<ErrorResponse> ParseErrorAsync(HttpResponseMessage response)
         {
             var error = await response.Content.ReadFromJsonAsync<ErrorResponse>();
