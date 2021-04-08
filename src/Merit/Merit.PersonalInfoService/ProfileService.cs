@@ -91,5 +91,11 @@ namespace Merit.PersonalInfoService
             db.PersonalInfo.Remove(personalInfo);
             db.SaveChanges();
         }
+
+        public List<PersonalInfo> GetAllPersons()
+        {
+            using var db = new MeritContext();
+            return db.PersonalInfo.ToList();
+        }
     }
 }
