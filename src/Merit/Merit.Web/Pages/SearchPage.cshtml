@@ -1,0 +1,142 @@
+﻿@page
+@model Merit.Web.Pages.SearchPageModel
+@{
+}
+<div class="row">
+    <div class="col-md-5 mb-5">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="card-header">
+                    <h5 class="card-title">Sök Privatpersoner</h5>
+                </div>
+                <p></p>
+                <div class="card-text">
+                    <h6>Sök person via efternamn</h6>
+                    <div>
+                        <form method="post">
+                            <div class="input-group">
+                                <input type="text" class="form-control" asp-for="@Model.SearchPersonString" placeholder="Hitta person via efternamn" />
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-primary" asp-page-handler="SearchPerson">Sök person</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <br />
+                    <h6>Sök person via merit</h6>
+                    <div>
+                        <form method="post">
+                            <div class="input-group">
+                                <input type="text" class="form-control" asp-for="@Model.SearchPersonMeritString" placeholder="Hitta person via merit" />
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-primary" asp-page-handler="PersonByMerit">Sök Person</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <br />
+                    <h6>Sök person via wants</h6>
+                    <div>
+                        <form method="post">
+                            <div class="input-group">
+                                <input type="text" class="form-control" asp-for="@Model.SearchPersonWantString" placeholder="Hitta person via efternamn" />
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-primary" asp-page-handler="PersonByWant">Sök person</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.col-md-4 -->
+    <div class="col-md-5 mb-5">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="card-header">
+                    <h5 class="card-title">Sök Företag</h5>
+                </div>
+                <p></p>
+                <div class="card-text">
+                    <h6>Sök företag via namn</h6>
+                    <div>
+                        <form method="post">
+                            <div class="input-group">
+                                <input type="text" class="form-control" asp-for="@Model.SearchCompanyString" placeholder="Hitta företag" />
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-primary" asp-page-handler="SearchCompany">Sök företag</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <br />
+                    <h6>Sök företag via merit</h6>
+                    <div>
+                        <form method="post">
+                            <div class="input-group">
+                                <input type="text" class="form-control" asp-for="@Model.SearchCompanyMeritString" placeholder="Hitta person via merit" />
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-primary" asp-page-handler="CompanyByMerit">Sök företag</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <br />
+                    <h6>Sök företag via wants</h6>
+                    <div>
+                        <form method="post">
+                            <div class="input-group">
+                                <input type="text" class="form-control" asp-for="@Model.SearchCompanyWantString" placeholder="Hitta företag" />
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-primary" asp-page-handler="CompanyByWant">Sök företag</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-5 mb-5">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="card-header">
+                    <h5 class="card-title">Sökresultat</h5>
+                </div>
+                <p></p>
+                <div class="card-text">
+                    @if (Model.SearchPersonList != null)
+                    {
+                        @foreach (var x in Model.SearchPersonList)
+                        {
+                    <a href="PersonalInfoPage?PersonalId=@x.PersonalUserId">@x.FirstName @x.LastName</a>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.col-md-4 -->
+    <div class="col-md-5 mb-5">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="card-header">
+                    <h5 class="card-title">Sökresultat</h5>
+                </div>
+                <p></p>
+                <div class="card-text">
+                    @if (Model.SearchCompanyList != null)
+                    {
+                        @foreach (var x in Model.SearchCompanyList)
+                        {
+                            <a href="CompanyInfoPage?CompanyId=@x.CompanyUserId">@x.CompanyName</a>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
