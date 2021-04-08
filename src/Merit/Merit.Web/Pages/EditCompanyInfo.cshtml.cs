@@ -7,12 +7,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Merit.Data.Models;
 using Microsoft.AspNetCore.Identity;
+using Merit.AccountService;
 
 namespace Merit.Web.Pages
 {
     public class EditCompanyInfoModel : PageModel
     {
         private readonly ICompanyService companyService = new CompanyService.CompanyService();
+        private readonly IAccount accountService = new Account();
 
         private readonly UserManager<IdentityUser> userManager;
         private readonly SignInManager<IdentityUser> signInManager;
@@ -67,6 +69,26 @@ namespace Merit.Web.Pages
             companyService.EditCompanyInfo(ACompany);
             
             return Page();
+        }
+        public async Task<IActionResult> OnPostDeleteAsync()
+        {
+            if (!signInManager.IsSignedIn(User))
+            {
+                return Redirect("/Login");
+            }
+
+            IdentityUser identity = await userManager.GetUserAsync(User);
+            IUser pUser = identity.GetUser();
+            
+            if (pUser is CompanyUser companyUser)
+            {
+                ACompany.CompanyUserId = companyUser.CompanyUserId;
+            }
+            accountService.DeleteCompanyUser(ACompany.CompanyUserId);
+            await signInManager.SignOutAsync();
+            await userManager.DeleteAsync(identity);
+
+            return RedirectToPage("/ConfirmedRemovedAccount");
         }
     }
 }

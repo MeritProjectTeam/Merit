@@ -5,20 +5,20 @@
 
 <h3>Uppdatera företagsinformation</h3>
 <hr />
-<form method="post">
-    <div class="row">
-        <div class="col-12">
-            @if (Model.Visi)
-            {
-                <div class="alert alert-success">
-                    @Model.Message
-                </div>
-            }
-        </div>
+
+<div class="row">
+    <div>
+        @if (Model.Visi)
+        {
+            <br />
+            <br />
+            <div class="alert alert-success">
+                @Model.Message
+            </div>
+        }
     </div>
-    <div class="row">
-        <div class="col-lg-3">
-            
+    <div class="col-4">
+        <form method="post">
             <input type="hidden" asp-for="ACompany.CompanyInfoId" />
 
             <div class="justify-content-between mb-2">
@@ -50,11 +50,33 @@
                 <label for="city">Stad:</label>
                 <input class="form-control" asp-for="ACompany.City" type="text" />
             </div>
-        </div>
+
+            <p></p>
+
+            <div class="justify-content-between mb-2">
+                <button class="btn btn-primary" type="submit">Spara</button>
+            </div>
+
+
+        </form>
     </div>
-    <p></p>
-    <div class="justify-content-between mb-2">
-        <button class="btn btn-primary" type="submit">Spara</button>
-        <a class="btn btn-primary " asp-page="/companyinfopage">Företagsinfo</a>
+
+    <div class="col-4" style="vertical-align:bottom">
+        <form method="post" asp-page-handler="Delete">
+            <span> Jag vill ta bort mitt konto.</span>
+            <span style="display:none" id="a">
+                <a href="#" onclick="ConfirmX(false)" class="btn btn-primary">Ångra</a>
+                <button class="btn btn-danger" type="submit">Ta bort</button>
+            </span>
+            <span id="b">
+                <a href="#" onclick="ConfirmX(true)" class="btn btn-danger">Ta bort kontot</a>
+            </span>
+
+
+
+        </form>
     </div>
-</form>
+</div>
+
+
+

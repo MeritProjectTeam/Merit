@@ -5,20 +5,23 @@
 
 <h3>Uppdatera profilinformation</h3>
 <hr />
-<form method="post">
-    <div class="row">
-        <div class="col-12">
-            @if (Model.Visi)
-            {
-                <div class="alert alert-success">
-                    @Model.Information
-                </div>
-            }
-        </div>
+<div class="row">
+    <div>
+        @if (Model.Visi)
+        {
+            <br />
+            <br />
+            <div class="alert alert-success">
+                @Model.Information
+            </div>
+        }
     </div>
+    <div class="col-4">
+        <form method="post">
 
-    <div class="row">
-        <div class="col-lg-3">
+
+
+
             <input type="hidden" asp-for="APerson.PersonalInfoId" />
             <div class="justify-content-between mb-2">
                 <label for="firstname">Förnamn</label>
@@ -49,12 +52,33 @@
                 <label for="phone">Telefon</label>
                 <input class="form-control" asp-for="APerson.PhoneNumber" type="text" value="@Model.APerson.PhoneNumber" />
             </div>
-        </div>
-        </div>
-    <p></p>
-    <div class="justify-content-between mb-2">
-        <button class="btn btn-primary" type="submit">Spara</button>
-        <br />
-        <a class="btn btn-primary " asp-page="/companyinfopage">Företagsinfo</a>
+
+            <p></p>
+
+            <div class="justify-content-between mb-2">
+                <button class="btn btn-primary" type="submit">Spara</button>
+            </div>
+
+
+        </form>
     </div>
-</form>
+
+    <div class="col-4" style="vertical-align:bottom">
+        <form method="post" asp-page-handler="Delete">
+            <span> Jag vill ta bort mitt konto.</span>
+            <span style="display:none" id="a">
+                <a href="#" onclick="ConfirmX(false)" class="btn btn-primary">Ångra</a>
+                <button class="btn btn-danger" type="submit">Ta bort</button>
+            </span>
+            <span id="b">
+                <a href="#" onclick="ConfirmX(true)" class="btn btn-danger">Ta bort kontot</a>
+            </span>
+
+
+
+        </form>
+    </div>
+</div>
+
+
+
