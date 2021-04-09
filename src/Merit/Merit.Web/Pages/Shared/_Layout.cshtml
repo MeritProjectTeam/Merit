@@ -2,7 +2,7 @@
 @using Merit.Data.Models
 @inject UserManager<IdentityUser> UserManager
 @inject SignInManager<IdentityUser> SignInManager
-@{ 
+@{
     IdentityUser identity = await UserManager.GetUserAsync(User);
     IUser pUser = identity.GetUser();
 }
@@ -58,8 +58,8 @@
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-page="/LogIn">Logga in</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-page="/Register">Registrera</a></li>
                 }
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-page="/Privacy">Privacy</a></li>
                 <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-page="/Team">Team</a></li>
-
                 @RenderSection("NavItems", required: false)
 
             </ul>
