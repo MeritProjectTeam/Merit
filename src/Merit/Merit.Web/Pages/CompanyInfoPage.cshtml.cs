@@ -38,7 +38,10 @@ namespace Merit.Web.Pages
             this.signInManager = signInManager;
             this.userManager = userManager;
         }
-
+        [BindProperty(SupportsGet = true)]
+        public int SearchType { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public string SearchTerm { get; set; } ="";
         [BindProperty]
         public CompanyUser AUser { get; set; }
         [BindProperty]

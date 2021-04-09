@@ -16,7 +16,7 @@ namespace Merit.Web.Pages
     public class SearchPageModel : PageModel
     {
         private IProfileService profileService = new ProfileService();
-        //private IAccount accountService = new Account();
+        
         private IMeritService meritService = new MeritService.MeritService();
         private IWantsService wantsService = new WantsService.WantsService();
         private ICompanyService companyService = new Merit.CompanyService.CompanyService();
@@ -29,100 +29,106 @@ namespace Merit.Web.Pages
             this.signInManager = signInManager;
             this.userManager = userManager;
         }
-
+        [BindProperty(SupportsGet = true)]
+        public int SearchType { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public string SearchTerm { get; set; } = "";
+        [BindProperty]
+        public string Message { get; set; } = "";
 
         [BindProperty]
-        public string SearchCompanyString { get; set; }
-        [BindProperty(SupportsGet = true)]
         public List<CompanyInfo> SearchCompanyList { get; set; }
-        [BindProperty(SupportsGet = true)]
+        [BindProperty]
         public List<CompanyInfo> companies { get; set; }
 
-        [BindProperty(SupportsGet = true)]
-        public int CompanySelectInt { get; set; }
-        [BindProperty(SupportsGet = true)]
-        public CompanyInfo SelectedComp { get; set; }
-        [BindProperty(SupportsGet = true)]
-        public string SelectedCompUrl { get; set; }
-
-        [BindProperty(SupportsGet = true)]
-        public List<CompanyMerit> CompanyMeritList { get; set; }
-        [BindProperty(SupportsGet = true)]
-        public List<CompanyWants> CompanyWantList { get; set; }
-        //------------------------------------
-        [BindProperty(SupportsGet = true)]
-        public string SearchPersonString { get; set; }
-        [BindProperty(SupportsGet = true)]
+        [BindProperty]
         public List<PersonalInfo> SearchPersonList { get; set; }
-        [BindProperty(SupportsGet = true)]
+        [BindProperty]
         public List<PersonalInfo> persons { get; set; }
 
-        [BindProperty(SupportsGet = true)]
-        public int PersonSelectedInt { get; set; }
-        [BindProperty(SupportsGet = true)]
-        public PersonalInfo SelectedPerson { get; set; }
-        [BindProperty(SupportsGet = true)]
-        public string SelectedPersonUrl { get; set; }
-
-        [BindProperty(SupportsGet = true)]
-        public List<PersonalMerit> PersonalMeritList { get; set; }
-        [BindProperty(SupportsGet = true)]
-        public List<PersonalWants> PersonalWantList { get; set; }
-        //------------------------------------
-        [BindProperty(SupportsGet = true)]
-        public string SearchPersonMeritString { get; set; }
-
-        [BindProperty(SupportsGet = true)]
-        public string SearchCompanyMeritString { get; set; }
-
-        [BindProperty(SupportsGet = true)]
-        public string SearchPersonWantString { get; set; }
-
-        [BindProperty(SupportsGet = true)]
-        public string SearchCompanyWantString { get; set; }
-
-        public async Task<IActionResult> OnGetAsync()
+        public IActionResult OnGet()
         {
             if (!signInManager.IsSignedIn(User))
             {
                 return Redirect("/Login");
             }
 
-            IdentityUser identity = await userManager.GetUserAsync(User);
-            IUser pUser = identity.GetUser();
-            //AUser = accountService.GetPersonalUser(pUser.Identity);
+            //IdentityUser identity = await userManager.GetUserAsync(User);
+            //IUser pUser = identity.GetUser();
+            
+            if(SearchTerm != "")
+            {
+                switch (SearchType)
+                {
+                    case 1:
+                        OnPostSearchPerson();
+                        break;
+                    case 2:
+                        OnPostPersonByMerit();
+                        break;
+                    case 3:
+                        OnPostPersonByWant();
+                        break;
+                    case 4:
+                        OnPostSearchCompany();
+                        break;
+                    case 5:
+                        OnPostCompanyByMerit();
+                        break;
+                    case 6:
+                        OnPostCompanyByWant();
+                        break;
+                    default:
+                        break;
+                }
+            }
+
             return Page();
         }
 
 
 
-        public async Task OnPostSearchCompanyAsync()
+        public void OnPostSearchCompany()
         {
-            if (!string.IsNullOrEmpty(SearchCompanyString))
+            if (!signInManager.IsSignedIn(User))
+            {
+                Redirect("/Login");
+            }
+            if (!string.IsNullOrEmpty(SearchTerm))
             {
                 companies = companyService.GetAllCompany();
-                SearchCompanyList = companies.Where(a => a.CompanyName.ToLower().Contains(SearchCompanyString.ToLower())).ToList();
+                SearchCompanyList = companies.Where(a => a.CompanyName.ToLower().Contains(SearchTerm.ToLower())).ToList();
             }
-            await OnGetAsync();
+            
+            
         }
 
-        public async Task OnPostSearchPersonAsync()
+        public void OnPostSearchPerson()
         {
-            if (!string.IsNullOrEmpty(SearchPersonString))
+            if (!signInManager.IsSignedIn(User))
+            {
+                Redirect("/Login");
+            }
+            if (!string.IsNullOrEmpty(SearchTerm))
             {
                 persons = profileService.GetAllPersons();
-                SearchPersonList = persons.Where(a => a.LastName.ToLower().Contains(SearchPersonString.ToLower())).ToList();
+                SearchPersonList = persons.Where(a => a.LastName.ToLower().Contains(SearchTerm.ToLower())).ToList();
             }
-            await OnGetAsync();
+           
         }
 
-        public async Task OnPostPersonByMeritAsync()
+        public void OnPostPersonByMerit()
         {
-            if (!string.IsNullOrEmpty(SearchPersonMeritString))
+            if (!signInManager.IsSignedIn(User))
+            {
+                Redirect("/Login");
+            }
+            if (!string.IsNullOrEmpty(SearchTerm))
             {
                 List<PersonalMerit> pml = meritService.GetAllPersonalMerits();
-                List<PersonalMerit> spml = pml.Where(x => x.Category.ToLower() == SearchPersonMeritString.ToLower()).ToList();
+                List<PersonalMerit> spml = pml.Where(x => x.Category.ToLower() == SearchTerm.ToLower()).ToList();
                 persons = profileService.GetAllPersons();
+                SearchPersonList = new();
                 foreach (var y in spml)
                 {
                     PersonalInfo aaa = new PersonalInfo();
@@ -130,16 +136,21 @@ namespace Merit.Web.Pages
                     SearchPersonList.Add(aaa);
                 }
             }
-            await OnGetAsync();
+            
         }
 
-        public async Task OnPostCompanyByMeritAsync()
+        public void OnPostCompanyByMerit()
         {
-            if (!string.IsNullOrEmpty(SearchCompanyMeritString))
+            if (!signInManager.IsSignedIn(User))
+            {
+                Redirect("/Login");
+            }
+            if (!string.IsNullOrEmpty(SearchTerm))
             {
                 List<CompanyMerit> cml = meritService.GetAllCompanyMerits();
-                List<CompanyMerit> scml = cml.Where(x => x.Category.ToLower().Contains(SearchCompanyMeritString.ToLower())).ToList();
+                List<CompanyMerit> scml = cml.Where(x => x.Category.ToLower().Contains(SearchTerm.ToLower())).ToList();
                 companies = companyService.GetAllCompany();
+                SearchCompanyList = new();
                 foreach (var y in scml)
                 {
                     CompanyInfo aaa = new CompanyInfo();
@@ -147,16 +158,22 @@ namespace Merit.Web.Pages
                     SearchCompanyList.Add(aaa);
                 }
             }
-            await OnGetAsync();
+            
+
         }
 
-        public async Task OnPostPersonByWantAsync()
+        public void OnPostPersonByWant()
         {
-            if (!string.IsNullOrEmpty(SearchPersonWantString))
+            if (!signInManager.IsSignedIn(User))
+            {
+                Redirect("/Login");
+            }
+            if (!string.IsNullOrEmpty(SearchTerm))
             {
                 List<PersonalWants> pwl = wantsService.AllPersonalWantsToList();
-                List<PersonalWants> spwl = pwl.Where(x => x.Want.ToLower() == SearchPersonWantString.ToLower()).ToList();
+                List<PersonalWants> spwl = pwl.Where(x => x.Want.ToLower() == SearchTerm.ToLower()).ToList();
                 persons = profileService.GetAllPersons();
+                SearchPersonList = new();
                 foreach (var y in spwl)
                 {
                     PersonalInfo aaa = new PersonalInfo();
@@ -164,16 +181,21 @@ namespace Merit.Web.Pages
                     SearchPersonList.Add(aaa);
                 }
             }
-            await OnGetAsync();
+            
         }
 
-        public async Task OnPostCompanyByWantAsync()
+        public void OnPostCompanyByWant()
         {
-            if (!string.IsNullOrEmpty(SearchCompanyWantString))
+            if (!signInManager.IsSignedIn(User))
+            {
+                Redirect("/Login");
+            }
+            if (!string.IsNullOrEmpty(SearchTerm))
             {
                 List<CompanyWants> cwl = wantsService.AllCompanyWantsToList();
-                List<CompanyWants> scwl = cwl.Where(x => x.Want.ToLower() == SearchCompanyWantString.ToLower()).ToList();
+                List<CompanyWants> scwl = cwl.Where(x => x.Want.ToLower() == SearchTerm.ToLower()).ToList();
                 companies = companyService.GetAllCompany();
+                SearchCompanyList = new();
                 foreach (var y in scwl)
                 {
                     CompanyInfo aaa = new CompanyInfo();
@@ -181,7 +203,8 @@ namespace Merit.Web.Pages
                     SearchCompanyList.Add(aaa);
                 }
             }
-            await OnGetAsync();
+            
+
         }
 
     }

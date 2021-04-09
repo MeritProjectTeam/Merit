@@ -10,176 +10,179 @@
 
 
     <!-- Page Content -->
-    <div class="container justify-content-center">
+<div class="container justify-content-center">
+    @if (Model.SearchTerm != "")
+    {
+        <a href="/SearchPage?searchterm=@Model.SearchTerm&&searchtype=@Model.SearchType">Tillbaka till söksidan</a>
+    }
+    <!-- Heading Row -->
+    <div class="row align-items-center my-5">
 
-        <!-- Heading Row -->
-        <div class="row align-items-center my-5">
-            
-                <div style="width:300px">
-                <img height="300" width="300" src="@Model.ImageUrl" alt="">
-            </div>
-            <!-- /.col-lg-8 -->
-            <div class="col-lg-5 ml-5">
-                <hr />
+        <div style="width:300px">
+            <img height="300" width="300" src="@Model.ImageUrl" alt="">
+        </div>
+        <!-- /.col-lg-8 -->
+        <div class="col-lg-5 ml-5">
+            <hr />
+            @if (Model.Owner)
+            {
+                <h3>Välkommen, @Model.CompanyInfo.CompanyName!</h3>
+                <p>Här kan du uppdatera din profilinformation, lägga till meriter samt lägga till Wants.</p>
+
+                <div>
+                    <form method="post"
+                          enctype="multipart/form-data">
+                        <span id="b">
+                            <input onchange="ConfirmX(true)" type="file" id="file1" name="file1" />
+                        </span>
+                        <span style="display:none" id="a">
+                            <button type="submit" class="btn btn-success">Ladda upp bild</button>
+                        </span>
+                    </form>
+                </div>
+            }
+            else
+            {
+                <h3>@Model.CompanyInfo.CompanyName</h3>
+            }
+
+            <p></p>
+            <hr />
+        </div>
+        <!-- /.col-md-4 -->
+    </div>
+    <!-- /.row -->
+    <!-- Call to Action Well -->
+    <!-- Content Row -->
+    <div class="row">
+        <div class="col-md-5 mb-5">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="card-header">
+                        <h4 class="card-title">Profil</h4>
+                    </div>
+                    <p></p>
+                    <div>Företagsnamn: @Model.CompanyInfo.CompanyName</div>
+                    <div>Organisationsnummer: @Model.CompanyInfo.OrgNumber</div>
+                    <hr />
+                    <div>Email: @Model.Email</div>
+                    <div>Tele: @Model.CompanyInfo.Phone</div>
+                    <hr />
+                    <div>Gata: @Model.CompanyInfo.Street</div>
+                    <div>Postnr: @Model.CompanyInfo.ZipCode</div>
+                    <div>Ort: @Model.CompanyInfo.City</div>
+                </div>
                 @if (Model.Owner)
                 {
-                    <h3>Välkommen, @Model.CompanyInfo.CompanyName!</h3>
-                    <p>Här kan du uppdatera din profilinformation, lägga till meriter samt lägga till Wants.</p>
-
-                    <div>
-                        <form method="post"
-                              enctype="multipart/form-data">
-                            <span id="b">
-                                <input onchange="ConfirmX(true)" type="file" id="file1" name="file1" />
-                            </span>
-                            <span style="display:none" id="a">
-                                <button type="submit" class="btn btn-success">Ladda upp bild</button>
-                            </span>
-                        </form>
+                    <div class="card-footer">
+                        <a href="/EditCompanyInfo" class="btn btn-primary btn-sm">Uppdatera profil</a>
+                        <a href="/EditCompanyUser" class="btn btn-primary btn-sm">Ändra Lösenord</a>
                     </div>
                 }
-                else
-                {
-                    <h3>@Model.CompanyInfo.CompanyName</h3>
-                }
-
-                <p></p>
-                <hr />
             </div>
-            <!-- /.col-md-4 -->
         </div>
-        <!-- /.row -->
-        <!-- Call to Action Well -->
-        <!-- Content Row -->
-        <div class="row">
-            <div class="col-md-5 mb-5">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <div class="card-header">
-                            <h4 class="card-title">Profil</h4>
-                        </div>
-                        <p></p>
-                        <div>Företagsnamn: @Model.CompanyInfo.CompanyName</div>
-                        <div>Organisationsnummer: @Model.CompanyInfo.OrgNumber</div>
-                        <hr />
-                        <div>Email: @Model.Email</div>
-                        <div>Tele: @Model.CompanyInfo.Phone</div>
-                        <hr />
-                        <div>Gata: @Model.CompanyInfo.Street</div>
-                        <div>Postnr: @Model.CompanyInfo.ZipCode</div>
-                        <div>Ort: @Model.CompanyInfo.City</div>
+        <!-- /.col-md-4 -->
+        <div class="col-md-5 mb-5">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="card-header">
+                        <h4 class="card-title">Annonser</h4>
                     </div>
-                    @if (Model.Owner)
-                    {
-                        <div class="card-footer">
-                            <a href="/EditCompanyInfo" class="btn btn-primary btn-sm">Uppdatera profil</a>
-                            <a href="/EditCompanyUser" class="btn btn-primary btn-sm">Ändra Lösenord</a>
-                        </div>
-                    }
+                    <p></p>
+                    <p class="card-text">
+                        @foreach (var add in Model.CompanyAdvertisements)
+                        {
+                            <div>
+                                <a href="/ShowJobAdvertisement?advertisementid=@add.CompanyAdvertisementId">@add.CompanyAdvertisementId - @add.Profession</a>
+                            </div>
+                        }
+                    </p>
                 </div>
-            </div>
-            <!-- /.col-md-4 -->
-            <div class="col-md-5 mb-5">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <div class="card-header">
-                            <h4 class="card-title">Annonser</h4>
-                        </div>
-                        <p></p>
-                        <p class="card-text">
-                            @foreach (var add in Model.CompanyAdvertisements)
-                            {
-                                <div>
-                                    <a href="/ShowJobAdvertisement?advertisementid=@add.CompanyAdvertisementId">@add.CompanyAdvertisementId - @add.Profession</a>
-                                </div>
-                            }
-                        </p>
+                @if (Model.Owner)
+                {
+                    <div class="card-footer">
+                        <a href="/AddJobAdvertisement" class="btn btn-primary btn-sm">Lägg till ny annons</a>
+                        <a href="/EditCompanyAdvertisement" class="btn btn-primary btn-sm">Redigera annonser</a>
                     </div>
-                    @if (Model.Owner)
-                    {
-                        <div class="card-footer">
-                            <a href="/AddJobAdvertisement" class="btn btn-primary btn-sm">Lägg till ny annons</a>
-                            <a href="/EditCompanyAdvertisement" class="btn btn-primary btn-sm">Redigera annonser</a>
-                        </div>
-                    }
-                    </div>
+                }
             </div>
         </div>
-        <!-- /.row -->
-        <!-- Call to Action Well -->
-        <!-- Content Row -->
-        <div class="row ">
-            <!-- /.col-md-4 -->
-            <div class="col-md-5 mb-5">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <div class="card-header">
-                            <h4 class="card-title">Meriter</h4>
-                        </div>
-                        <p></p>
-                        <p class="card-text">
-                            @foreach (var merit in Model.CompanyMerits)
-                            {
-                                <div>
-                                    Kategori: @merit.Category
-                                </div>
-                                <div>
-                                    Underkategori: @merit.SubCategory
-                                </div>
-                                <div>
-                                    Beskrivning: @merit.Description
-                                </div>
-                                <hr />
-                            }
-                        </p>
-                    </div>
-                    @if (Model.Owner)
-                    {
-                        <div class="card-footer">
-                            <a href="/AddMeritBusiness" class="btn btn-primary btn-sm">Lägg till ny merit</a>
-                            <a href="/EditCompanyMerits" class="btn btn-primary btn-sm">Redigera meriter</a>
-                        </div>
-                    }
-                    </div>
-            </div>
-            <!-- /.col-md-4 -->
-            <div class="col-md-5 mb-5">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <div class="card-header">
-                            <h4 class="card-title">Wants</h4>
-                        </div>
-                        <p></p>
-                        <p class="card-text">
-                            <ul>
-                                @foreach (var x in Model.CompanyWants)
-                                {
-                                    <li>
-                                        @x.Want
-                                    </li>
-
-                                }
-                            </ul>
-
-                        </p>
-                    </div>
-                    @if (Model.Owner)
-                    {
-
-                        <div class="card-footer">
-
-                            <a href="/AddWantCompany" class="btn btn-primary btn-sm">Lägg till Want</a>
-                            <a href="/EditCompanyWants" class="btn btn-primary btn-sm">Redigera Wants</a>
-
-                        </div>
-                    }
-                    </div>
-            </div>
-            <!-- /.col-md-4 -->
-
-        </div><!-- /.container -->
-        <!-- Footer -->
-        <!-- Bootstrap core JavaScript -->
-        <script src="vendor/jquery/jquery.min.js"></script>
-        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     </div>
+    <!-- /.row -->
+    <!-- Call to Action Well -->
+    <!-- Content Row -->
+    <div class="row ">
+        <!-- /.col-md-4 -->
+        <div class="col-md-5 mb-5">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="card-header">
+                        <h4 class="card-title">Meriter</h4>
+                    </div>
+                    <p></p>
+                    <p class="card-text">
+                        @foreach (var merit in Model.CompanyMerits)
+                        {
+                            <div>
+                                Kategori: @merit.Category
+                            </div>
+                            <div>
+                                Underkategori: @merit.SubCategory
+                            </div>
+                            <div>
+                                Beskrivning: @merit.Description
+                            </div>
+                            <hr />
+                        }
+                    </p>
+                </div>
+                @if (Model.Owner)
+                {
+                    <div class="card-footer">
+                        <a href="/AddMeritBusiness" class="btn btn-primary btn-sm">Lägg till ny merit</a>
+                        <a href="/EditCompanyMerits" class="btn btn-primary btn-sm">Redigera meriter</a>
+                    </div>
+                }
+            </div>
+        </div>
+        <!-- /.col-md-4 -->
+        <div class="col-md-5 mb-5">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="card-header">
+                        <h4 class="card-title">Wants</h4>
+                    </div>
+                    <p></p>
+                    <p class="card-text">
+                        <ul>
+                            @foreach (var x in Model.CompanyWants)
+                            {
+                                <li>
+                                    @x.Want
+                                </li>
+
+                            }
+                        </ul>
+
+                    </p>
+                </div>
+                @if (Model.Owner)
+                {
+
+                    <div class="card-footer">
+
+                        <a href="/AddWantCompany" class="btn btn-primary btn-sm">Lägg till Want</a>
+                        <a href="/EditCompanyWants" class="btn btn-primary btn-sm">Redigera Wants</a>
+
+                    </div>
+                }
+            </div>
+        </div>
+        <!-- /.col-md-4 -->
+
+    </div><!-- /.container -->
+    <!-- Footer -->
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</div>
