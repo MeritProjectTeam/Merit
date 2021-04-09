@@ -15,7 +15,8 @@
                     <div>
                         <form method="post">
                             <div class="input-group">
-                                <input type="text" class="form-control" asp-for="@Model.SearchPersonString" placeholder="Hitta person via efternamn" />
+                                <input type="hidden" name="SearchType" value="1" />
+                                <input type="text" class="form-control" name="SearchTerm" placeholder="Hitta person via efternamn" />
                                 <div class="input-group-append">
                                     <button type="submit" class="btn btn-primary" asp-page-handler="SearchPerson">Sök person</button>
                                 </div>
@@ -27,7 +28,8 @@
                     <div>
                         <form method="post">
                             <div class="input-group">
-                                <input type="text" class="form-control" asp-for="@Model.SearchPersonMeritString" placeholder="Hitta person via merit" />
+                                <input type="hidden" name="SearchType" value="2" />
+                                <input type="text" class="form-control" name="SearchTerm" placeholder="Hitta person via merit" />
                                 <div class="input-group-append">
                                     <button type="submit" class="btn btn-primary" asp-page-handler="PersonByMerit">Sök Person</button>
                                 </div>
@@ -39,7 +41,8 @@
                     <div>
                         <form method="post">
                             <div class="input-group">
-                                <input type="text" class="form-control" asp-for="@Model.SearchPersonWantString" placeholder="Hitta person via efternamn" />
+                                <input type="hidden" name="SearchType" value="3" />
+                                <input type="text" class="form-control" name="SearchTerm" placeholder="Hitta person via efternamn" />
                                 <div class="input-group-append">
                                     <button type="submit" class="btn btn-primary" asp-page-handler="PersonByWant">Sök person</button>
                                 </div>
@@ -63,7 +66,8 @@
                     <div>
                         <form method="post">
                             <div class="input-group">
-                                <input type="text" class="form-control" asp-for="@Model.SearchCompanyString" placeholder="Hitta företag" />
+                                <input type="hidden" name="SearchType" value="4" />
+                                <input type="text" class="form-control" name="SearchTerm" placeholder="Hitta företag" />
                                 <div class="input-group-append">
                                     <button type="submit" class="btn btn-primary" asp-page-handler="SearchCompany">Sök företag</button>
                                 </div>
@@ -75,7 +79,8 @@
                     <div>
                         <form method="post">
                             <div class="input-group">
-                                <input type="text" class="form-control" asp-for="@Model.SearchCompanyMeritString" placeholder="Hitta person via merit" />
+                                <input type="hidden" name="SearchType" value="5" />
+                                <input type="text" class="form-control" name="SearchTerm" placeholder="Hitta person via merit" />
                                 <div class="input-group-append">
                                     <button type="submit" class="btn btn-primary" asp-page-handler="CompanyByMerit">Sök företag</button>
                                 </div>
@@ -87,7 +92,8 @@
                     <div>
                         <form method="post">
                             <div class="input-group">
-                                <input type="text" class="form-control" asp-for="@Model.SearchCompanyWantString" placeholder="Hitta företag" />
+                                <input type="hidden" name="SearchType" value="6" />
+                                <input type="text" class="form-control" name="SearchTerm" placeholder="Hitta företag" />
                                 <div class="input-group-append">
                                     <button type="submit" class="btn btn-primary" asp-page-handler="CompanyByWant">Sök företag</button>
                                 </div>
@@ -110,11 +116,17 @@
                 <div class="card-text">
                     @if (Model.SearchPersonList != null)
                     {
+                        @if (Model.SearchPersonList.Count == 0 && (Model.SearchType == 1 || Model.SearchType == 2 || Model.SearchType == 3))
+                        {
+                            <div>Sökningen gav inget matchande resultat.</div>
+                        }
                         @foreach (var x in Model.SearchPersonList)
                         {
-                    <a href="PersonalInfoPage?PersonalId=@x.PersonalUserId">@x.FirstName @x.LastName</a>
+                            <a href="PersonalInfoPage?PersonalId=@x.PersonalUserId&&searchterm=@Model.SearchTerm&&searchType=@Model.SearchType">@x.FirstName @x.LastName</a>
                         }
                     }
+           
+
                 </div>
             </div>
         </div>
@@ -130,9 +142,13 @@
                 <div class="card-text">
                     @if (Model.SearchCompanyList != null)
                     {
+                        @if (Model.SearchCompanyList.Count == 0 && (Model.SearchType == 4 || Model.SearchType == 5 || Model.SearchType == 6))
+                        {
+                            <div>Sökningen gav inget matchande resultat.</div>
+                        }
                         @foreach (var x in Model.SearchCompanyList)
                         {
-                            <a href="CompanyInfoPage?CompanyId=@x.CompanyUserId">@x.CompanyName</a>
+                            <a href="CompanyInfoPage?CompanyId=@x.CompanyUserId&&searchterm=@Model.SearchTerm&&searchtype=@Model.SearchType">@x.CompanyName</a>
                         }
                     }
                 </div>

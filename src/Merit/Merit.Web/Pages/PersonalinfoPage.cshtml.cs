@@ -32,7 +32,11 @@ namespace Merit.Web.Pages
         }
 
         public bool Owner { get; set; } = true;
-        
+        [BindProperty(SupportsGet = true)]
+        public int SearchType { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public string SearchTerm { get; set; } = "";
+
         [BindProperty(SupportsGet = true)]
         public int PersonalId { get; set; }
 

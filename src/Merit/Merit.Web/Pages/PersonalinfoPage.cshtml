@@ -10,6 +10,10 @@
 
 <!-- Page Content -->
 <div class="container">
+    @if (Model.SearchTerm != "")
+    {
+                <a href="/SearchPage?searchterm=@Model.SearchTerm&&searchtype=@Model.SearchType">Tillbaka till söksidan</a>
+    }
 
     <!-- Heading Row -->
     <div class="row align-items-center my-5">
