@@ -1,3 +1,4 @@
+using Merit.Web.Services.BankId;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -31,7 +32,7 @@ namespace Merit.Web
                 option.MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.Strict;
             });
 
-            
+            services.AddSingleton<BankIdTestService>();
 
         }
 

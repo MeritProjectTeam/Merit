@@ -10,19 +10,19 @@ using System.Threading.Tasks;
 
 namespace Merit.Web.Services.BankId
 {
-    public class BankIdAuthenticationHandler : AuthenticationHandler<BankIdAuthenticationOptions>
-    {
-        public BankIdAuthenticationHandler(IOptionsMonitor<BankIdAuthenticationOptions> options,
-                                           ILoggerFactory logger,
-                                           UrlEncoder encoder,
-                                           ISystemClock clock,
-                                           BankIdService bankIdService) : base(options, logger, encoder, clock)
-        {
-        }
+    //public class BankIdAuthenticationHandler : AuthenticationHandler<BankIdAuthenticationOptions>
+    //{
+    //    public BankIdAuthenticationHandler(IOptionsMonitor<BankIdAuthenticationOptions> options,
+    //                                       ILoggerFactory logger,
+    //                                       UrlEncoder encoder,
+    //                                       ISystemClock clock,
+    //                                       BankIdService bankIdService) : base(options, logger, encoder, clock)
+    //    {
+    //    }
 
-        protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
-        {
-            throw new NotImplementedException();
-        }
-    }
+    //    //protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
+    //    //{
+    //    //    throw new NotImplementedException();
+    //    //}
+    //}
 }
