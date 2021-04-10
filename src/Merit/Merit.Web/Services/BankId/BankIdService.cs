@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -59,11 +60,22 @@ namespace Merit.Web.Services.BankId
 
         public async Task<IBankIdResponse> AuthorizeAsync(string personalNr, string userIp)
         {
-            HttpResponseMessage response = await PostToBankId("auth", new
+            HttpResponseMessage response;
+            if (!string.IsNullOrEmpty(personalNr)) 
+            { 
+                response = await PostToBankId("auth", new
+                {
+                    personalNumber = personalNr,
+                    endUserIp = userIp
+                });
+            }
+            else
             {
-                personalNumber = personalNr,
-                endUserIp = userIp
-            });
+                response = await PostToBankId("auth", new
+                {
+                    endUserIp = userIp
+                });
+            }
 
             if (response.IsSuccessStatusCode)
             {
