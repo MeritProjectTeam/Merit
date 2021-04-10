@@ -2,8 +2,10 @@
 @model Merit.Web.Pages.BankIdModel
 @{
 }
-
-<h1>Bank ID</h1>
-
-<h3>Response:</h3>
-<p>@ViewData["AuthResponse"]</p>
+<h1><img src="~/images/bankid-logo.svg" width="100" height="100"/>BankId</h1>
+<hr />
+<div role="img" aria-label="QR Kod för BankID.">
+    @Model.Data.QrCode
+</div>
+<br />
+<p>@Model.Data.StatusMessage</p>
