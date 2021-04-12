@@ -79,7 +79,6 @@ namespace Merit.Web.Pages
                     Visi = true;
                     EditMessage = "Användarprofil uppdaterad!";
                     TypeMessage = "success";
-
                 }
                 else
                 {

@@ -19,7 +19,7 @@
                 <label for="password">Nuvarande lösenord:</label>
             </div>
             <div>
-                <input class="form-control" type="password" id="CurrentPassword" name="CurrentPassword" placeholder="Nuvarande lösenord" />
+                <input class="form-control" type="password" id="CurrentPassword" name="CurrentPassword" placeholder="Nuvarande lösenord" required/>
             </div>
             <br />
             <div class="justify-content-between mb-2">
@@ -27,7 +27,7 @@
                     <label for="password">Nytt lösenord:</label>
                 </div>
                 <div>
-                    <input class="form-control" type="password" id="PasswordCheck1" name="PasswordCheck1" placeholder="Nytt lösenord" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" />
+                    <input class="form-control" required type="password" id="PasswordCheck1" name="PasswordCheck1" placeholder="Nytt lösenord" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" />
                     <small id="emailHelp" class="form-text text-muted">Lösenordet måste innehålla en siffra, stor bokstav, liten bokstav och vara minst 8 tecken långt.</small>
                 </div>
             </div>
@@ -36,7 +36,7 @@
                     <label for="passwordcheck">Upprepa lösenord:</label>
                 </div>
                 <div>
-                    <input class="form-control" type="password" id="PasswordCheck2" name="PasswordCheck2" placeholder="Upprepa lösenord" minlength="8" />
+                    <input class="form-control" required type="password" id="PasswordCheck2" name="PasswordCheck2" placeholder="Upprepa lösenord" minlength="8" />
                 </div>
             </div>
         </div>
