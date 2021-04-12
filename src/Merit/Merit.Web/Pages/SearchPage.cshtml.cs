@@ -174,11 +174,14 @@ namespace Merit.Web.Pages
                 List<PersonalWants> spwl = pwl.Where(x => x.Want.ToLower() == SearchTerm.ToLower()).ToList();
                 persons = profileService.GetAllPersons();
                 SearchPersonList = new();
-                foreach (var y in spwl)
+                foreach (var person in spwl)
                 {
-                    PersonalInfo aaa = new PersonalInfo();
-                    aaa = persons.FirstOrDefault(x => x.PersonalUserId == y.PersonalUserId);
-                    SearchPersonList.Add(aaa);
+                    PersonalInfo personToAdd = new PersonalInfo();
+                    personToAdd = persons.FirstOrDefault(x => x.PersonalUserId == person.PersonalUserId);
+                    if (!SearchPersonList.Contains(personToAdd))
+                    {
+                        SearchPersonList.Add(personToAdd);
+                    }
                 }
             }
             
@@ -196,16 +199,16 @@ namespace Merit.Web.Pages
                 List<CompanyWants> scwl = cwl.Where(x => x.Want.ToLower() == SearchTerm.ToLower()).ToList();
                 companies = companyService.GetAllCompany();
                 SearchCompanyList = new();
-                foreach (var y in scwl)
+                foreach (var company in scwl)
                 {
-                    CompanyInfo aaa = new CompanyInfo();
-                    aaa = companies.FirstOrDefault(x => x.CompanyUserId == y.CompanyUserId);
-                    SearchCompanyList.Add(aaa);
+                    CompanyInfo companyToAdd = new CompanyInfo();
+                    companyToAdd = companies.FirstOrDefault(x => x.CompanyUserId == company.CompanyUserId);
+                    if (!SearchCompanyList.Contains(companyToAdd))
+                    {
+                        SearchCompanyList.Add(companyToAdd);
+                    }
                 }
             }
-            
-
         }
-
     }
 }
