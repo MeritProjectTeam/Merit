@@ -21,30 +21,53 @@
             }
         </div>
     </div>
-    <div class="row">
-        <div class="col-lg-5">
-            <div class="justify-content-between mb-2">
-                <label>Kategori:</label>
-                <input class="form-control" type="text" asp-for="AMerit.Category" placeholder="Kategori" />
-            </div>
-            <div class="justify-content-between mb-2">
-                <label>Underkategori:</label>
-                <input class="form-control" type="text" asp-for="AMerit.SubCategory" placeholder="Underkategori" />
-            </div>
-            <div class="justify-content-between mb-2">
-                <label>Beskrivning:</label>
-                <textarea style="resize: none" class="form-control" type="text" asp-for="AMerit.Description" placeholder="Beskrivning" id="exampleFormControlTextarea1" rows="3"></textarea>
-            </div>
-            <div class="justify-content-between mb-2">
-                <label>Varaktighet:</label>
-                <input class="form-control" type="text" asp-for="AMerit.Duration" placeholder="Period" />
-            </div>
-            <div class="justify-content-between mb-2">
-                <button type="submit" class="btn btn-primary">Lägg till merit</button>
+        <div class="row">
+            <div class="col-lg-5">
+                @if (!Model.TESTING)
+                {
+                    <div class="justify-content-between mb-2">
+                        <label>Kategori:</label>
+                        <input class="form-control" type="text" asp-for="AMerit.Category" placeholder="Kategori" />
+                    </div>
+                    <div class="justify-content-between mb-2">
+                        <label>Underkategori:</label>
+                        <input class="form-control" type="text" asp-for="AMerit.SubCategory" placeholder="Underkategori" />
+                    </div>
+                    <div class="justify-content-between mb-2">
+                        <label>Beskrivning:</label>
+                        <textarea style="resize: none" class="form-control" type="text" asp-for="AMerit.Description" placeholder="Beskrivning" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    </div>
+                    <div class="justify-content-between mb-2">
+                        <label>Varaktighet:</label>
+                        <input class="form-control" type="text" asp-for="AMerit.Duration" placeholder="Period" />
+                    </div>
+                }
+                @if (Model.TESTING)
+                {
+                    <div class="justify-content-between mb-2">
+                        <label>Kategori:</label>
+                        <input class="form-control" type="text" name="AMerit.Category" placeholder="Kategori" />
+                    </div>
+                    <div class="justify-content-between mb-2">
+                        <label>Underkategori:</label>
+                        <input class="form-control" type="text" name="AMerit.SubCategory" placeholder="Underkategori" />
+                    </div>
+                    <div class="justify-content-between mb-2">
+                        <label>Beskrivning:</label>
+                        <textarea style="resize: none" class="form-control" type="text" name="AMerit.Description" placeholder="Beskrivning" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    </div>
+                    <div class="justify-content-between mb-2">
+                        <label>Varaktighet:</label>
+                        <input class="form-control" type="text" name="AMerit.Duration" placeholder="Period" />
+                    </div>
+                }
+                <div class="justify-content-between mb-2">
+                    <button type="submit" class="btn btn-primary">Lägg till merit</button>
+                    <a class="btn btn-primary" asp-page="/PersonalInfoPage">Profilinfo</a>
+
+                </div>
             </div>
         </div>
-    </div>
-
 </form>
 
 

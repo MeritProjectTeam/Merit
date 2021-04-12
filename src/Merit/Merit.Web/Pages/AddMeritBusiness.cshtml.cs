@@ -30,6 +30,8 @@ namespace Merit.Web.Pages
         [BindProperty]
         public string Information { get; set; }
         public string alertlook { get; set; }
+        public bool TESTING { get; set; }
+
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -69,9 +71,10 @@ namespace Merit.Web.Pages
                 {
                     ACompanyMerit.CompanyUserId = companyUser.CompanyUserId;
                 }
-                    CompanyMeritService.SaveMeritBusiness(ACompanyMerit);
-                    alertlook = "success";
-                    Information = "Merit sparad!";
+                CompanyMeritService.SaveMeritBusiness(ACompanyMerit);
+                alertlook = "success";
+                Information = "Merit sparad!";
+                TESTING = true;
             }
             else
             {

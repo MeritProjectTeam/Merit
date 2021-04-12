@@ -19,18 +19,36 @@
     </div>
     <div class="row">
         <div class="col-lg-5">
-            <div class="justify-content-between mb-2">
-                <label>Kategori:</label>
-                <input class="form-control" type="text" asp-for="ACompanyMerit.Category" placeholder="Kategori" />
-            </div>
-            <div class="justify-content-between mb-2">
-                <label>Underkategori:</label>
-                <input class="form-control" type="text" asp-for="ACompanyMerit.SubCategory" placeholder="Underkategori" />
-            </div>
-            <div class="justify-content-between mb-2">
-                <label>Beskrivning:</label>
-                <textarea style="resize: none" class="form-control" type="text" asp-for="ACompanyMerit.Description" placeholder="Beskrivning" id="exampleFormControlTextarea1" rows="3"></textarea>
-            </div>
+            @if (!Model.TESTING)
+            {
+                <div class="justify-content-between mb-2">
+                    <label>Kategori:</label>
+                    <input class="form-control" type="text" asp-for="ACompanyMerit.Category" placeholder="Kategori" />
+                </div>
+                <div class="justify-content-between mb-2">
+                    <label>Underkategori:</label>
+                    <input class="form-control" type="text" asp-for="ACompanyMerit.SubCategory" placeholder="Underkategori" />
+                </div>
+                <div class="justify-content-between mb-2">
+                    <label>Beskrivning:</label>
+                    <textarea style="resize: none" class="form-control" type="text" asp-for="ACompanyMerit.Description" placeholder="Beskrivning" id="exampleFormControlTextarea1" rows="3"></textarea>
+                </div>
+            }
+            @if (Model.TESTING)
+            {
+                <div class="justify-content-between mb-2">
+                    <label>Kategori:</label>
+                    <input class="form-control" type="text" name="ACompanyMerit.Category" placeholder="Kategori" />
+                </div>
+                <div class="justify-content-between mb-2">
+                    <label>Underkategori:</label>
+                    <input class="form-control" type="text" name="ACompanyMerit.SubCategory" placeholder="Underkategori" />
+                </div>
+                <div class="justify-content-between mb-2">
+                    <label>Beskrivning:</label>
+                    <textarea style="resize: none" class="form-control" type="text" name="ACompanyMerit.Description" placeholder="Beskrivning" id="exampleFormControlTextarea1" rows="3"></textarea>
+                </div>
+            }
         </div>
     </div>
     <p></p>
