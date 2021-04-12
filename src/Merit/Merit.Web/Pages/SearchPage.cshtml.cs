@@ -16,7 +16,7 @@ namespace Merit.Web.Pages
     public class SearchPageModel : PageModel
     {
         private IProfileService profileService = new ProfileService();
-        
+
         private IMeritService meritService = new MeritService.MeritService();
         private IWantsService wantsService = new WantsService.WantsService();
         private ICompanyService companyService = new Merit.CompanyService.CompanyService();
@@ -53,10 +53,7 @@ namespace Merit.Web.Pages
                 return Redirect("/Login");
             }
 
-            //IdentityUser identity = await userManager.GetUserAsync(User);
-            //IUser pUser = identity.GetUser();
-            
-            if(SearchTerm != "")
+            if (SearchTerm != "")
             {
                 switch (SearchType)
                 {
@@ -99,8 +96,8 @@ namespace Merit.Web.Pages
                 companies = companyService.GetAllCompany();
                 SearchCompanyList = companies.Where(a => a.CompanyName.ToLower().Contains(SearchTerm.ToLower())).ToList();
             }
-            
-            
+
+
         }
 
         public void OnPostSearchPerson()
@@ -114,7 +111,7 @@ namespace Merit.Web.Pages
                 persons = profileService.GetAllPersons();
                 SearchPersonList = persons.Where(a => a.LastName.ToLower().Contains(SearchTerm.ToLower())).ToList();
             }
-           
+
         }
 
         public void OnPostPersonByMerit()
@@ -129,14 +126,17 @@ namespace Merit.Web.Pages
                 List<PersonalMerit> spml = pml.Where(x => x.Category.ToLower() == SearchTerm.ToLower()).ToList();
                 persons = profileService.GetAllPersons();
                 SearchPersonList = new();
-                foreach (var y in spml)
+                foreach (var person in spml)
                 {
-                    PersonalInfo aaa = new PersonalInfo();
-                    aaa = persons.FirstOrDefault(x => x.PersonalUserId == y.PersonalUserId);
-                    SearchPersonList.Add(aaa);
+                    PersonalInfo personToAdd = new PersonalInfo();
+                    personToAdd = persons.FirstOrDefault(x => x.PersonalUserId == person.PersonalUserId);
+                    if (!SearchPersonList.Contains(personToAdd))
+                    {
+                        SearchPersonList.Add(personToAdd);
+                    }
                 }
             }
-            
+
         }
 
         public void OnPostCompanyByMerit()
@@ -151,14 +151,17 @@ namespace Merit.Web.Pages
                 List<CompanyMerit> scml = cml.Where(x => x.Category.ToLower().Contains(SearchTerm.ToLower())).ToList();
                 companies = companyService.GetAllCompany();
                 SearchCompanyList = new();
-                foreach (var y in scml)
+                foreach (var company in scml)
                 {
-                    CompanyInfo aaa = new CompanyInfo();
-                    aaa = companies.FirstOrDefault(x => x.CompanyUserId == y.CompanyUserId);
-                    SearchCompanyList.Add(aaa);
+                    CompanyInfo companyToAdd = new CompanyInfo();
+                    companyToAdd = companies.FirstOrDefault(x => x.CompanyUserId == company.CompanyUserId);
+                    if (!SearchCompanyList.Contains(companyToAdd))
+                    {
+                        SearchCompanyList.Add(companyToAdd);
+                    }
                 }
             }
-            
+
 
         }
 
@@ -184,7 +187,7 @@ namespace Merit.Web.Pages
                     }
                 }
             }
-            
+
         }
 
         public void OnPostCompanyByWant()
