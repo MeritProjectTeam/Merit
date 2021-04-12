@@ -146,7 +146,7 @@ namespace Merit.Web.Services.BankId
                     "certificateErr" => MessageCode.RFA16,
                     "userCancel" => MessageCode.RFA6,
                     "cancelled" => MessageCode.RFA3,
-                    "startFailed" => MessageCode.RFA17A,
+                    "startFailed" => MessageCode.RFA17B,
                     _ => MessageCode.RFA21
                 },
                 "complete" => MessageCode.None,
