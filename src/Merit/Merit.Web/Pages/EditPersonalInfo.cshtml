@@ -4,18 +4,23 @@
 }
 
 <h3>Uppdatera profilinformation</h3>
-<hr />
 <div class="row">
-    <div>
+    <div class="col-12">
         @if (Model.Visi)
         {
             <br />
-            <br />
+
             <div class="alert alert-success">
                 @Model.Information
             </div>
         }
     </div>
+
+</div>
+<hr />
+
+<div class="row">
+    
     <div class="col-4">
         <form method="post">
 
@@ -57,6 +62,7 @@
 
             <div class="justify-content-between mb-2">
                 <button class="btn btn-primary" type="submit">Spara</button>
+                <a href="/CompanyInfoPage" class="btn btn-primary">Profilinfo</a>
             </div>
 
 
