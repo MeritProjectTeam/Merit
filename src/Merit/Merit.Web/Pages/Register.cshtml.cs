@@ -80,8 +80,8 @@ namespace Merit.Web.Pages
 
         public class InputModel
         {
-            [Required(ErrorMessage = "Du måste ange en e-post.")]
-            [EmailAddress]
+            [Required(ErrorMessage = "Du måste ange en e-postadress.")]
+            [EmailAddress(ErrorMessage = "Du måste ange en korrekt E-Postadress")]
             [Display(Name = "E-post")]
             public string Email { get; set; }
 
@@ -100,8 +100,8 @@ namespace Merit.Web.Pages
             [Display(Name = "Välj Användartyp")]
             public AccountType AccountType { get; set; }
 
-            [Required(ErrorMessage = "Du måste läsa och acceptera policyn för att fortsätta")]
             [Display(Name = "Jag har läst och accepterar integritetspolicyn.")]
+            [Required(ErrorMessage = "Du måste läsa och acceptera policyn för att fortsätta")]
             public bool PrivacyConsent { get; set; }
         }
     }
