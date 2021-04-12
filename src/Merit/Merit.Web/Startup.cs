@@ -32,7 +32,7 @@ namespace Merit.Web
                 option.MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.Strict;
             });
 
-            services.AddSingleton<BankIdTestService>();
+            services.AddSingleton<BankIdService, BankIdTestService>();
 
         }
 

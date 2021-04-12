@@ -1,6 +1,9 @@
 ﻿@page
 @model Merit.Web.Pages.LogInModel
+@using Merit.Web.Services.BankId;
 @{
+    const string mobileString = "Mobi";
+    bool isMobile = Request.Headers["User-Agent"].Any(x => x.Contains(mobileString));
 }
 
 <h3>Logga in</h3>
@@ -26,12 +29,27 @@
         <button class="btn btn-primary" type="submit">Logga in</button>
     </div>
 </form>
-    <div class="col">
-            <img src="~/images/bankid-logo.svg" height="100" width="100" />
-            <br />
-            <br />
-            <a class="btn btn-primary" asp-page="BankId">Logga in med BankID</a>
-    </div>
+<div class="col">
+    <img src="~/images/bankid-logo.svg" height="100" width="100" />
+    <br />
+    <br />
+    @if (isMobile)
+    {
+        <p>@BankIdService.GetUserMessage(MessageCode.RFA20)</p>
+        <div class="btn-group btn-group-vertical">
+            <a class="btn btn-primary" asp-page="BankId" asp-page-handler="ThisDevice" >Mobilt BankID på den här enheten</a>
+            <a class="btn btn-outline-primary" asp-page="BankId" asp-page-handler="OtherDevice">Mobilt BankID på en annan enhet</a>
+        </div>
+
+    }
+    else
+    {
+        <p>@BankIdService.GetUserMessage(MessageCode.RFA19)</p>
+            <a class="btn btn-primary" asp-page="BankId" asp-page-handler="OtherDevice">Mobilt BankID</a>
+            <a class="btn btn-info" asp-page="BankId" asp-page-handler="ThisDevice">BankID på den här datorn</a>
+
+    }
+</div>
 </div>
 
 @section Scripts{ 
