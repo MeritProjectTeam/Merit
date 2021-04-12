@@ -29,6 +29,7 @@ namespace Merit.Web.Pages
         public bool Visi { get; set; }
         public string Message { get; set; }
         public string alertlook { get; set; }
+        public bool TESTING { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -69,6 +70,7 @@ namespace Merit.Web.Pages
                     AMerit.PersonalUserId = personalUser.PersonalUserId;
                 }
                 meritService.SaveMerit(AMerit);
+                TESTING = true;
             }
             else
             {
