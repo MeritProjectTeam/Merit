@@ -3,37 +3,46 @@
 @{ }
 <h3>Registrera Användare</h3>
 <hr />
-<form method="post" class="col-lg-4">
-    <div asp-validation-summary="All" class="text-danger"></div>
-    <div class="form-group">
-        <label asp-for="Input.AccountType"></label>
-        <select asp-for="Input.AccountType" class="form-control">
-            <option value="@Merit.AccountService.AccountType.Personal">Personligt Konto</option>
-            <option value="@Merit.AccountService.AccountType.Company">Företagskonto</option>
-        </select>
-        <span asp-validation-for="Input.AccountType" class="text-danger"></span>
+<form method="post">
+    <div class="row">
+        <div class="col-lg-4">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Input.AccountType"></label>
+                <select asp-for="Input.AccountType" class="form-control">
+                    <option value="@Merit.AccountService.AccountType.Personal">Personligt Konto</option>
+                    <option value="@Merit.AccountService.AccountType.Company">Företagskonto</option>
+                </select>
+                <span asp-validation-for="Input.AccountType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Email"></label>
+                <input asp-for="Input.Email" class="form-control" />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Password"></label>
+                <input asp-for="Input.Password" class="form-control" />
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.ConfirmPassword"></label>
+                <input asp-for="Input.ConfirmPassword" class="form-control" />
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+        </div>
     </div>
-    <div class="form-group">
-        <label asp-for="Input.Email"></label>
-        <input asp-for="Input.Email" class="form-control" />
-        <span asp-validation-for="Input.Email" class="text-danger"></span>
+    <div class="row">
+        <div class="col-lg-5">
+            <div class="form-group m-2">
+                <input required asp-for="Input.PrivacyConsent" class="form-check-input" />
+                <label asp-for="Input.PrivacyConsent" class="form-check-label"></label>
+                <span asp-validation-for="Input.PrivacyConsent" class="text-danger"></span>
+            </div>
+            <button class="btn btn-primary" type="submit">Registrera</button>
+        </div>
     </div>
-    <div class="form-group">
-        <label asp-for="Input.Password"></label>
-        <input asp-for="Input.Password" class="form-control" />
-        <span asp-validation-for="Input.Password" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Input.ConfirmPassword"></label>
-        <input asp-for="Input.ConfirmPassword" class="form-control" />
-        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-    </div>
-    <div class="form-group m-2">
-        <input required asp-for="Input.PrivacyConsent" class="form-check-input" />
-        <label asp-for="Input.PrivacyConsent" class="form-check-label"></label>
-        <span asp-validation-for="Input.PrivacyConsent" class="text-danger"></span>
-    </div>
-    <button class="btn btn-primary" type="submit">Registrera</button>
+    
 </form>
 
 @section Scripts{
