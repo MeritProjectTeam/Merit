@@ -45,21 +45,23 @@ namespace Merit.Web.Pages
 
         public void OnPost()
         {
-            switch (SearchType)
+            if (freeText != null && freeText != "")
             {
-                case 1:
-                    resultSet = advertisementService.FreeSearchAdvertisements(freeText);
-                    break;
-                case 2:
-                    resultSet = advertisementService.FreeSearchMeritsInAdvertisements(freeText);
-                    break;
-                case 3:
-                    resultSet = advertisementService.FreeSearchWantsInAdvertisements(freeText);
-                    break;
-                default:
-                    break;
+                switch (SearchType)
+                {
+                    case 1:
+                        resultSet = advertisementService.FreeSearchAdvertisements(freeText);
+                        break;
+                    case 2:
+                        resultSet = advertisementService.FreeSearchMeritsInAdvertisements(freeText);
+                        break;
+                    case 3:
+                        resultSet = advertisementService.FreeSearchWantsInAdvertisements(freeText);
+                        break;
+                    default:
+                        break;
+                }
             }
-
         }
 
     }

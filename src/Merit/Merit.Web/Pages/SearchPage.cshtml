@@ -31,7 +31,7 @@
                                 <input type="hidden" name="SearchType" value="2" />
                                 <input type="text" class="form-control" name="SearchTerm" placeholder="Hitta person via merit" />
                                 <div class="input-group-append">
-                                    <button type="submit" class="btn btn-primary" asp-page-handler="PersonByMerit">Sök Person</button>
+                                    <button type="submit" class="btn btn-primary" asp-page-handler="PersonByMerit">Sök person</button>
                                 </div>
                             </div>
                         </form>
@@ -122,7 +122,7 @@
                         }
                         @foreach (var x in Model.SearchPersonList)
                         {
-                            <a href="PersonalInfoPage?PersonalId=@x.PersonalUserId&&searchterm=@Model.SearchTerm&&searchType=@Model.SearchType">@x.FirstName @x.LastName</a>
+                <div><a href="PersonalInfoPage?PersonalId=@x.PersonalUserId&&searchterm=@Model.SearchTerm&&searchType=@Model.SearchType">@x.FirstName @x.LastName</a></div>
                         }
                     }
            
@@ -148,7 +148,7 @@
                         }
                         @foreach (var x in Model.SearchCompanyList)
                         {
-                            <a href="CompanyInfoPage?CompanyId=@x.CompanyUserId&&searchterm=@Model.SearchTerm&&searchtype=@Model.SearchType">@x.CompanyName</a>
+                <div><a href="CompanyInfoPage?CompanyId=@x.CompanyUserId&&searchterm=@Model.SearchTerm&&searchtype=@Model.SearchType">@x.CompanyName</a></div>
                         }
                     }
                 </div>
