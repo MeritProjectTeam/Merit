@@ -1,11 +1,65 @@
-﻿@page
+﻿@page "{handler?}/{order:guid?}"
 @model Merit.Web.Pages.BankIdModel
 @{
+    ViewData["Title"] = "Logga in med BankID";
+    const string errorMessage = "Något gick fel, vänligen försök igen.";
 }
 <h1><img src="~/images/bankid-logo.svg" width="100" height="100"/>BankId</h1>
 <hr />
-<div role="img" aria-label="QR Kod för BankID.">
-    @Model.Data.QrCode
+<p id="statusMessage" class="lead" style="font-size:larger">@(Model.Data?.StatusMessage ?? "")</p>
+<div id="qr">
+    @if (!string.IsNullOrEmpty(Model.Data.QrString)) 
+    { 
+        <partial name="_QrPartial" model="Model.Data.QrString" />
+    }
 </div>
 <br />
-<p>@Model.Data.StatusMessage</p>
+<div>
+    <button type="button" class="btn btn-danger" id="cancel" onclick="Cancel()">Avbryt</button>
+    <a href="javascript:window.location.reload(true)" class="btn btn-primary" id="retry">Försök igen</a>
+</div>
+
+@section scripts{ 
+    <script>
+        $("#retry").hide();
+        CollectJson();
+
+        function CollectJson() {
+            $.getJSON('/BankId/Collect/@Model.Data.OrderRef', (data) => {
+                $("#statusMessage").text(data.message);
+                if (data.showQr == false) {
+                    console.info("Hiding QR.");
+                    $("#qr").hide();
+                }
+                if (data.stopCollect == true) {
+                    console.warn("Stopping collect.");
+                }
+                else {
+                    setTimeout(() => {
+                        console.log("Collecting from server.");
+                        CollectJson();
+                    }, @Model.Data.RefreshInterval);
+                    if (data.retry == true) {
+                        $("#cancel").hide();
+                        $("#retry").show();
+                    }
+                }
+                if (data.redirect == true) {
+                    console.info("Redirecting.");
+                    setTimeout(() => {
+                        window.location.href = "/PersonalInfoPage";
+                    }, 1000);
+                }
+            })
+                .fail(() => {
+                    $("#statusMessage").text('@errorMessage');
+                    $("#cancel").hide();
+                    $("#retry").show();
+                });
+        }
+
+        function Cancel() {
+            $.getJSON('/BankId/Cancel/@Model.Data.OrderRef', () => { });
+        }
+    </script>
+}
