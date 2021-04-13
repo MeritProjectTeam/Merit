@@ -21,7 +21,7 @@
                     <p class="card-text">
                         @foreach (var item in Model.ListOfMatchingCompanyUsers)
                         {
-                            <a href="/CompanyInfoPage?companyId=@item.CompanyUserId">@companyService.Get(item.CompanyUserId).CompanyName</a>
+                            <a href="/CompanyInfoPage?companyId=@item.CompanyUserId&&Matching=true">@companyService.Get(item.CompanyUserId).CompanyName</a>
                         }
                     </p>
                 </div>
@@ -39,7 +39,7 @@
                         @foreach (var add in Model.ListOfMatchingAdvertisiment)
                         {
                             <div>
-                                <a href="/ShowJobAdvertisement?advertisementid=@add.CompanyAdvertisementId">@add.CompanyAdvertisementId - @add.Profession</a>
+                                <a href="/ShowJobAdvertisement?advertisementid=@add.CompanyAdvertisementId&&Matching=true">@add.CompanyAdvertisementId - @add.Profession</a>
                             </div>
                         }
                     </p>
@@ -61,7 +61,7 @@ else if (Model.AUser is CompanyUser)
                     <p class="card-text">
                         @foreach (var item in Model.ListOfMatchingPersonalUsers)
                         {
-                            <a href="/PersonalInfoPage?personalId=@item.PersonalUserId">@profileService.Get(item.PersonalUserId).FirstName @profileService.Get(item.PersonalUserId).LastName</a>
+                            <a href="/PersonalInfoPage?personalId=@item.PersonalUserId&&Matching=true">@profileService.Get(item.PersonalUserId).FirstName @profileService.Get(item.PersonalUserId).LastName</a>
                         }
                     </p>
                 </div>

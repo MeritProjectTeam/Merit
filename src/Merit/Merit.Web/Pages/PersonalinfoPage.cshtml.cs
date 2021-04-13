@@ -30,6 +30,8 @@ namespace Merit.Web.Pages
             this.signInManager = signInManager;
             this.userManager = userManager;
         }
+        [BindProperty(SupportsGet = true)]
+        public bool Matching { get; set; }
 
         public bool Owner { get; set; } = true;
         [BindProperty(SupportsGet = true)]

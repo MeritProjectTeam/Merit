@@ -16,6 +16,7 @@ namespace Merit.Web.Pages
         private readonly UserManager<IdentityUser> userManager;
         private readonly IMatchService matchService = new MatchService.MatchService();
 
+       
         public List<CompanyUser> ListOfMatchingCompanyUsers { get; set; }
         public List<PersonalUser> ListOfMatchingPersonalUsers { get; set; }
         public List<CompanyAdvertisement> ListOfMatchingAdvertisiment { get; set; }

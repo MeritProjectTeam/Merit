@@ -15,6 +15,7 @@ namespace Merit.Web.Pages
 
         [BindProperty(SupportsGet = true)]
         public string freeText { get; set; }
+       
 
         [BindProperty(SupportsGet = true)]
         public int SearchType { get; set; }

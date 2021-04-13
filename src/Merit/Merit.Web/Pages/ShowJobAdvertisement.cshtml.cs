@@ -23,7 +23,8 @@ namespace Merit.Web.Pages
 
         private readonly UserManager<IdentityUser> userManager;
         private readonly SignInManager<IdentityUser> signInManager;
-
+        [BindProperty(SupportsGet = true)]
+        public bool Matching { get; set; }
         public ShowJobAdvertisementModel(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
             this.signInManager = signInManager;

@@ -12,7 +12,11 @@
 <div class="container">
     @if (Model.SearchTerm != "")
     {
-                <a href="/SearchPage?searchterm=@Model.SearchTerm&&searchtype=@Model.SearchType">Tillbaka till söksidan</a>
+        <a href="/SearchPage?searchterm=@Model.SearchTerm&&searchtype=@Model.SearchType">Tillbaka till söksidan</a>
+    }
+    @if (Model.Matching)
+    {
+        <a href="/AutomaticMatch">Tillbaka till matchningssida</a>
     }
 
     <!-- Heading Row -->
@@ -88,7 +92,7 @@
                         <a href="/EditUserInfo" class="btn btn-primary btn-sm">Ändra Lösenord</a>
                     </div>
                 }
-                </div>
+            </div>
         </div>
         <!-- /.col-md-4 -->
         <div class="col-md-4 mb-5">
@@ -118,14 +122,14 @@
                         }
                     </p>
                 </div>
-                    @if (Model.Owner)
-                    {
-                        <div class="card-footer">
-                            <a href="/AddMerit" class="btn btn-primary btn-sm">Lägg till Merit</a>
-                            <a href="/EditPersonalMerits" class="btn btn-primary btn-sm">Redigera Meriter</a>
-                        </div>
-                    }
-                </div>
+                @if (Model.Owner)
+                {
+                    <div class="card-footer">
+                        <a href="/AddMerit" class="btn btn-primary btn-sm">Lägg till Merit</a>
+                        <a href="/EditPersonalMerits" class="btn btn-primary btn-sm">Redigera Meriter</a>
+                    </div>
+                }
+            </div>
         </div>
         <!-- /.col-md-4 -->
         <div class="col-md-4 mb-5">
@@ -156,7 +160,7 @@
                         <a href="/EditPersonalWants" class="btn btn-primary btn-sm">Redigera Wants</a>
                     </div>
                 }
-                </div>
+            </div>
         </div>
         <!-- /.col-md-4 -->
     </div>

@@ -30,7 +30,8 @@ namespace Merit.Web.Pages
         private readonly SignInManager<IdentityUser> signInManager;
         [BindProperty(SupportsGet = true)]
         public int CompanyId { get; set; }
-
+        [BindProperty (SupportsGet =true)]
+        public bool Matching { get; set; }
         public bool Owner { get; set; } = true;
 
         public CompanyInfoPageModel(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)

@@ -15,6 +15,10 @@
     {
         <a href="/SearchPage?searchterm=@Model.SearchTerm&&searchtype=@Model.SearchType">Tillbaka till söksidan</a>
     }
+    @if (Model.Matching)
+    {
+        <a href="/AutomaticMatch">Tillbaka till matchningssida</a>
+    }
     <!-- Heading Row -->
     <div class="row align-items-center my-5">
 
