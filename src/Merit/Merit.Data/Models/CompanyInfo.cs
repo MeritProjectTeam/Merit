@@ -16,7 +16,7 @@ namespace Merit.Data.Models
         public string ZipCode { get; set; } = "-";
         public string City { get; set; } = "-";
 
-        public int CompanyUserId { get; set; }
+        public int CompanyUserID { get; set; }
         public CompanyUser CompanyUser { get; set; }
     }
 }

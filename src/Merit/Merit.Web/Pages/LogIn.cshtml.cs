@@ -1,74 +1,45 @@
-using Merit.AccountService;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Identity;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.ComponentModel.DataAnnotations;
-using System.Threading.Tasks;
+using Merit.AccountService;
+using Merit.Data.Models;
 
 namespace Merit.Web.Pages
 {
     public class LogInModel : PageModel
     {
-        private readonly UserManager<IdentityUser> userManager;
-        private readonly SignInManager<IdentityUser> signInManager;
 
         [BindProperty]
-        public InputModel Input { get; set; }
+        public User UserLogin { get; set; }
 
-        public LogInModel(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        private readonly IAccount Account = new Account();
+
+        [BindProperty]
+        public string LoginMessage { get; set; }
+
+        public void OnGet()
         {
-            this.userManager = userManager;
-            this.signInManager = signInManager;
         }
 
-        public async Task OngetAsync()
+        public IActionResult OnPost()
         {
-            // Clear external login cookies.
-            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
-        }
+            int[] userIdAndUserType = Account.CheckLogin(UserLogin);
 
-        public async Task<IActionResult> OnPostAsync()
-        {
-            if (ModelState.IsValid)
+            if (userIdAndUserType[0] != 0)
             {
-                var result = await signInManager.PasswordSignInAsync(Input.Email, Input.Password, isPersistent: true, lockoutOnFailure: false);
-                if (result.Succeeded)
-                {
-                    IdentityUser user = await userManager.FindByEmailAsync(Input.Email);
-                    var type = user.GetAccountType();
-                    if (type == AccountType.Personal)
-                    {
-                        return RedirectToPage("/PersonalInfoPage");
-                    }
-                    else if (type == AccountType.Company)
-                    {
-                        return RedirectToPage("/CompanyInfoPage");
-                    }
-                }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Ogiltig inloggning.");
-                    return Page();
-                }
+
+                LoginMessage = "Inloggningen lyckades!";
+                AccountService.Account.CreateCookie(userIdAndUserType[0]);
+                if (userIdAndUserType[1] == 1)
+                { return Redirect("/PersonalInfoPage"); }
+                else if (userIdAndUserType[1] == 2)
+                { return Redirect("/CompanyInfoPage"); }
             }
-            return Page();
-        }
-
-        public class InputModel
-        {
-            [Required(ErrorMessage = "Du måste fylla i din e-post.")]
-            [EmailAddress(ErrorMessage = "Ogiltig e-post.")]
-            [Display(Name = "E-post")]
-            public string Email { get; set; }
-
-            [Required(ErrorMessage = "Du måste fylla i ditt lösenord.")]
-            [DataType(DataType.Password)]
-            [Display(Name = "Lösenord")]
-            public string Password { get; set; }
-
-            [Display(Name = "Kom ihåg mig?")]
-            public bool RememberMe { get; set; }
+            LoginMessage = "Felaktigt användarnamn eller lösenord";
+            return RedirectToPage();
         }
     }
 }

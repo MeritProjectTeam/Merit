@@ -1,35 +1,17 @@
-﻿@using Microsoft.AspNetCore.Identity
-@using Merit.Data.Models
-@inject UserManager<IdentityUser> UserManager
-@inject SignInManager<IdentityUser> SignInManager
-@{
-    IdentityUser identity = await UserManager.GetUserAsync(User);
-    IUser pUser = identity.GetUser();
-}
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-
+    
     @*<meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>@ViewData["Title"] - Merit.Web</title>*@
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
-    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
-    <!-- Font Awesome icons (free version)-->
-    <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>
-    <!-- Google fonts-->
-    <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700" rel="stylesheet" type="text/css" />
-    <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i" rel="stylesheet" type="text/css" />
-    <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="css/styles.css" rel="stylesheet" />
-    <title>@ViewData["Title"]</title>
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
+    <header>
+
+    </header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
         <a class="navbar-brand js-scroll-trigger" href="#page-top">
             <span class="d-block d-lg-none">MERIT</span>
@@ -38,36 +20,13 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav">
-                @if (SignInManager.IsSignedIn(User))
-                {
-                    if (pUser is CompanyUser)
-                    {
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-page="/CompanyInfoPage">Hem</a></li>
-                    }
-                    else if (pUser is PersonalUser)
-                    {
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-page="/PersonalInfoPage">Hem</a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-page="/AdvertisementSearchPage">Sök Jobbannonser</a></li>
-                    }
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-page="/SearchPage">Sök företag/personer</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-page="/AutomaticMatch">Matchningar</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-page="/LogOut">Logga ut</a></li>
-                }
-                else
-                {
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-page="/Index">Hem</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-page="/LogIn">Logga in</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-page="/Register">Registrera</a></li>
-                }
-                <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-page="/Privacy">Privacy</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-page="/Index">Hem</a></li>
                 <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-page="/Team">Team</a></li>
-                @RenderSection("NavItems", required: false)
-
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-page="/LogOut">Logga ut</a></li>
             </ul>
         </div>
     </nav>
     <div class="container">
-        <partial name="_CookieConsentPartial" />
         <main role="main" class="pb-3">
             @RenderBody()
         </main>

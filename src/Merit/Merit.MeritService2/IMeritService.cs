@@ -19,8 +19,5 @@ namespace Merit.MeritService
         CompanyMerit GetCompanyMerit(int id);
         void DeleteCompanyMerit(CompanyMerit cMerit);
         void DeletePersonalMerit(PersonalMerit pMerit);
-
-        public List<PersonalMerit> GetAllPersonalMerits();
-        public List<CompanyMerit> GetAllCompanyMerits();
     }
 }

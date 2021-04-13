@@ -10,8 +10,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using System.Threading;
-using Microsoft.AspNetCore.Identity;
-using System.Linq;
 
 namespace Merit.Web.Pages
 {
@@ -21,28 +19,10 @@ namespace Merit.Web.Pages
         private IAccount accountService = new Account();
         private IMeritService meritService = new MeritService.MeritService();
         private IWantsService wantsService = new WantsService.WantsService();
+        
+        
+        
 
-        private readonly UserManager<IdentityUser> userManager;
-        private readonly SignInManager<IdentityUser> signInManager;
-
-        public PersonalinfoPageModel(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
-        {
-            this.signInManager = signInManager;
-            this.userManager = userManager;
-        }
-        [BindProperty(SupportsGet = true)]
-        public bool Matching { get; set; }
-
-        public bool Owner { get; set; } = true;
-        [BindProperty(SupportsGet = true)]
-        public int SearchType { get; set; }
-        [BindProperty(SupportsGet = true)]
-        public string SearchTerm { get; set; } = "";
-
-        [BindProperty(SupportsGet = true)]
-        public int PersonalId { get; set; }
-
-        public string Email { get; set; }
 
         [BindProperty]
         public PersonalUser AUser { get; set; }
@@ -56,34 +36,12 @@ namespace Merit.Web.Pages
 
         [BindProperty]
         public string ImageUrl { get; set; }
-        public async Task<IActionResult> OnGetAsync()
+        public void OnGet()
         {
-            if (!signInManager.IsSignedIn(User))
-            {
-                return Redirect("/Login");
-            }
+            int userId = Account.CheckCookie();
 
-            IdentityUser identity = await userManager.GetUserAsync(User);
-            IUser pUser = identity.GetUser();
-            AUser = accountService.GetPersonalUser(pUser.Identity);
-
-            if (PersonalId != 0 && (AUser == null || PersonalId != AUser.PersonalUserId))
-            {
-                Owner = false;
-                pUser = accountService.GetPersonalUser(PersonalId);
-                if (pUser == null)
-                {
-                    return NotFound();
-                }
-                AUser = accountService.GetPersonalUser(pUser.Identity);
-            }
-            else if (PersonalId == 0 && pUser is CompanyUser )
-            {
-                return Redirect("/Companyinfopage");
-            }
-
-
-            PersonalImage img = await profileService.GetImage(AUser);
+            AUser = accountService.GetPersonalUser(userId);
+            PersonalImage img = profileService.GetImage(AUser);
             if (img == null)
             {
                 ImageUrl = "http://placehold.it/300x300";
@@ -93,32 +51,19 @@ namespace Merit.Web.Pages
                 string imageBase64Data = Convert.ToBase64String(img.ImageData);
                 ImageUrl = string.Format($"data:image/jpg;base64, {imageBase64Data}");
             }
-            if (pUser is PersonalUser personalUser)
-            {
-                PersonalInfo = profileService.Get(personalUser.PersonalUserId);
-                PersonalWants = wantsService.GetAllPersonalWants(personalUser.PersonalUserId);
-                PersonalMerits = meritService.ReadPersonalMerits(personalUser.PersonalUserId);
-                Email = userManager.Users.FirstOrDefault(x => x.Id == personalUser.Identity).Email;
-
-            }
-
-            return Page();
+            PersonalInfo = profileService.Get(userId);
+            PersonalWants = wantsService.GetAllPersonalWants(userId);
+            
+            PersonalMerits = meritService.ReadPersonalMerits(userId);
         }
-        public async Task<IActionResult> OnPostAsync()
+        public void OnPost()
         {
-            if (!signInManager.IsSignedIn(User))
-            {
-                return Redirect("/Login");
-            }
-
-            IdentityUser identity = await userManager.GetUserAsync(User);
-            IUser pUser = identity.GetUser();
-            AUser = accountService.GetPersonalUser(pUser.Identity);
-            await UploadImage();
-            return await OnGetAsync();
+            int userId = Account.CheckCookie();
+            AUser = accountService.GetPersonalUser(userId);
+            UploadImage();
         }
 
-        public async Task UploadImage()
+        public IActionResult UploadImage()
         {
             PersonalImage img = new PersonalImage();
             var files = Request.Form.Files;
@@ -131,7 +76,9 @@ namespace Merit.Web.Pages
                 file.CopyTo(ms);
                 img.ImageData = ms.ToArray();
             }
-            await profileService.SaveImage(img);
+            profileService.SaveImage(img);
+
+            return RedirectToPage();
         }
         
        

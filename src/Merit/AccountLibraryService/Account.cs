@@ -1,154 +1,187 @@
-﻿using Merit.AdvertisementService;
-using Merit.CompanyService;
-using Merit.Data;
-using Merit.Data.Data;
-using Merit.Data.Models;
-using Merit.MeritService;
-using Merit.PersonalInfoService;
-using Merit.WantsService;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using Merit.Data.Data;
+using Merit.Data.Models;
+using Merit.CompanyService;
 
 namespace Merit.AccountService
 {
     public class Account : IAccount
     {
-        private AccountRequest source = new();
-
-
-        private readonly IMeritService meritService = new MeritService.MeritService();
-        private readonly IWantsService wantsService = new WantsService.WantsService();
-        private readonly IProfileService profileService = new ProfileService();
-        private readonly IAdvertisementService advertisementService = new AdvertisementService.AdvertisementService();
-        private readonly ICompanyService companyService = new CompanyService.CompanyService();
         public void AddAccount(PersonalUser user)
         {
-            using var db = new MeritContext();
-            db.Add(user);
-            db.SaveChanges();
+            //krypteringen sker på server-sidan, bör bytas till klient-sidan
+            using (var db = new MeritContext())
+            {
+                user.Password = EncryptPassword(user.Password);
+                db.Add(user);
+                db.SaveChanges();
 
-            try
-            {
-                PersonalInfo info = new();
-                info.PersonalUserId = user.PersonalUserId;
-                db.Add(info);
-                db.SaveChanges();
-            }
-            catch (Exception)
-            {
-                db.Remove(user);
-                db.SaveChanges();
+                try
+                {
+                    PersonalInfo info = new PersonalInfo();
+                    info.PersonalUserID = user.PersonalUserId;
+                    db.Add(info);
+                    db.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    db.Remove(user);
+                    db.SaveChanges();
+                }
             }
         }
-
         public void AddAccount(CompanyUser user)
         {
-            using var db = new MeritContext();
-            db.Add(user);
-            db.SaveChanges();
+            //krypteringen sker på server-sidan, bör bytas till klient-sidan
 
-            try
+            using (var db = new MeritContext())
             {
-                CompanyInfo info = new();
-                info.CompanyUserId = user.CompanyUserId;
-                db.Add(info);
+                user.Password = EncryptPassword(user.Password);
+                db.Add(user);
                 db.SaveChanges();
+
+                try
+                {
+                    CompanyInfo info = new CompanyInfo();
+                    info.CompanyUserID = user.CompanyUserId;
+                    db.Add(info);
+                    db.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    db.Remove(user);
+                    db.SaveChanges();
+                }
+
             }
-            catch (Exception)
+        }
+        public PersonalUser GetPersonalUser(int id)
+        {
+            using (var db = new MeritContext())
+                return db.PersonalUsers
+                    .FirstOrDefault(p => p.PersonalUserId == id);
+        }
+        public CompanyUser GetCompanyUser(int id)
+        {
+            using (var db = new MeritContext())
+                return db.CompanyUsers
+                    .FirstOrDefault(p => p.CompanyUserId == id);
+        }
+
+        public int CheckExistingAccount(PersonalUser user)
+        {
+            using var db = new MeritContext() ;
+
+            var userNameExists = db.PersonalUsers
+                .FirstOrDefault(x => x.UserName.ToLower() == user.UserName.ToLower());
+            var emailExists = db.PersonalUsers
+                .FirstOrDefault(x => x.Email.ToLower() == user.Email.ToLower());
+
+            var companyUserNameExists = db.CompanyUsers
+                .FirstOrDefault(x => x.UserName.ToLower() == user.UserName.ToLower());
+            var companyEmailExists = db.CompanyUsers
+                .FirstOrDefault(x => x.Email.ToLower() == user.Email.ToLower());
+
+            if (userNameExists != null || companyUserNameExists != null)
+            {   
+                return 101;
+            }
+            else if (emailExists != null || companyEmailExists != null)
             {
-                db.Remove(user);
-                db.SaveChanges();
+                return 102;
             }
-        }
-
-        public PersonalUser GetPersonalUser(string identity)
-        {
-            using var db = new MeritContext();
-            return db.PersonalUsers
-                .FirstOrDefault(p => p.Identity == identity);
-        }
-        public PersonalUser GetPersonalUser(int personalUserId)
-        {
-            using var db = new MeritContext();
-            return db.PersonalUsers
-                .FirstOrDefault(p => p.PersonalUserId == personalUserId);
-        }
-        public void EditPersonalUser(PersonalUser user)
-        {
-            using var db = new MeritContext();
-            db.Attach(user).State = EntityState.Modified;
-            db.SaveChanges();
-        }
-        public CompanyUser GetCompanyUser(string identity)
-        {
-            using var db = new MeritContext();
-            return db.CompanyUsers
-                .FirstOrDefault(p => p.Identity == identity);
-        }
-        public void EditCompanyUser(CompanyUser user)
-        {
-            using var db = new MeritContext();
-            db.Attach(user).State = EntityState.Modified;
-            db.SaveChanges();
-        }
-
-        public CompanyUser GetCompanyUser(int companyUserId)
-        {
-            using var db = new MeritContext();
-            return db.CompanyUsers.FirstOrDefault(x => x.CompanyUserId == companyUserId);
-        }
-        public void DeletePersonalUser(int userId)
-        {
-            using var db = new MeritContext();
-            List<PersonalMerit> meritList = meritService.ReadPersonalMerits(userId);
-            foreach (var merit in meritList)
+            else
             {
-                meritService.DeletePersonalMerit(merit);
+                return 100;
             }
-            List<PersonalWants> wantsList = wantsService.GetAllPersonalWants(userId);
-            foreach (var want in wantsList)
-            {
-                wantsService.DeletePersonalWant(want);
-            }
-            profileService.DeletePersonalInfo(userId);
-
-            var personalUser = db.PersonalUsers.FirstOrDefault(x => x.PersonalUserId == userId);
-            db.PersonalUsers.Remove(personalUser);
-            db.SaveChanges();
-
         }
 
-        public void DeleteCompanyUser(int userId)
+        public int CheckExistingAccount(CompanyUser user)
         {
             using var db = new MeritContext();
-            List<CompanyAdvertisement> list = advertisementService.GetAllCompanyAdvertisements(userId);
-                        foreach (var ad in list)
-            {
-                advertisementService.DeleteCompanyAdvertisement(ad.CompanyAdvertisementId);
-            }
-            
-            List<CompanyMerit> meritList = meritService.ReadCompanyMerits(userId);
-            foreach (var merit in meritList)
-            {
-                meritService.DeleteCompanyMerit(merit);
-            }
-            List<CompanyWants> wantsList = wantsService.GetAllCompanyWants(userId);
-            foreach (var want in wantsList)
-            {
-                wantsService.DeleteCompanyWant(want);
-            }
-            companyService.DeleteCompanyInfo(userId);
 
-            var companyUser = db.CompanyUsers.FirstOrDefault(x => x.CompanyUserId == userId);
-            db.CompanyUsers.Remove(companyUser);
-            db.SaveChanges();
+            var userNameExists = db.PersonalUsers
+                .FirstOrDefault(x => x.UserName.ToLower() == user.UserName.ToLower());
+            var emailExists = db.PersonalUsers
+                .FirstOrDefault(x => x.Email.ToLower() == user.Email.ToLower());
 
+            var companyUserNameExists = db.CompanyUsers
+                .FirstOrDefault(x => x.UserName.ToLower() == user.UserName.ToLower());
+            var companyEmailExists = db.CompanyUsers
+                .FirstOrDefault(x => x.Email.ToLower() == user.Email.ToLower());
 
+            if (userNameExists != null || companyUserNameExists != null)
+            {
+                return 101;
+            }
+            else if (emailExists != null || companyEmailExists != null)
+            {
+                return 102;
+            }
+            else
+            {
+                return 100;
+            }
         }
+        public static string EncryptPassword(string password)
+        {
+            MD5 mD5 = MD5.Create();
+            byte[] inputBytes = Encoding.ASCII.GetBytes(password);
+            byte[] hash = mD5.ComputeHash(inputBytes);
+
+            string result = "";
+
+            foreach (var h in hash)
+            {
+                result += h.ToString("X2");
+            }
+
+            return result;
+        }
+
+        public int[] CheckLogin(User user)
+        {
+            using var db = new MeritContext();
+            var personalUserValid = db.PersonalUsers
+                .FirstOrDefault(x => x.UserName.ToLower() == user.UserName.ToLower() && x.Password == EncryptPassword(user.Password));
+            var companyUserValid = db.CompanyUsers
+                .FirstOrDefault(x => x.UserName.ToLower() == user.UserName.ToLower() && x.Password == EncryptPassword(user.Password));
+
+            int[] userIdAndUserType = new int[] {0,0};
+            if (personalUserValid != null)
+            {
+                userIdAndUserType[0] = personalUserValid.PersonalUserId;
+                userIdAndUserType[1] = 1;
+                return userIdAndUserType;
+            }
+            else if (companyUserValid != null)
+            {
+                
+                userIdAndUserType[0] = companyUserValid.CompanyUserId;
+                userIdAndUserType[1] = 2;
+                return userIdAndUserType;
+            }
+            return  userIdAndUserType;
+        }
+        public static void CreateCookie(int? userId)
+        {
+            using StreamWriter sw = new StreamWriter("wwwroot/DataFile/cookie.txt", false);
+            sw.WriteLine(userId);
+        }
+        public static int CheckCookie()
+        {
+            using StreamReader sr = new StreamReader("wwwroot/DataFile/cookie.txt");
+            bool ok = int.TryParse(sr.ReadLine(), out int id);
+            if(ok)
+            {
+                return id;
+            }
+            return 0;
+        }
+
     }
 }

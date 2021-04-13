@@ -1,6 +1,4 @@
-﻿using Merit.Data.Models;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using System;
@@ -17,6 +15,11 @@ namespace Merit.Web.Pages
         public IndexModel(ILogger<IndexModel> logger)
         {
             _logger = logger;
+        }
+
+        public void OnGet()
+        {
+
         }
     }
 }
