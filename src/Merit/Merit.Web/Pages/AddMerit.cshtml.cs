@@ -6,30 +6,78 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Merit.MeritService;
 using Merit.Data.Models;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace Merit.Web.Pages
 {
     public class AddMeritModel : PageModel
     {
-        public bool MeritSaved { get; set; } = false;
         IMeritService meritService = new MeritService.MeritService();
-        public string Status { get; set; } = "Success!"; 
+
+        private readonly UserManager<IdentityUser> userManager;
+        private readonly SignInManager<IdentityUser> signInManager;
+
+        public AddMeritModel(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        {
+            this.signInManager = signInManager;
+            this.userManager = userManager;
+        }
 
         [BindProperty]
         public PersonalMerit AMerit { get; set; }
-        public void OnGet()
+        public bool Visi { get; set; }
+        public string Message { get; set; }
+        public string alertlook { get; set; }
+        public bool TESTING { get; set; }
+
+        public async Task<IActionResult> OnGetAsync()
         {
-            
-        }
-        public void OnPost()
-        {
-            MeritSaved = true;
-            int userId = AccountService.Account.CheckCookie();
-            if (userId != 0)
+            if (!signInManager.IsSignedIn(User))
             {
-                AMerit.PersonalUserId = userId;
-                meritService.SaveMerit(AMerit);
+                return Redirect("/Login");
             }
+
+            IdentityUser identity = await userManager.GetUserAsync(User);
+            IUser pUser = identity.GetUser();
+            if (pUser is CompanyUser)
+            {
+                return Redirect("/CompanyInfoPage");
+            }
+            return Page();
+        }
+        public async Task<IActionResult> OnPostAsync()
+        {
+            if (!signInManager.IsSignedIn(User))
+            {
+                return Redirect("/Login");
+            }
+
+            IdentityUser identity = await userManager.GetUserAsync(User);
+            IUser pUser = identity.GetUser();
+            if (pUser is CompanyUser)
+            {
+                return Redirect("/CompanyInfoPage");
+            }
+
+            Visi = true;
+            if (AMerit.Category != null && AMerit.SubCategory != null && AMerit.Description != null)
+            {
+                Message = "Merit skapat!";
+                alertlook = "success";
+                if (pUser is PersonalUser personalUser)
+                {
+                    AMerit.PersonalUserId = personalUser.PersonalUserId;
+                }
+                meritService.SaveMerit(AMerit);
+                TESTING = true;
+            }
+            else
+            {
+                alertlook = "danger";
+                Message = "Fyll i rutorna!";
+            }
+            return Page();
         }
     }
 }

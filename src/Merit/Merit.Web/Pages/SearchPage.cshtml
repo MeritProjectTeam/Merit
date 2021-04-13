@@ -1,0 +1,158 @@
+﻿@page
+@model Merit.Web.Pages.SearchPageModel
+@{
+}
+<div class="row">
+    <div class="col-md-5 mb-5">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="card-header">
+                    <h5 class="card-title">Sök Privatpersoner</h5>
+                </div>
+                <p></p>
+                <div class="card-text">
+                    <h6>Sök person via efternamn</h6>
+                    <div>
+                        <form method="post">
+                            <div class="input-group">
+                                <input type="hidden" name="SearchType" value="1" />
+                                <input type="text" class="form-control" name="SearchTerm" placeholder="Hitta person via efternamn" />
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-primary" asp-page-handler="SearchPerson">Sök person</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <br />
+                    <h6>Sök person via merit</h6>
+                    <div>
+                        <form method="post">
+                            <div class="input-group">
+                                <input type="hidden" name="SearchType" value="2" />
+                                <input type="text" class="form-control" name="SearchTerm" placeholder="Hitta person via merit" />
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-primary" asp-page-handler="PersonByMerit">Sök person</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <br />
+                    <h6>Sök person via wants</h6>
+                    <div>
+                        <form method="post">
+                            <div class="input-group">
+                                <input type="hidden" name="SearchType" value="3" />
+                                <input type="text" class="form-control" name="SearchTerm" placeholder="Hitta person via want" />
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-primary" asp-page-handler="PersonByWant">Sök person</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.col-md-4 -->
+    <div class="col-md-5 mb-5">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="card-header">
+                    <h5 class="card-title">Sök Företag</h5>
+                </div>
+                <p></p>
+                <div class="card-text">
+                    <h6>Sök företag via namn</h6>
+                    <div>
+                        <form method="post">
+                            <div class="input-group">
+                                <input type="hidden" name="SearchType" value="4" />
+                                <input type="text" class="form-control" name="SearchTerm" placeholder="Hitta företag" />
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-primary" asp-page-handler="SearchCompany">Sök företag</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <br />
+                    <h6>Sök företag via merit</h6>
+                    <div>
+                        <form method="post">
+                            <div class="input-group">
+                                <input type="hidden" name="SearchType" value="5" />
+                                <input type="text" class="form-control" name="SearchTerm" placeholder="Hitta företag via merit" />
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-primary" asp-page-handler="CompanyByMerit">Sök företag</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <br />
+                    <h6>Sök företag via wants</h6>
+                    <div>
+                        <form method="post">
+                            <div class="input-group">
+                                <input type="hidden" name="SearchType" value="6" />
+                                <input type="text" class="form-control" name="SearchTerm" placeholder="Hitta företag via want" />
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-primary" asp-page-handler="CompanyByWant">Sök företag</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-5 mb-5">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="card-header">
+                    <h5 class="card-title">Sökresultat</h5>
+                </div>
+                <p></p>
+                <div class="card-text">
+                    @if (Model.SearchPersonList != null)
+                    {
+                        @if (Model.SearchPersonList.Count == 0 && (Model.SearchType == 1 || Model.SearchType == 2 || Model.SearchType == 3))
+                        {
+                            <div>Sökningen gav inget matchande resultat.</div>
+                        }
+                        @foreach (var x in Model.SearchPersonList)
+                        {
+                <div><a href="PersonalInfoPage?PersonalId=@x.PersonalUserId&&searchterm=@Model.SearchTerm&&searchType=@Model.SearchType">@x.FirstName @x.LastName</a></div>
+                        }
+                    }
+           
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.col-md-4 -->
+    <div class="col-md-5 mb-5">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="card-header">
+                    <h5 class="card-title">Sökresultat</h5>
+                </div>
+                <p></p>
+                <div class="card-text">
+                    @if (Model.SearchCompanyList != null)
+                    {
+                        @if (Model.SearchCompanyList.Count == 0 && (Model.SearchType == 4 || Model.SearchType == 5 || Model.SearchType == 6))
+                        {
+                            <div>Sökningen gav inget matchande resultat.</div>
+                        }
+                        @foreach (var x in Model.SearchCompanyList)
+                        {
+                <div><a href="CompanyInfoPage?CompanyId=@x.CompanyUserId&&searchterm=@Model.SearchTerm&&searchtype=@Model.SearchType">@x.CompanyName</a></div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

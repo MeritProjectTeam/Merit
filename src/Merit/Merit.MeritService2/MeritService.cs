@@ -13,26 +13,22 @@ namespace Merit.MeritService
     {
         public void SaveMerit(PersonalMerit merit)
         {
-            using (var db = new MeritContext())
-            {
-                db.PersonalMerits.Add(merit);
-                db.SaveChanges();
-            }
+            using var db = new MeritContext();
+            db.PersonalMerits.Add(merit);
+            db.SaveChanges();
         }
         public void SaveMeritBusiness(CompanyMerit merit)
         {
-            using (var db = new MeritContext())
-            {
-                db.CompanyMerits.Add(merit);
-                db.SaveChanges();
-            }
+            using var db = new MeritContext();
+            db.CompanyMerits.Add(merit);
+            db.SaveChanges();
         }
         public List<PersonalMerit> ReadPersonalMerits(int userId)
         {
             using (var db = new MeritContext())
             {
                 var l = db.PersonalMerits
-                    .Where(l => l.PersonalUserId == userId)
+                    .Where(l => l.PersonalUser.PersonalUserId == userId)
                     .ToList();
                 return l;
             }
@@ -42,60 +38,52 @@ namespace Merit.MeritService
             using (var db = new MeritContext())
             {
                 var l = db.CompanyMerits
-                    .Where(l => l.CompanyUserId == companyUserId)
+                    .Where(l => l.CompanyUser.CompanyUserId == companyUserId)
                     .ToList();
                 return l;
             }
         }
         public void EditPersonalMerit(PersonalMerit merit)
         {
-            using (var db = new MeritContext())
+            using var db = new MeritContext();
+            
+            var existingMerit = db.PersonalMerits
+                .FirstOrDefault(p => p.PersonalMeritId == merit.PersonalMeritId);
+            if (existingMerit != null)
             {
-                var existingMerit = GetPersonalMerit(merit.PersonalMeritId);
-
-                if (existingMerit!= null)
-                {
-                    db.Entry(existingMerit).State = EntityState.Modified;
-
-                    existingMerit.Category = merit.Category; 
-                    existingMerit.SubCategory = merit.SubCategory;
-                    existingMerit.Description = merit.Description;
-                    existingMerit.Duration = merit.Duration;
-                    db.SaveChanges();
-                }
+                existingMerit.Category = merit.Category;
+                existingMerit.SubCategory = merit.SubCategory;
+                existingMerit.Description = merit.Description;
+                existingMerit.Duration = merit.Duration;
+                db.SaveChanges();
             }
         }
         public PersonalMerit GetPersonalMerit(int id)
         {
-            using (var db = new MeritContext())
-            {
-                return db.PersonalMerits
-                    .FirstOrDefault(m => m.PersonalMeritId == id);
-            }
+            using var db = new MeritContext();
+            return db.PersonalMerits
+                .FirstOrDefault(m => m.PersonalMeritId == id);
         }
         public CompanyMerit GetCompanyMerit(int id)
         {
-            using (var db = new MeritContext())
-            {
-                return db.CompanyMerits
-                    .FirstOrDefault(c => c.CompanyMeritId == id);
-            }
+            using var db = new MeritContext();
+
+            return db.CompanyMerits
+                .FirstOrDefault(c => c.CompanyMeritId == id);
         }
         public void EditCompanyMerit(CompanyMerit merit)
         {
-            using (var db = new MeritContext())
+            using var db = new MeritContext();
+            
+            var existingMerit = db.CompanyMerits
+                .FirstOrDefault(c => c.CompanyMeritId == merit.CompanyMeritId);
+
+            if (existingMerit != null)
             {
-                var existingMerit = GetCompanyMerit(merit.CompanyMeritId);
-
-                if (existingMerit != null)
-                {
-                    db.Entry(existingMerit).State = EntityState.Modified;
-
-                    existingMerit.Category = merit.Category;
-                    existingMerit.SubCategory = merit.SubCategory;
-                    existingMerit.Description = merit.Description;
-                    db.SaveChanges();
-                }
+                existingMerit.Category = merit.Category;
+                existingMerit.SubCategory = merit.SubCategory;
+                existingMerit.Description = merit.Description;
+                db.SaveChanges();
             }
         }
         public void DeleteCompanyMerit(CompanyMerit merit)
@@ -104,7 +92,6 @@ namespace Merit.MeritService
             {
                 var q = db.CompanyMerits
                     .FirstOrDefault(q => q.CompanyMeritId == merit.CompanyMeritId);
-
                 if (q !=null)
                 {
                     db.Remove(q);
@@ -118,13 +105,25 @@ namespace Merit.MeritService
             {
                 var q = db.PersonalMerits
                     .FirstOrDefault(q => q.PersonalMeritId == merit.PersonalMeritId);
-
                 if (q != null)
                 {
                     db.Remove(q);
                     db.SaveChanges();
                 }
             }
+        }
+        public List<PersonalMerit> GetAllPersonalMerits()
+        {
+            MeritContext db = new MeritContext();
+            var list = db.PersonalMerits.ToList();
+            return list;
+        }
+
+        public List<CompanyMerit> GetAllCompanyMerits()
+        {
+            MeritContext db = new MeritContext();
+            var list = db.CompanyMerits.ToList();
+            return list;
         }
     }
 }

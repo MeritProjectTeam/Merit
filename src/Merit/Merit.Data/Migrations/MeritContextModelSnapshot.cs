@@ -16,8 +16,46 @@ namespace Merit.Data.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.3")
+                .HasAnnotation("ProductVersion", "5.0.4")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("Merit.Data.Models.CompanyAdvertisement", b =>
+                {
+                    b.Property<int>("CompanyAdvertisementId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CompanyUserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Duration")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Extent")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FormOfEmployment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Information")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Place")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Profession")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Salary")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CompanyAdvertisementId");
+
+                    b.HasIndex("CompanyUserId");
+
+                    b.ToTable("CompanyAdvertisements");
+                });
 
             modelBuilder.Entity("Merit.Data.Models.CompanyImage", b =>
                 {
@@ -58,7 +96,7 @@ namespace Merit.Data.Migrations
                     b.Property<string>("CompanyName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CompanyUserID")
+                    b.Property<int>("CompanyUserId")
                         .HasColumnType("int");
 
                     b.Property<string>("ContactName")
@@ -78,7 +116,7 @@ namespace Merit.Data.Migrations
 
                     b.HasKey("CompanyInfoId");
 
-                    b.HasIndex("CompanyUserID")
+                    b.HasIndex("CompanyUserId")
                         .IsUnique();
 
                     b.ToTable("CompanyInfo");
@@ -118,6 +156,9 @@ namespace Merit.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Identity")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
@@ -196,7 +237,7 @@ namespace Merit.Data.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PersonalUserID")
+                    b.Property<int>("PersonalUserId")
                         .HasColumnType("int");
 
                     b.Property<string>("PhoneNumber")
@@ -210,7 +251,7 @@ namespace Merit.Data.Migrations
 
                     b.HasKey("PersonalInfoId");
 
-                    b.HasIndex("PersonalUserID")
+                    b.HasIndex("PersonalUserId")
                         .IsUnique();
 
                     b.ToTable("PersonalInfo");
@@ -255,6 +296,12 @@ namespace Merit.Data.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("GUID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Identity")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
@@ -286,6 +333,47 @@ namespace Merit.Data.Migrations
                     b.ToTable("PersonalWants");
                 });
 
+            modelBuilder.Entity("Merit.Data.Models.VisibleMerit", b =>
+                {
+                    b.Property<int>("CompanyAdvertisementId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CompanyMeritId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CompanyAdvertisementId", "CompanyMeritId");
+
+                    b.HasIndex("CompanyMeritId");
+
+                    b.ToTable("VisibleMerits");
+                });
+
+            modelBuilder.Entity("Merit.Data.Models.VisibleWant", b =>
+                {
+                    b.Property<int>("CompanyAdvertisementId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CompanyWantsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CompanyAdvertisementId", "CompanyWantsId");
+
+                    b.HasIndex("CompanyWantsId");
+
+                    b.ToTable("VisibleWants");
+                });
+
+            modelBuilder.Entity("Merit.Data.Models.CompanyAdvertisement", b =>
+                {
+                    b.HasOne("Merit.Data.Models.CompanyUser", "CompanyUser")
+                        .WithMany()
+                        .HasForeignKey("CompanyUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CompanyUser");
+                });
+
             modelBuilder.Entity("Merit.Data.Models.CompanyImage", b =>
                 {
                     b.HasOne("Merit.Data.Models.CompanyUser", "CompanyUser")
@@ -301,7 +389,7 @@ namespace Merit.Data.Migrations
                 {
                     b.HasOne("Merit.Data.Models.CompanyUser", "CompanyUser")
                         .WithOne("CompanyInfo")
-                        .HasForeignKey("Merit.Data.Models.CompanyInfo", "CompanyUserID")
+                        .HasForeignKey("Merit.Data.Models.CompanyInfo", "CompanyUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -345,7 +433,7 @@ namespace Merit.Data.Migrations
                 {
                     b.HasOne("Merit.Data.Models.PersonalUser", "PersonalUser")
                         .WithOne("PersonalInfo")
-                        .HasForeignKey("Merit.Data.Models.PersonalInfo", "PersonalUserID")
+                        .HasForeignKey("Merit.Data.Models.PersonalInfo", "PersonalUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -372,6 +460,51 @@ namespace Merit.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("PersonalUser");
+                });
+
+            modelBuilder.Entity("Merit.Data.Models.VisibleMerit", b =>
+                {
+                    b.HasOne("Merit.Data.Models.CompanyAdvertisement", "CompanyAdvertisement")
+                        .WithMany("VisibleMerits")
+                        .HasForeignKey("CompanyAdvertisementId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Merit.Data.Models.CompanyMerit", "CompanyMerit")
+                        .WithMany()
+                        .HasForeignKey("CompanyMeritId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("CompanyAdvertisement");
+
+                    b.Navigation("CompanyMerit");
+                });
+
+            modelBuilder.Entity("Merit.Data.Models.VisibleWant", b =>
+                {
+                    b.HasOne("Merit.Data.Models.CompanyAdvertisement", "CompanyAdvertisement")
+                        .WithMany("VisibleWants")
+                        .HasForeignKey("CompanyAdvertisementId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Merit.Data.Models.CompanyWants", "CompanyWants")
+                        .WithMany()
+                        .HasForeignKey("CompanyWantsId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("CompanyAdvertisement");
+
+                    b.Navigation("CompanyWants");
+                });
+
+            modelBuilder.Entity("Merit.Data.Models.CompanyAdvertisement", b =>
+                {
+                    b.Navigation("VisibleMerits");
+
+                    b.Navigation("VisibleWants");
                 });
 
             modelBuilder.Entity("Merit.Data.Models.CompanyUser", b =>

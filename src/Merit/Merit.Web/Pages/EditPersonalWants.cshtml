@@ -1,0 +1,82 @@
+﻿@page
+@model Merit.Web.Pages.EditPersonalWantsModel
+@{
+}
+
+<form method="post">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-sm-12">
+                @if (Model.Visi)
+                {
+                    <div class="alert alert-@Model.alertlook">
+                        @Model.Message
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-md-4 mb-5">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="card-header">
+                            <h4 class="card-title">Wants</h4>
+                        </div>
+                        <p></p>
+                        <p class="card-text">
+                            @foreach (var want in Model.PersonalWantsList)
+                            {
+
+                                <div>
+                                    Want: @want.Want
+                                </div>
+                                <div><a href="?SelectedPersonalWantId=@want.PersonalWantsID">Välj att redigera</a></div>
+                                <hr />
+                            }
+                        </p>
+                    </div>
+                    <div class="card-footer">
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-lg-3" row="10">
+                <p><h4 c>Redigera</h4></p>
+                <input type="hidden" value="@Model.SelectedPersonalWantId" asp-for="PWant.PersonalWantsID" />
+                <div><input type="text" value="@Model.WantText" asp-for="PWant.Want" /></div>
+
+                @if (Model.SelectedPersonalWantId > 0)
+                {
+                    <br />
+                    <span class="justify-content-between mb-2">
+                        <span style="display:none" id="x">
+                            <button type="submit" class="btn btn-primary m-1" asp-page-handler="Edit">Ändra</button>
+                            <a href="#" onclick="ConfirmQ(false)" class="btn btn-primary m-1">Ångra</a>
+                        </span>
+                        <span id="y">
+                            <a href="#" onclick="ConfirmQ(true)" class="btn btn-primary m-1">Ändra önskemål</a>
+                        </span>
+                    </span>
+
+                    <span class="justify-content-between mb-2">
+                        <span style="display:none" id="a">
+                            <button type="submit" class="btn btn-danger m-1" asp-page-handler="Delete">Ta bort</button>
+                            <a href="#" onclick="ConfirmX(false)" class="btn btn-primary m-1">Ångra</a>
+                        </span>
+                        <span id="b">
+                            <a href="#" onclick="ConfirmX(true)" class="btn btn-danger m-1">Ta bort önskemål</a>
+                        </span>
+                    </span>
+                }
+                <br />
+                <br />
+                <a class="btn btn-primary " asp-page="/PersonalInfoPage">Profilsida</a>
+
+            </div>
+        </div>
+    </div>
+</form>

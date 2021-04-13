@@ -2,7 +2,7 @@
 
 namespace Merit.Data.Models
 {
-    public class CompanyUser
+    public class CompanyUser :IUser
     {
 
         public int CompanyUserId { get; set; }
@@ -13,6 +13,8 @@ namespace Merit.Data.Models
         public ICollection<CompanyMerit> CompanyMerits { get; set; }
         public ICollection<CompanyWants> CompanyWants { get; set; }
         public CompanyImage CompanyImage { get; set; }
+
+        public string Identity { get; set; }
 
     }
 }

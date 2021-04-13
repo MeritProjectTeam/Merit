@@ -8,14 +8,23 @@ using Merit.MeritService;
 using Merit.Data.Models;
 using Merit.PersonalInfoService;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace Merit.Web.Pages
 {
     public class EditPersonalMeritsModel : PageModel
     {
         private readonly IMeritService meritService = new MeritService.MeritService();
+        private readonly UserManager<IdentityUser> userManager;
+        private readonly SignInManager<IdentityUser> signInManager;
 
-        [BindProperty(SupportsGet  = true)]
+        public EditPersonalMeritsModel(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        {
+            this.signInManager = signInManager;
+            this.userManager = userManager;
+        }
+
+        [BindProperty]
         public List<PersonalMerit> MeritList { get; set; }
 
         [BindProperty(SupportsGet=true)]
@@ -31,12 +40,34 @@ namespace Merit.Web.Pages
         [BindProperty]
         public PersonalMerit PMerit { get; set; }
 
-        int userId = AccountService.Account.CheckCookie();
+        public string Message { get; set; }
 
-        public void OnGet()
+        [BindProperty(SupportsGet = true)]
+        public bool Visi { get; set; } = false;
+
+
+        public async Task<IActionResult> OnGetAsync()
         {
-            MeritList = meritService.ReadPersonalMerits(userId);
-          
+            if (!signInManager.IsSignedIn(User))
+            {
+                return Redirect("/Login");
+            }
+
+            IdentityUser identity = await userManager.GetUserAsync(User);
+            IUser pUser = identity.GetUser();
+
+            if (pUser is PersonalUser personalUser)
+            {
+                MeritList = meritService.ReadPersonalMerits(personalUser.PersonalUserId);
+                if (SelectedMeritID != 0 && MeritList.FirstOrDefault(x => x.PersonalMeritId == SelectedMeritID) == null)
+                {
+                    return Redirect($"/PersonalInfoPage");
+                }
+            }
+            else if (pUser is CompanyUser)
+            {
+                return Redirect("/CompanyInfoPage");
+            }
             foreach (var merit in MeritList)
             {
                 if (merit.PersonalMeritId == SelectedMeritID) 
@@ -48,18 +79,24 @@ namespace Merit.Web.Pages
                     DurationText = merit.Duration;
                 }
             }
+            return Page();
         }
-        public IActionResult OnPostEdit()
+        public async Task OnPostEdit()
         {
-           
+            Visi = true;
             meritService.EditPersonalMerit(PMerit);
-            return RedirectToPage("EditPersonalMerits");
+            Message = "Merit ändrad";
+            SelectedMeritID = 0;
+            await OnGetAsync();
         }
 
-        public IActionResult OnPostDelete()
+        public async Task OnPostDelete()
         {
             meritService.DeletePersonalMerit(PMerit);
-            return RedirectToPage("EditPersonalMerits");
+            Visi = true;
+            Message = "Merit borttagen";
+            SelectedMeritID = 0;
+            await OnGetAsync();
         }
     }
 }

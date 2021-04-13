@@ -14,78 +14,89 @@ namespace Merit.PersonalInfoService
     {
         public void EditPersonalInfo(PersonalInfo info)
         {
-            using (var db = new MeritContext())
+            using var db = new MeritContext();
+           
+            var existingInfo = db.PersonalInfo
+                .FirstOrDefault(p => p.PersonalUserId == info.PersonalUserId);
+            if (existingInfo != null)
             {
-                var existingInfo = Get(info.PersonalInfoId);
-                
-                if (existingInfo != null)
-                {
-                    db.Entry(existingInfo).State = EntityState.Modified;
-
-                    existingInfo.FirstName = info.FirstName;
-                    existingInfo.LastName = info.LastName;
-                    existingInfo.PhoneNumber = info.PhoneNumber;
-                    existingInfo.City = info.City;
-                    existingInfo.Street = info.Street;
-                    existingInfo.ZipCode = info.ZipCode;
-                    existingInfo.DateOfBirth = info.DateOfBirth;
-                    db.SaveChanges();
-                }
+                existingInfo.FirstName = info.FirstName;
+                existingInfo.LastName = info.LastName;
+                existingInfo.PhoneNumber = info.PhoneNumber;
+                existingInfo.City = info.City;
+                existingInfo.Street = info.Street;
+                existingInfo.ZipCode = info.ZipCode;
+                existingInfo.DateOfBirth = info.DateOfBirth;
+                db.SaveChanges();
             }
         }
         public PersonalInfo Get(int id)
         {
-            using (var db = new MeritContext())
-                return db.PersonalInfo
-                    .FirstOrDefault(p => p.PersonalUserID == id);
-        }
-        public CompanyImage GetImage(CompanyUser companyUser)
+            using var db = new MeritContext();
+            return db.PersonalInfo
+                .FirstOrDefault(p => p.PersonalUserId == id);
+        }        
+        public async Task<CompanyImage> GetImage(CompanyUser companyUser)
         {
-            using (var db = new MeritContext())
-            {
-                return db.CompanyImages.FirstOrDefault(i => i.CompanyUserId == companyUser.CompanyUserId);
-            }
-        }
+            using var db = new MeritContext();
 
-        public void SaveImage(CompanyImage image)
-        {
-            using (var db = new MeritContext())
-            {
-                if (db.CompanyImages.FirstOrDefault(x => x.CompanyUserId == image.CompanyUserId) != null)
-                {
-                    db.CompanyImages.Remove(db.CompanyImages.FirstOrDefault(x => x.CompanyUserId == image.CompanyUserId));
-                }
-                db.Add(image);
-                db.SaveChanges();
-            }
+            return await db.CompanyImages
+                .FirstOrDefaultAsync(i => i.CompanyUserId == companyUser.CompanyUserId);
         }
-        public PersonalImage GetImage(PersonalUser personalUser)
+        public async Task SaveImage(CompanyImage image)
         {
-            using (var db = new MeritContext())
+            using var db = new MeritContext();
+            
+            if (db.CompanyImages.FirstOrDefault(x => x.CompanyUserId == image.CompanyUserId) != null)
             {
-                return db.PersonalImages.FirstOrDefault(i => i.PersonalUserId == personalUser.PersonalUserId);
+                db.CompanyImages.Remove(db.CompanyImages.FirstOrDefault(x => x.CompanyUserId == image.CompanyUserId));
             }
+            db.Add(image);
+            await db.SaveChangesAsync();
         }
+        public async Task<PersonalImage> GetImage(PersonalUser personalUser)
+        {
+            using var db = new MeritContext();
+            return await db.PersonalImages.FirstOrDefaultAsync(i => i.PersonalUserId == personalUser.PersonalUserId);
+        }
+        public async Task SaveImage(PersonalImage image)
+        {
+            using var db = new MeritContext();
 
-        public void SaveImage(PersonalImage image)
-        {
-            using (var db = new MeritContext())
+            if (db.PersonalImages.FirstOrDefault(x => x.PersonalUserId == image.PersonalUserId) != null)
             {
-                if (db.PersonalImages.FirstOrDefault(x => x.PersonalUserId == image.PersonalUserId) != null)
-                {
-                    db.PersonalImages.Remove(db.PersonalImages.FirstOrDefault(x => x.PersonalUserId == image.PersonalUserId));
-                }
-                db.Add(image);
-                db.SaveChanges();
+                db.PersonalImages
+                    .Remove(db.PersonalImages.FirstOrDefault(x => x.PersonalUserId == image.PersonalUserId));
             }
+            db.Add(image);
+            await db.SaveChangesAsync();
         }
         public void SavePersonalInfo(PersonalInfo info)
         {
-            using (var db = new MeritContext())
-            {
-                db.PersonalInfo.Add(info);
-                db.SaveChanges();
-            }
+            using var db = new MeritContext();
+
+            db.PersonalInfo.Add(info);
+            db.SaveChanges();
         }
+
+        public void DeletePersonalInfo(int userId)
+        {
+            using var db = new MeritContext();
+            var imageInfo = db.PersonalImages.FirstOrDefault(x => x.PersonalUserId == userId);
+            if(imageInfo != null)
+            { 
+                db.PersonalImages.Remove(imageInfo); 
+            }
+            var personalInfo = db.PersonalInfo.FirstOrDefault(x => x.PersonalUserId == userId);
+            db.PersonalInfo.Remove(personalInfo);
+            db.SaveChanges();
+        }
+
+        public List<PersonalInfo> GetAllPersons()
+        {
+            using var db = new MeritContext();
+            return db.PersonalInfo.ToList();
+        }
+      
     }
 }

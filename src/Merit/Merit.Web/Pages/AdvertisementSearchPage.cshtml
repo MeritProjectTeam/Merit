@@ -1,0 +1,66 @@
+﻿@page
+@model Merit.Web.Pages.AdvertisementSearchPageModel
+@{
+}
+
+
+<div class="row">
+    <div class="col-md-6 mb-5">
+        <div class="card h-100">
+            <div class="card-body">
+                <form method="post">
+                    <div class="card-header">
+                        <h4 class="card-title">Hitta annonser</h4>
+                    </div>
+                    <br />
+                    <select name="SearchType" class="float-right form-control md-1">
+                        <option value="1" selected>Sök i hela annonsen</option>
+                        <option value="2">Sök bland meriter</option>
+                        <option value="3">Sök bland wants</option>
+                    </select>
+                    <div class="input-group md-1 pt-4">
+                        <input type="text" class="form-control" asp-for="@Model.freeText" placeholder="Söktext"/>
+                        <div class="input-group-append md-1">
+                            <input type="submit" class="btn btn-primary" value="Sök">
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<br />
+<hr />
+
+@if (Model.resultSet != null)
+{
+    <h4>Sökresultat</h4>
+
+    <div class="row">
+        <div class="col-2">
+
+            <h6>Annons-id</h6>
+
+        </div>
+        <div class="col-4">
+            <h6>Yrkesroll</h6>
+        </div>
+    </div>
+
+    @foreach (var ad in Model.resultSet)
+    {
+        <div class="row">
+            <div class="col-2">
+
+                @ad.CompanyAdvertisementId
+
+            </div>
+            <div class="col-4">
+                <a href="/ShowJobAdvertisement?AdvertisementId=@ad.CompanyAdvertisementId&&SearchTerm=@Model.freeText&&SearchType=@Model.SearchType">@ad.Profession</a>
+            </div>
+        </div>
+    }
+
+}
