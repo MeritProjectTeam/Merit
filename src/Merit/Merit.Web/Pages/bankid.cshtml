@@ -31,6 +31,10 @@
                     console.info("Hiding QR.");
                     $("#qr").hide();
                 }
+                if (data.retry == true) {
+                    $("#cancel").hide();
+                    $("#retry").show();
+                }
                 if (data.stopCollect == true) {
                     console.warn("Stopping collect.");
                 }
@@ -39,10 +43,6 @@
                         console.log("Collecting from server.");
                         CollectJson();
                     }, @Model.Data.RefreshInterval);
-                    if (data.retry == true) {
-                        $("#cancel").hide();
-                        $("#retry").show();
-                    }
                 }
                 if (data.redirect == true) {
                     console.info("Redirecting.");
