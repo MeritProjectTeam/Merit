@@ -100,10 +100,7 @@ namespace Merit.Web.Pages
             [Display(Name = "Välj Användartyp")]
             public AccountType AccountType { get; set; }
 
-
             [Display(Name = "Jag har läst och accepterar integritetspolicyn.")]
-
-
             [Required(ErrorMessage = "Du måste läsa och acceptera policyn för att fortsätta")]
             public bool PrivacyConsent { get; set; }
         }
