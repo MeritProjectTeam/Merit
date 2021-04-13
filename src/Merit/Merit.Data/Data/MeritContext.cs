@@ -20,40 +20,9 @@ namespace Merit.Data.Data
             var configuration = builder.Build();
             connectionString = configuration.GetConnectionString("ConnectionString");
         }
-
-        
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(connectionString);
-        }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<VisibleMerit>()
-                .HasKey(v => new { v.CompanyAdvertisementId, v.CompanyMeritId });
-            modelBuilder.Entity<VisibleMerit>()
-                .HasOne(v => v.CompanyAdvertisement)
-                .WithMany(c => c.VisibleMerits)
-                .HasForeignKey(v => v.CompanyAdvertisementId)
-                .OnDelete(DeleteBehavior.NoAction);
-            modelBuilder.Entity<VisibleMerit>()
-                .HasOne(v => v.CompanyMerit)
-                .WithMany()
-                .HasForeignKey(v => v.CompanyMeritId)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            modelBuilder.Entity<VisibleWant>()
-                .HasKey(v => new { v.CompanyAdvertisementId, v.CompanyWantsId});
-            modelBuilder.Entity<VisibleWant>()
-                .HasOne(v => v.CompanyAdvertisement)
-                .WithMany(c => c.VisibleWants)
-                .HasForeignKey(v => v.CompanyAdvertisementId)
-                .OnDelete(DeleteBehavior.NoAction);
-            modelBuilder.Entity<VisibleWant>()
-                .HasOne(v => v.CompanyWants)
-                .WithMany()
-                .HasForeignKey(v => v.CompanyWantsId)
-                .OnDelete(DeleteBehavior.NoAction);
         }
 
         public DbSet<CompanyInfo> CompanyInfo { get; set; }
@@ -67,12 +36,5 @@ namespace Merit.Data.Data
         public DbSet<PersonalWants> PersonalWants { get; set; }
         public DbSet<CompanyImage> CompanyImages { get; set; }
         public DbSet<PersonalImage> PersonalImages { get; set; }
-
-        public DbSet<CompanyAdvertisement> CompanyAdvertisements { get; set; }
-
-        public DbSet<VisibleWant> VisibleWants { get; set; }
-
-        public DbSet<VisibleMerit> VisibleMerits { get; set; }
-
     }
 }

@@ -13,55 +13,39 @@ namespace Merit.CompanyService
     {
         public CompanyInfo Get(int id)
         {
-            using var db = new MeritContext();
-            return db.CompanyInfo
-                .FirstOrDefault(c => c.CompanyUserId == id);
+            using (var db = new MeritContext())
+                return db.CompanyInfo
+                    .FirstOrDefault(c => c.CompanyUserID == id);
         }
         public void SaveCompany(CompanyInfo company)
         {
-            using MeritContext db = new MeritContext();
-
-            db.Add(company);
-            db.SaveChanges();
-        }
-        public void EditCompanyInfo(CompanyInfo info)
-        {
-            using var db = new MeritContext();
-            
-            var existingInfo = db.CompanyInfo.FirstOrDefault(c => c.CompanyUserId == info.CompanyUserId);
-
-            if (existingInfo != null)
+            using (var db = new MeritContext())
             {
-                existingInfo.CompanyName = info.CompanyName;
-                existingInfo.ContactName = info.ContactName;
-                existingInfo.Phone = info.Phone;
-                existingInfo.Street = info.Street;
-                existingInfo.ZipCode = info.ZipCode;
-                existingInfo.OrgNumber = info.OrgNumber;
-                existingInfo.City = info.City;
-
+                db.Add(company);
                 db.SaveChanges();
             }
         }
-
-        public List<CompanyInfo> GetAllCompany()
+        public void EditCompanyInfo(CompanyInfo info)
         {
-            List<CompanyInfo> aaa = new List<CompanyInfo>();
-            using var db = new MeritContext();
-            return aaa = db.CompanyInfo.ToList();
-        }
-
-        public void DeleteCompanyInfo(int userId)
-        {
-            using var db = new MeritContext();
-            var imageInfo = db.CompanyImages.FirstOrDefault(x => x.CompanyUserId == userId);
-            if (imageInfo != null)
+            using (var db = new MeritContext())
             {
-                db.CompanyImages.Remove(imageInfo);
+                var existingInfo = Get(info.CompanyInfoId);
+
+                if (existingInfo != null)
+                {
+                    db.Entry(existingInfo).State = EntityState.Modified;
+
+                    existingInfo.CompanyName = info.CompanyName;
+                    existingInfo.ContactName = info.ContactName;
+                    existingInfo.Phone = info.Phone;
+                    existingInfo.Street = info.Street;
+                    existingInfo.ZipCode = info.ZipCode;
+                    existingInfo.OrgNumber = info.OrgNumber;
+                    existingInfo.City = info.City;
+
+                    db.SaveChanges();
+                }
             }
-            var companyInfo = db.CompanyInfo.FirstOrDefault(x => x.CompanyUserId == userId);
-            db.CompanyInfo.Remove(companyInfo);
-            db.SaveChanges();
         }
     }
 }
