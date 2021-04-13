@@ -36,7 +36,7 @@
         <div class="col-lg-5">
             <div class="form-group m-2">
                 <input required asp-for="Input.PrivacyConsent" class="form-check-input" />
-                <label asp-for="Input.PrivacyConsent" class="form-check-label"></label>
+                <label class="form-check-label">Jag har läst och accepterar <a href="/privacy">integritetspolicyn.</a></label>
                 <span asp-validation-for="Input.PrivacyConsent" class="text-danger"></span>
             </div>
             <button class="btn btn-primary" type="submit">Registrera</button>
