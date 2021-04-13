@@ -1,108 +1,85 @@
-﻿using Merit.AccountService;
-using Merit.Data.Models;
-using Merit.Web.Areas.Identity.Data;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.WebUtilities;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-using System.Text.Encodings.Web;
-using System.Threading.Tasks;
+using Merit.AccountService;
+using Merit.Data.Models;
+using Merit.PersonalInfoService;
+using Merit.CompanyService;
 
-namespace Merit.Web.Pages
+namespace LoginWebTesting.Pages
 {
     public class RegisterModel : PageModel
     {
-        private readonly SignInManager<IdentityUser> signInManager;
-        private readonly UserManager<IdentityUser> userManager;
-        private readonly IEmailSender emailSender;
-        private readonly IAccount accountService = new Account();
+        [BindProperty]
+        public User NewUser { get; set; }
 
         [BindProperty]
-        public InputModel Input { get; set; }
+        public string PasswordCheck { get; set; }
+        [BindProperty]
+        public int AccountType { get; set; }
 
-        public RegisterModel(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IEmailSender emailSender)
+        [BindProperty]
+        public string RegisterMessage { get; set; }
+        private readonly IAccount account = new Account();
+        private readonly IProfileService profileService = new ProfileService();
+
+        public void OnGet()
         {
-            this.signInManager = signInManager;
-            this.userManager = userManager;
-            this.emailSender = emailSender;
         }
 
-        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+        public void OnPost()
         {
-            returnUrl ??= Url.Content("~/");
 
-            if (ModelState.IsValid)
+            if (NewUser.Password == PasswordCheck)
             {
-                var user = new IdentityUser { Email = Input.Email, UserName = Input.Email };
-                var result = await userManager.CreateAsync(user, Input.Password);
-                if (result.Succeeded)
+                if (AccountType == 1)
                 {
-                    if (Input.AccountType == AccountType.Personal)
+                    PersonalUser NewAccount = new PersonalUser() { UserName = NewUser.UserName, Email = NewUser.Email, Password = NewUser.Password };
+                    switch (account.CheckExistingAccount(NewAccount))
                     {
-                        accountService.AddAccount(new PersonalUser()
-                        {
-                            Identity = user.Id
-                        });
-                    }
-                    else if (Input.AccountType == AccountType.Company)
-                    {
-                        accountService.AddAccount(new CompanyUser()
-                        {
-                            Identity = user.Id
-                        });
-                    }
-
-                    await signInManager.SignInAsync(user, isPersistent: false);
-
-                    var type = user.GetAccountType();
-                    if (type == AccountType.Personal)
-                    {
-                        return Redirect("/PersonalInfoPage");
-                    }
-                    else if (type == AccountType.Company)
-                    {
-                        return Redirect("/CompanyInfoPage");
+                        case 100:
+                            account.AddAccount(NewAccount);
+                            RegisterMessage = "Registreringen lyckades!";
+                            break;
+                        case 101:
+                            RegisterMessage = "Användarnamnet upptaget.";
+                            break;
+                        case 102:
+                            RegisterMessage = "Epost-adressen finns redan registrerad.";
+                            break;
+                        default:
+                            break;
                     }
                 }
-
-                foreach (var error in result.Errors)
+                else if (AccountType == 2)
                 {
-                    ModelState.AddModelError(string.Empty, error.Description);
+                    CompanyUser NewAccount = new CompanyUser() { UserName = NewUser.UserName, Email = NewUser.Email, Password = NewUser.Password };
+                    switch (account.CheckExistingAccount(NewAccount))
+                    {
+                        case 100:
+                            account.AddAccount(NewAccount);
+                            RegisterMessage = "Registreringen lyckades!";
+                            break;
+                        case 101:
+                            RegisterMessage = "Användarnamnet upptaget.";
+                            break;
+                        case 102:
+                            RegisterMessage = "Epost-adressen finns redan registrerad.";
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
-
-            // Fallback.
-            return Page();
+            else
+            {
+                RegisterMessage = "Lösenorden stämmer inte överens.";
+            }
         }
 
-        public class InputModel
-        {
-            [Required(ErrorMessage = "Du måste ange en e-postadress.")]
-            [EmailAddress(ErrorMessage = "Du måste ange en korrekt E-Postadress")]
-            [Display(Name = "E-post")]
-            public string Email { get; set; }
 
-            [Required(ErrorMessage = "Du måste ange ett lösenord.")]
-            [StringLength(100, ErrorMessage = "Lösenordet måste vara minst {2} och max {1} tecken långt.", MinimumLength = 6)]
-            [DataType(DataType.Password)]
-            [Display(Name = "Lösenord")]
-            public string Password { get; set; }
-
-            [DataType(DataType.Password)]
-            [Display(Name = "Bekräfta Lösenord")]
-            [Compare("Password", ErrorMessage = "Inmatningarna för lösenord matchar inte varandra.")]
-            public string ConfirmPassword { get; set; }
-
-            [Required]
-            [Display(Name = "Välj Användartyp")]
-            public AccountType AccountType { get; set; }
-
-            [Display(Name = "Jag har läst och accepterar integritetspolicyn")]
-            [Required(ErrorMessage = "Du måste läsa och acceptera policyn för att fortsätta")]
-            public bool PrivacyConsent { get; set; }
-        }
     }
 }

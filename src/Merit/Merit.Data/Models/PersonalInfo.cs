@@ -12,12 +12,12 @@ namespace Merit.Data.Models
         public string FirstName { get; set; } = "-";
         public string LastName { get; set; } = "-";
         public string PhoneNumber { get; set; } = "-";
-        public DateTime DateOfBirth { get; set; } = DateTime.Now;
+        public DateTime DateOfBirth { get; set; } = default;
         public string City { get; set; } = "-";
         public string Street { get; set; } = "-";
         public string ZipCode { get; set; } = "--";
      
-        public int PersonalUserId { get; set; }
+        public int PersonalUserID { get; set; }
         public PersonalUser PersonalUser { get; set; }
     }
 }

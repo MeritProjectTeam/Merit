@@ -33,7 +33,6 @@ namespace Merit.Web
             });
 
             services.AddSingleton<BankIdService, BankIdTestService>();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,7 +41,6 @@ namespace Merit.Web
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseMigrationsEndPoint();
             }
             else
             {
@@ -51,14 +49,13 @@ namespace Merit.Web
                 app.UseHsts();
             }
 
-            app.UseCookiePolicy();
-
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
 
             app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

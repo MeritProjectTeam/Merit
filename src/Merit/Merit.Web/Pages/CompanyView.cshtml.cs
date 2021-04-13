@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Merit.Web.Pages
 {
-    public class EditCompanyWantsModel : PageModel
+    public class CompanyViewModel : PageModel
     {
         public void OnGet()
         {

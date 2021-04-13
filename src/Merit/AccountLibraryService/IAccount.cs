@@ -6,14 +6,11 @@ namespace Merit.AccountService
     {
         public void AddAccount(PersonalUser user);
         public void AddAccount(CompanyUser user);
-        public PersonalUser GetPersonalUser(string identity);
-        public PersonalUser GetPersonalUser(int personalUserId);
-        public void EditPersonalUser(PersonalUser user);
-        public void EditCompanyUser(CompanyUser company);
-        public CompanyUser GetCompanyUser(string identity);
-        public CompanyUser GetCompanyUser(int companyUserId);
-        public void DeletePersonalUser(int userId);
-
-        public void DeleteCompanyUser(int userId);
+        public PersonalUser GetPersonalUser(int id);
+        public CompanyUser GetCompanyUser(int id);
+        public int CheckExistingAccount(PersonalUser user);
+        public int CheckExistingAccount(CompanyUser user);
+        public int[] CheckLogin(User user);
+        
     }
 }

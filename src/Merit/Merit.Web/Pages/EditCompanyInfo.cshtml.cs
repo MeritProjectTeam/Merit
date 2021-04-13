@@ -6,89 +6,32 @@ using Merit.CompanyService;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Merit.Data.Models;
-using Microsoft.AspNetCore.Identity;
-using Merit.AccountService;
 
 namespace Merit.Web.Pages
 {
     public class EditCompanyInfoModel : PageModel
     {
         private readonly ICompanyService companyService = new CompanyService.CompanyService();
-        private readonly IAccount accountService = new Account();
-
-        private readonly UserManager<IdentityUser> userManager;
-        private readonly SignInManager<IdentityUser> signInManager;
-
-        public EditCompanyInfoModel(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
-        {
-            this.signInManager = signInManager;
-            this.userManager = userManager;
-        }
 
         [BindProperty]
-        public string Message { get; set; }
+        public string Information { get; set; }
         [BindProperty]
         public CompanyInfo ACompany { get; set; }
-        public bool Visi { get; set; }
 
-        public async Task<IActionResult> OnGetAsync()
+        int companyUserId = AccountService.Account.CheckCookie();
+        public void OnGet()
         {
-            if (!signInManager.IsSignedIn(User))
+            Information = "";
+            if (companyUserId != 0)
             {
-                return Redirect("/Login");
+                ACompany = companyService.Get(companyUserId);
             }
-
-            IdentityUser identity = await userManager.GetUserAsync(User);
-            IUser cUser = identity.GetUser();
-            if (cUser is CompanyUser companyUser)
-            {
-                ACompany = companyService.Get(companyUser.CompanyUserId);
-            }
-            return Page();
         }
-        public async Task<IActionResult> OnPostAsync()
+        public void OnPost()
         {
-            if (!signInManager.IsSignedIn(User))
-            {
-                return Redirect("/Login");
-            }
-
-            IdentityUser identity = await userManager.GetUserAsync(User);
-            IUser cUser = identity.GetUser();
-
-            Visi = true;
-            Message = "Företagsinfo sparad.";
-            if (cUser is CompanyUser companyUser)
-            {
-                ACompany.CompanyUserId = companyUser.CompanyUserId;
-            }
-            else if (cUser is PersonalUser)
-            {
-                return Redirect("/PersonalInfoPage");
-            }
+            Information = "Företagsinfo sparad.";
+            ACompany.CompanyUserID = AccountService.Account.CheckCookie();
             companyService.EditCompanyInfo(ACompany);
-            
-            return Page();
-        }
-        public async Task<IActionResult> OnPostDeleteAsync()
-        {
-            if (!signInManager.IsSignedIn(User))
-            {
-                return Redirect("/Login");
-            }
-
-            IdentityUser identity = await userManager.GetUserAsync(User);
-            IUser pUser = identity.GetUser();
-            
-            if (pUser is CompanyUser companyUser)
-            {
-                ACompany.CompanyUserId = companyUser.CompanyUserId;
-            }
-            accountService.DeleteCompanyUser(ACompany.CompanyUserId);
-            await signInManager.SignOutAsync();
-            await userManager.DeleteAsync(identity);
-
-            return RedirectToPage("/ConfirmedRemovedAccount");
         }
     }
 }
