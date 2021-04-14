@@ -123,7 +123,7 @@ namespace Merit.Web.Pages
             if (!string.IsNullOrEmpty(SearchTerm))
             {
                 List<PersonalMerit> pml = meritService.GetAllPersonalMerits();
-                List<PersonalMerit> spml = pml.Where(x => x.Category.ToLower() == SearchTerm.ToLower()).ToList();
+                List<PersonalMerit> spml = pml.Where(x => x.Category.ToLower().Contains(SearchTerm.ToLower()) || x.SubCategory.ToLower().Contains(SearchTerm.ToLower())).ToList();
                 persons = profileService.GetAllPersons();
                 SearchPersonList = new();
                 foreach (var person in spml)
@@ -148,7 +148,7 @@ namespace Merit.Web.Pages
             if (!string.IsNullOrEmpty(SearchTerm))
             {
                 List<CompanyMerit> cml = meritService.GetAllCompanyMerits();
-                List<CompanyMerit> scml = cml.Where(x => x.Category.ToLower().Contains(SearchTerm.ToLower())).ToList();
+                List<CompanyMerit> scml = cml.Where(x => x.Category.ToLower().Contains(SearchTerm.ToLower()) || x.SubCategory.ToLower().Contains(SearchTerm.ToLower())).ToList();
                 companies = companyService.GetAllCompany();
                 SearchCompanyList = new();
                 foreach (var company in scml)
@@ -174,7 +174,7 @@ namespace Merit.Web.Pages
             if (!string.IsNullOrEmpty(SearchTerm))
             {
                 List<PersonalWants> pwl = wantsService.AllPersonalWantsToList();
-                List<PersonalWants> spwl = pwl.Where(x => x.Want.ToLower() == SearchTerm.ToLower()).ToList();
+                List<PersonalWants> spwl = pwl.Where(x => x.Want.ToLower().Contains(SearchTerm.ToLower())).ToList();
                 persons = profileService.GetAllPersons();
                 SearchPersonList = new();
                 foreach (var person in spwl)
@@ -199,7 +199,7 @@ namespace Merit.Web.Pages
             if (!string.IsNullOrEmpty(SearchTerm))
             {
                 List<CompanyWants> cwl = wantsService.AllCompanyWantsToList();
-                List<CompanyWants> scwl = cwl.Where(x => x.Want.ToLower() == SearchTerm.ToLower()).ToList();
+                List<CompanyWants> scwl = cwl.Where(x => x.Want.ToLower().Contains(SearchTerm.ToLower())).ToList();
                 companies = companyService.GetAllCompany();
                 SearchCompanyList = new();
                 foreach (var company in scwl)
