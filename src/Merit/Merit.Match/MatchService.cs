@@ -15,6 +15,7 @@ namespace Merit.MatchService
     {
         private readonly IWantsService wantsService = new WantsService.WantsService();
         private readonly IMeritService meritService = new MeritService.MeritService();
+        private readonly IAdvertisementService advertisementService = new AdvertisementService.AdvertisementService();
         private readonly IAccount accountService = new AccountService.Account();
 
 
@@ -159,7 +160,23 @@ namespace Merit.MatchService
                         listOfAdvertisement.Add(advertisement);
                     }
                 }
+                var q2 = db.VisibleWants.ToList();
+
+                foreach (var want in q2)
+                {
+                CompanyWants cw = db.CompanyWants.FirstOrDefault(x => x.CompanyWantsId == want.CompanyWantsId);
+                    
+                    if (merit.Category.ToLower().Contains(cw.Want.ToLower()) || merit.SubCategory.ToLower().Contains(cw.Want.ToLower()) || merit.Description.ToLower().Contains(cw.Want.ToLower()))
+                    {
+                        if (listOfAdvertisement.Find(x => x.CompanyAdvertisementId == want.CompanyAdvertisementId) == null)
+                        {
+                            listOfAdvertisement.Add(advertisementService.GetOneCompanyAdvertisement(want.CompanyAdvertisementId));
+                        }
+                    }
             }
+            }
+          
+
             return listOfAdvertisement;
         }
 

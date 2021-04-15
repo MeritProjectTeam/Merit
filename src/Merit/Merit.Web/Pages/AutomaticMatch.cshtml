@@ -26,7 +26,9 @@
                     <p class="card-text">
                         @foreach (var item in Model.ListOfMatchingCompanyUsers)
                         {
+                        <div>
                             <a href="/CompanyInfoPage?companyId=@item.CompanyUserId&&Matching=true">@companyService.Get(item.CompanyUserId).CompanyName</a>
+                        </div>
                         }
                     </p>
                 </div>
